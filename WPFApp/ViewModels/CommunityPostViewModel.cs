@@ -9,7 +9,7 @@ namespace WPFApp.ViewModels
     public class CommunityPostViewModel : INotifyPropertyChanged
     {
         public CommunityPost Post { get; }
-        public ObservableCollection<Comment> Comments { get; set; }
+        public ObservableCollection<CommentViewModel> Comments { get; set; }
         private string _newCommentContent;
         public string NewCommentContent
         {
@@ -24,15 +24,19 @@ namespace WPFApp.ViewModels
         public ICommand AddCommentCommand { get; }
         public ICommand ShowPostMenuCommand { get; }
         public ICommand DeletePostCommand { get; }
+        public ICommand DeleteCommentCommand { get; }
         public Action<CommunityPostViewModel> DeletePostAction { get; set; }
 
-        public CommunityPostViewModel(CommunityPost post, Action<CommunityPostViewModel, string> addCommentAction)
+        private readonly Action<Comment> _deleteCommentAction;
+
+        public CommunityPostViewModel(CommunityPost post, Action<CommunityPostViewModel, string> addCommentAction, Action<Comment> deleteCommentAction)
         {
             Post = post;
-            Comments = new ObservableCollection<Comment>(post.Comments ?? new List<Comment>());
+            Comments = new ObservableCollection<CommentViewModel>((post.Comments ?? new List<Comment>()).Select(c => new CommentViewModel(c, deleteCommentAction)));
             AddCommentCommand = new RelayCommand(_ => addCommentAction(this, NewCommentContent));
             ShowPostMenuCommand = new RelayCommand(_ => OnShowPostMenu());
             DeletePostCommand = new RelayCommand(_ => OnDeletePost());
+            _deleteCommentAction = deleteCommentAction;
         }
 
         public string AuthorName => Post.User?.FullName ?? "Ẩn danh";
@@ -54,6 +58,26 @@ namespace WPFApp.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class CommentViewModel : INotifyPropertyChanged
+    {
+        public Comment Comment { get; }
+        public ICommand DeleteCommentCommand { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public string Content => Comment.Content;
+        public string AuthorName => Comment.User?.FullName ?? "Ẩn danh";
+        public DateTime CreatedAt => Comment.CreatedAt;
+        public int UserId => Comment.UserId;
+        public CommentViewModel(Comment comment, Action<Comment> deleteCommentAction)
+        {
+            Comment = comment;
+            DeleteCommentCommand = new RelayCommand(_ => deleteCommentAction?.Invoke(Comment));
+        }
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

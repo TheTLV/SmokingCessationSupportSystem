@@ -25,7 +25,6 @@ namespace WPFApp.ViewModels
         }
 
         public ICommand CreatePostCommand { get; }
-        public ICommand DeleteCommentCommand { get; }
 
         public CommunityViewModel()
         {
@@ -33,7 +32,7 @@ namespace WPFApp.ViewModels
             _communityPostRepository = new CommunityPostRepository();
             _commentRepository = new CommentRepository();
             CreatePostCommand = new RelayCommand(_ => CreatePost());
-            DeleteCommentCommand = new RelayCommand(DeleteComment);
+            // Xóa DeleteCommentCommand khỏi đây
             LoadCommunityPosts();
         }
 
@@ -43,10 +42,8 @@ namespace WPFApp.ViewModels
             CommunityPosts.Clear();
             foreach (CommunityPost post in posts)
             {
-                var postVM = new CommunityPostViewModel(post, AddComment)
-                {
-                    DeletePostAction = DeletePost
-                };
+                var postVM = new CommunityPostViewModel(post, AddComment, DeleteComment); // Truyền callback DeleteComment
+                postVM.DeletePostAction = DeletePost;
                 CommunityPosts.Add(postVM);
             }
         }
@@ -63,13 +60,10 @@ namespace WPFApp.ViewModels
                     Comments = new List<Comment>()
                 };
                 _communityPostRepository.AddPost(newPost);
-                // Lấy lại post vừa tạo từ DB để có navigation property User
                 var allPosts = _communityPostRepository.GetAllPosts();
                 var createdPost = allPosts.OrderByDescending(p => p.Id).FirstOrDefault(p => p.UserId == newPost.UserId && p.Content == newPost.Content && Math.Abs((p.CreatedAt - newPost.CreatedAt).TotalSeconds) < 5);
-                var postVM = new CommunityPostViewModel(createdPost ?? newPost, AddComment)
-                {
-                    DeletePostAction = DeletePost
-                };
+                var postVM = new CommunityPostViewModel(createdPost ?? newPost, AddComment, DeleteComment);
+                postVM.DeletePostAction = DeletePost;
                 CommunityPosts.Insert(0, postVM);
                 NewPostContent = string.Empty;
             }
@@ -93,25 +87,26 @@ namespace WPFApp.ViewModels
                     PostId = postVM.Post.Id
                 };
                 _commentRepository.AddComment(newComment);
-                // Lấy lại comment vừa tạo từ DB để có navigation property User
                 var allPosts = _communityPostRepository.GetAllPosts();
                 var updatedPost = allPosts.FirstOrDefault(p => p.Id == postVM.Post.Id);
                 var createdComment = updatedPost?.Comments.OrderByDescending(c => c.Id).FirstOrDefault(c => c.UserId == newComment.UserId && c.Content == newComment.Content && Math.Abs((c.CreatedAt - newComment.CreatedAt).TotalSeconds) < 5);
-                postVM.Comments.Add(createdComment ?? newComment);
+                var commentVM = new CommentViewModel(createdComment ?? newComment, DeleteComment);
+                postVM.Comments.Add(commentVM);
                 postVM.NewCommentContent = string.Empty;
             }
         }
 
-        private void DeleteComment(object parameter)
+        // Sửa lại DeleteComment nhận trực tiếp Comment
+        private void DeleteComment(Comment comment)
         {
-            if (parameter is Comment comment)
+            if (comment != null)
             {
                 if (MessageBox.Show("Bạn có chắc muốn xóa bình luận này?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    var postVM = CommunityPosts.FirstOrDefault(p => p.Comments.Any(c => c.Id == comment.Id));
+                    var postVM = CommunityPosts.FirstOrDefault(p => p.Comments.Any(c => c.Comment.Id == comment.Id));
                     if (postVM != null)
                     {
-                        var toRemove = postVM.Comments.FirstOrDefault(c => c.Id == comment.Id);
+                        var toRemove = postVM.Comments.FirstOrDefault(c => c.Comment.Id == comment.Id);
                         if (toRemove != null)
                         {
                             postVM.Comments.Remove(toRemove);
@@ -122,7 +117,7 @@ namespace WPFApp.ViewModels
             }
             else
             {
-                MessageBox.Show("Không nhận diện được comment để xóa!");
+                MessageBox.Show("Không tìm thấy bình luận để xóa.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -20,12 +20,33 @@
             Grid.Row="0"
             Padding="15"
             Background="#1976D2">
-            <TextBlock
-                FontSize="18"
-                FontWeight="Bold"
-                Foreground="White"
-                Text="KẾT NỐI VỚI HUẤN LUYỆN VIÊN"
-                TextAlignment="Center" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="BackToDashboardButton"
+                    Margin="0,0,16,0"
+                    Padding="10,4"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="#1976D2"
+                    BorderThickness="0"
+                    Click="BackToDashboard_Click"
+                    Content="←"
+                    Cursor="Hand"
+                    FontWeight="SemiBold"
+                    Foreground="White" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="KẾT NỐI VỚI HUẤN LUYỆN VIÊN"
+                    TextAlignment="Center" />
+            </Grid>
         </Border>
 
         <!--  Danh sách Coach  -->

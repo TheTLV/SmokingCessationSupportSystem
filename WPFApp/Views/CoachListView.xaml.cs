@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BusinessObjects;
+using System.Windows;
 using WPFApp.ViewModels;
 
 namespace WPFApp.Views
@@ -23,7 +24,7 @@ namespace WPFApp.Views
             this.Closed += (s, e) => AppSession.CurrentCoachListView = null;
         }
 
-        private void OpenChatDialog(CoachViewModel selectedCoach)
+        private void OpenChatDialog(Coach selectedCoach)
         {
             int currentUserId = AppSession.CurrentUser.Id;
             var chatView = new ChatView
@@ -32,6 +33,13 @@ namespace WPFApp.Views
                 DataContext = new ChatViewModel(currentUserId, selectedCoach)
             };
             chatView.Show(); // Sử dụng Show() thay vì ShowDialog() để cho phép tương tác với cả hai cửa sổ
+        }
+
+        private void BackToDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            var dashboard = new DashboardView();
+            dashboard.Show();
+            this.Close();
         }
     }
 }

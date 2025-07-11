@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayout
 {
@@ -8,6 +9,8 @@ namespace DataAccessLayout
         {
             using var db = new AppDbContext();
             return db.CommunityPosts
+                .Include(p => p.User) // Bao gồm thông tin người dùng
+                .Include(p => p.Comments) // Bao gồm các bình luận
                 .ToList();
         }
 

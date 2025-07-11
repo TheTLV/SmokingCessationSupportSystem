@@ -229,7 +229,7 @@
                                                         <TextBlock
                                                             Margin="8,0,0,0"
                                                             FontWeight="SemiBold"
-                                                            Text="{Binding User.FullName}" />
+                                                            Text="{Binding AuthorName}" />
                                                         <Button
                                                             Width="20"
                                                             Height="20"
@@ -246,7 +246,7 @@
                                                             <Button.ContextMenu>
                                                                 <ContextMenu>
                                                                     <MenuItem
-                                                                        Command="{Binding DataContext.DeleteCommentCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                        Command="{Binding DeleteCommentCommand}"
                                                                         CommandParameter="{Binding}"
                                                                         Header="Xóa bình luận" />
                                                                 </ContextMenu>

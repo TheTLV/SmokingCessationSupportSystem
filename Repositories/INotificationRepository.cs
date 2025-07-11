@@ -7,5 +7,7 @@ namespace Repositories
         List<Notification> GetNotificationsByUserId(int userId);
         void AddNotification(Notification notification);
         void MarkAsRead(int notificationId);
+        Notification GetNotificationToday(int userId);
+        List<Notification> GetAllNotificationsByUserId(int userId);
     }
 }

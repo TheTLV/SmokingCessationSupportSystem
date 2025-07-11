@@ -19,5 +19,15 @@ namespace Repositories
         {
             NotificationDAO.MarkAsRead(notificationId);
         }
+
+        public Notification GetNotificationToday(int userId)
+        {
+            return NotificationDAO.GetNotificationToday(userId);
+        }
+
+        public List<Notification> GetAllNotificationsByUserId(int userId)
+        {
+            return NotificationDAO.GetAllNotificationsByUserId(userId);
+        }
     }
 }

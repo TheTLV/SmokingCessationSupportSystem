@@ -3,23 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:conv="clr-namespace:WPFApp.Converters"
-    xmlns:local="clr-namespace:WPFApp.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="Tổng quan"
-    Width="900"
-    Height="650"
+    Width="1000"
+    Height="700"
     FontFamily="Segoe UI"
     WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <conv:MoneyConverter x:Key="MoneyConverter" />
         <conv:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
-        <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
-        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
-        <conv:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
-        <conv:DateToStringConverter x:Key="DateToStringConverter" />
 
+        <!--  Styles và Converters  -->
         <Style TargetType="materialDesign:Card">
             <Setter Property="Margin" Value="10" />
             <Setter Property="Padding" Value="15" />
@@ -34,7 +28,19 @@
         </Style>
 
         <Style
-            x:Key="NavigationButtonStyle"
+            x:Key="PrimaryButton"
+            BasedOn="{StaticResource MaterialDesignRaisedButton}"
+            TargetType="Button">
+            <Setter Property="Width" Value="180" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="#1976D2" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+
+        <Style
+            x:Key="SecondaryButton"
             BasedOn="{StaticResource MaterialDesignOutlinedButton}"
             TargetType="Button">
             <Setter Property="Width" Value="160" />
@@ -43,28 +49,21 @@
             <Setter Property="FontSize" Value="13" />
         </Style>
 
-        <Style x:Key="StatCardStyle" TargetType="materialDesign:Card">
-            <Setter Property="Width" Value="250" />
-            <Setter Property="Height" Value="150" />
+        <Style x:Key="StatCard" TargetType="materialDesign:Card">
+            <Setter Property="Width" Value="220" />
+            <Setter Property="Height" Value="120" />
             <Setter Property="Background" Value="#FAFAFA" />
-        </Style>
-
-        <Style x:Key="NotificationIconStyle" TargetType="materialDesign:PackIcon">
-            <Setter Property="Width" Value="24" />
-            <Setter Property="Height" Value="24" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Cursor" Value="Hand" />
         </Style>
     </Window.Resources>
 
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--  Header Section with Notification Icon  -->
+        <!--  Header Section  -->
         <Border
             Grid.Row="0"
             Padding="15"
@@ -83,178 +82,252 @@
                         Kind="ViewDashboard" />
                     <TextBlock
                         Margin="10,0,0,0"
-                        VerticalAlignment="Center"
                         FontSize="22"
                         FontWeight="Bold"
                         Foreground="White"
                         Text="TỔNG QUAN CAI THUỐC LÁ" />
                 </StackPanel>
 
-                <!--  Notification Bell with Custom Badge  -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Grid Width="32" Height="32">
-                        <materialDesign:PackIcon
-                            x:Name="NotificationBell"
-                            Foreground="White"
-                            Kind="Bell"
-                            MouseLeftButtonUp="NotificationBell_MouseLeftButtonUp"
-                            Style="{StaticResource NotificationIconStyle}" />
-                        <Ellipse
-                            Width="16"
-                            Height="16"
-                            Margin="0,0,2,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Fill="#FF5252" />
-                        <TextBlock
-                            Margin="0,0,2,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            FontSize="10"
-                            FontWeight="Bold"
-                            Foreground="White"
-                            Text="3"
-                            TextAlignment="Center" />
-                    </Grid>
-                </StackPanel>
+                <!--  Notification  -->
+                <Button Grid.Column="1" Style="{StaticResource MaterialDesignIconButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid>
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                Foreground="White"
+                                Kind="Bell"
+                                MouseLeftButtonDown="NotificationBell_MouseLeftButtonUp" />
+                            <Border
+                                x:Name="NotificationBadge"
+                                Width="16"
+                                Height="16"
+                                Margin="-5,-5,0,0"
+                                VerticalAlignment="Top"
+                                Background="#FF5252"
+                                CornerRadius="8"
+                                Visibility="{Binding DataContext.UnreadNotificationCount, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{Binding DataContext.UnreadNotificationCount, RelativeSource={RelativeSource AncestorType=Window}}" />
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Button>
             </Grid>
         </Border>
 
-        <!--  Main Content (giữ nguyên như trước)  -->
-        <ScrollViewer Grid.Row="1" Padding="5">
-            <!--  ... (giữ nguyên nội dung như trước) ...  -->
+        <!--  Main Content  -->
+        <ScrollViewer Grid.Row="1" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  Quick Stats Row  -->
+                <StackPanel
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <materialDesign:Card Style="{StaticResource StatCard}">
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="13"
+                                Foreground="#757575"
+                                Text="Số ngày cai thuốc" />
+                            <TextBlock
+                                Margin="0,5"
+                                FontSize="28"
+                                FontWeight="Bold"
+                                Text="27" />
+                            <TextBlock
+                                FontSize="11"
+                                Foreground="#4CAF50"
+                                Text="+5 ngày so với tuần trước" />
+                        </StackPanel>
+                    </materialDesign:Card>
+
+                    <materialDesign:Card Style="{StaticResource StatCard}">
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="13"
+                                Foreground="#757575"
+                                Text="Số điếu thuốc tiết kiệm" />
+                            <TextBlock
+                                Margin="0,5"
+                                FontSize="28"
+                                FontWeight="Bold"
+                                Text="135" />
+                            <TextBlock
+                                FontSize="11"
+                                Foreground="#4CAF50"
+                                Text="~1,350,000 VND" />
+                        </StackPanel>
+                    </materialDesign:Card>
+
+                    <materialDesign:Card Style="{StaticResource StatCard}">
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="13"
+                                Foreground="#757575"
+                                Text="Sức khỏe cải thiện" />
+                            <TextBlock
+                                Margin="0,5"
+                                FontSize="28"
+                                FontWeight="Bold"
+                                Text="42%" />
+                            <ProgressBar
+                                Height="8"
+                                Margin="0,5"
+                                Foreground="#4CAF50"
+                                Value="42" />
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+
+                <!--  Primary Actions  -->
+                <WrapPanel
+                    Grid.Row="1"
+                    Margin="0,20"
+                    HorizontalAlignment="Center">
+                    <Button Click="GoToQuitPlanButton_Click" Style="{StaticResource PrimaryButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Margin="0,0,8,0"
+                                Kind="CalendarEdit" />
+                            <TextBlock Text="Kế hoạch cai thuốc" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Click="GoToSmokingStatusButton_Click" Style="{StaticResource PrimaryButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Margin="0,0,8,0"
+                                Kind="ChartLine" />
+                            <TextBlock Text="Tiến trình" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource PrimaryButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Margin="0,0,8,0"
+                                Kind="MessageText" />
+                            <TextBlock Text="Hỗ trợ từ Coach" />
+                        </StackPanel>
+                    </Button>
+                </WrapPanel>
+
+                <!--  Recent Activity  -->
+                <materialDesign:Card
+                    Grid.Row="2"
+                    Margin="10"
+                    Padding="0">
+                    <StackPanel>
+                        <TextBlock
+                            Margin="15,10"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="HOẠT ĐỘNG GẦN ĐÂY" />
+                        <Separator />
+                        <ListView BorderThickness="0" ItemsSource="{Binding RecentActivities}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="10,5" Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="24"
+                                            Margin="0,0,10,0"
+                                            Foreground="#1976D2"
+                                            Kind="{Binding IconKind}" />
+                                        <StackPanel>
+                                            <TextBlock FontWeight="SemiBold" Text="{Binding Title}" />
+                                            <TextBlock
+                                                FontSize="13"
+                                                Foreground="#757575"
+                                                Text="{Binding Description}" />
+                                            <TextBlock
+                                                FontSize="11"
+                                                Foreground="#9E9E9E"
+                                                Text="{Binding Time, StringFormat='{}{0:HH:mm dd/MM}'}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
         </ScrollViewer>
 
-        <!--  Navigation Buttons - Redesigned  -->
+        <!--  Navigation Footer  -->
         <Border
             Grid.Row="2"
-            Padding="10"
             Background="#F5F5F5"
             BorderBrush="#E0E0E0"
             BorderThickness="0,1,0,0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <!--  Primary Navigation Buttons  -->
-                <UniformGrid
-                    Grid.Column="0"
-                    HorizontalAlignment="Center"
-                    Columns="4">
-                    <Button
-                        x:Name="GoToSmokingStatusButton"
-                        Click="GoToSmokingStatusButton_Click"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        ToolTip="Xem tình trạng hút thuốc">
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                Width="20"
-                                Height="20"
-                                Margin="0,0,5,0"
-                                Kind="Smoking" />
-                            <TextBlock
-                                Text="Tình trạng"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button
-                        x:Name="GoToQuitPlanButton"
-                        Click="GoToQuitPlanButton_Click"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        ToolTip="Xem kế hoạch cai thuốc">
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                Width="20"
-                                Height="20"
-                                Margin="0,0,5,0"
-                                Kind="CalendarEdit" />
-                            <TextBlock
-                                Text="Kế hoạch"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button
-                        x:Name="GoToMembershipButton"
-                        Click="GoToMembershipButton_Click"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        ToolTip="Xem gói thành viên">
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                Width="20"
-                                Height="20"
-                                Margin="0,0,5,0"
-                                Kind="AccountStar" />
-                            <TextBlock
-                                Text="Thành viên"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button
-                        x:Name="GoToAchievementButton"
-                        Click="GoToAchievementButton_Click"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        ToolTip="Xem thành tích">
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                Width="20"
-                                Height="20"
-                                Margin="0,0,5,0"
-                                Kind="Trophy" />
-                            <TextBlock
-                                Text="Thành tích"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Button>
-                </UniformGrid>
-
-                <!--  Community Button (separate for emphasis)  -->
-                <Button
-                    x:Name="GoToCommunityButton"
-                    Grid.Column="1"
-                    Width="160"
-                    Height="50"
-                    Margin="5,0"
-                    VerticalAlignment="Center"
-                    Click="GoToCommunityButton_Click"
-                    Style="{StaticResource MaterialDesignOutlinedButton}"
-                    ToolTip="Tham gia cộng đồng">
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <UniformGrid
+                Margin="10"
+                HorizontalAlignment="Center"
+                Columns="5">
+                <Button Click="GoToSmokingStatusButton_Click" Style="{StaticResource SecondaryButton}">
+                    <StackPanel>
                         <materialDesign:PackIcon
                             Width="20"
                             Height="20"
-                            Margin="0,0,5,0"
+                            Kind="Smoking" />
+                        <TextBlock Margin="0,5,0,0" Text="Tình trạng" />
+                    </StackPanel>
+                </Button>
+
+                <Button Click="GoToAchievementButton_Click" Style="{StaticResource SecondaryButton}">
+                    <StackPanel>
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Kind="Trophy" />
+                        <TextBlock Margin="0,5,0,0" Text="Thành tích" />
+                    </StackPanel>
+                </Button>
+
+                <Button Click="GoToMembershipButton_Click" Style="{StaticResource SecondaryButton}">
+                    <StackPanel>
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Kind="AccountStar" />
+                        <TextBlock Margin="0,5,0,0" Text="Thành viên" />
+                    </StackPanel>
+                </Button>
+
+                <Button Click="GoToCommunityButton_Click" Style="{StaticResource SecondaryButton}">
+                    <StackPanel>
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
                             Kind="AccountGroup" />
-                        <TextBlock Text="Cộng đồng" />
+                        <TextBlock Margin="0,5,0,0" Text="Cộng đồng" />
                     </StackPanel>
                 </Button>
 
-                <Button
-                    x:Name="GoToCoachChatButton"
-                    Click="GoToCoachChatButton_Click"
-                    Style="{StaticResource NavigationButtonStyle}"
-                    ToolTip="Chat với huấn luyện viên">
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Click="GoToCoachListButton_Click" Style="{StaticResource SecondaryButton}">
+                    <StackPanel>
                         <materialDesign:PackIcon
                             Width="20"
                             Height="20"
-                            Margin="0,0,5,0"
-                            Kind="MessageText" />
-                        <TextBlock
-                            Text="Chat với Coach"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap" />
+                            Kind="AccountMultiple" />
+                        <TextBlock Margin="0,5,0,0" Text="Huấn luyện viên" />
                     </StackPanel>
                 </Button>
-            </Grid>
+            </UniformGrid>
         </Border>
     </Grid>
 </Window>

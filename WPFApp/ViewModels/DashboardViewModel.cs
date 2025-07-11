@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -8,6 +9,8 @@ namespace WPFApp.ViewModels
 {
     public class DashboardViewModel : INotifyPropertyChanged
     {
+        private readonly INotificationService _notificationService;
+
         private ObservableCollection<Notification> _notifications;
         public ObservableCollection<Notification> Notifications
         {
@@ -34,23 +37,24 @@ namespace WPFApp.ViewModels
 
         private void LoadNotifications()
         {
-            using (var db = new AppDbContext())
+            var userId = AppSession.CurrentUser?.Id ?? 0;
+            if (userId == 0)
             {
-                var userId = AppSession.CurrentUser?.Id ?? 0;
-                Notifications = new ObservableCollection<Notification>(
-                    db.Notifications
-                      .Where(n => n.UserId == userId)
-                      .OrderByDescending(n => n.SentDate)
-                      .Take(10)
-                );
-
-                UnreadNotificationCount = Notifications.Count(n => !n.IsRead);
+                Notifications = new ObservableCollection<Notification>();
+                UnreadNotificationCount = 0;
+                return;
             }
+            var allNoti = _notificationService.GetAllNotificationsByUserId(userId);
+            Notifications = new ObservableCollection<Notification>(allNoti);
+            var unreadCount = allNoti.Count(n => !n.IsRead);
+            UnreadNotificationCount = unreadCount;
         }
 
         public DashboardViewModel()
         {
             ViewAllNotificationsCommand = new RelayCommand(obj => ViewAllNotifications());
+            _notificationService = new NotificationService();
+
             LoadNotifications();
         }
 

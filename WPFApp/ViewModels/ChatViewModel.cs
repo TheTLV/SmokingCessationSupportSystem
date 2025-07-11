@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,8 +9,10 @@ namespace WPFApp.ViewModels
 {
     public class ChatViewModel : INotifyPropertyChanged
     {
-        private readonly int _currentUserId; // ID của người dùng hiện tại
-        private readonly CoachViewModel _currentCoach;
+        private readonly IChatMessageService chatMessageService;
+
+        private readonly int _currentUserId;
+        private readonly Coach _currentCoach;
 
         public ObservableCollection<ChatMessage> Messages { get; } = new ObservableCollection<ChatMessage>();
 
@@ -28,10 +31,12 @@ namespace WPFApp.ViewModels
 
         public ICommand SendCommand { get; }
 
-        public ChatViewModel(int currentUserId, CoachViewModel coach)
+        public ChatViewModel(int currentUserId, Coach coach)
         {
             _currentUserId = currentUserId;
             _currentCoach = coach;
+
+            chatMessageService = new ChatMessageService();
 
             SendCommand = new RelayCommand(SendMessage, CanSendMessage);
 
@@ -40,33 +45,14 @@ namespace WPFApp.ViewModels
 
         private void LoadMessages()
         {
-            // TODO: Thay thế bằng code lấy tin nhắn từ database hoặc API
-            var sampleMessages = new List<ChatMessage>
-            {
-                new ChatMessage
-                {
-                    Id = 1,
-                    SenderId = _currentCoach.Id,
-                    ReceiverId = _currentUserId,
-                    Message = "Xin chào! Tôi có thể giúp gì cho bạn?",
-                    SentAt = DateTime.Now.AddMinutes(-30),
-                    IsRead = true
-                },
-                new ChatMessage
-                {
-                    Id = 2,
-                    SenderId = _currentUserId,
-                    ReceiverId = _currentCoach.Id,
-                    Message = "Tôi cần tư vấn về chế độ tập luyện",
-                    SentAt = DateTime.Now.AddMinutes(-15),
-                    IsRead = true
-                }
-            };
+            var chatMessage = chatMessageService.GetChatMessages(_currentUserId, _currentCoach.UserId);
 
-            foreach (var message in sampleMessages.OrderBy(m => m.SentAt))
+            foreach (var message in chatMessage.OrderBy(m => m.SentAt))
             {
                 Messages.Add(message);
             }
+
+            System.Windows.MessageBox.Show("Số lượng tin nhắn: " + Messages.Count);
         }
 
         private void SendMessage(object parameter)
@@ -76,14 +62,13 @@ namespace WPFApp.ViewModels
                 var newMsg = new ChatMessage
                 {
                     SenderId = _currentUserId,
-                    ReceiverId = _currentCoach.Id,
+                    ReceiverId = _currentCoach.UserId,
                     Message = NewMessage,
                     SentAt = DateTime.Now,
                     IsRead = false
                 };
 
-                // TODO: Thêm logic gửi tin nhắn đến database/API ở đây
-
+                chatMessageService.AddMessage(newMsg);
                 Messages.Add(newMsg);
                 NewMessage = string.Empty;
             }

@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using BusinessObjects;
+using Services;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -7,10 +9,11 @@ namespace WPFApp.ViewModels
 {
     public class CoachListViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<CoachViewModel> Coaches { get; }
+        private readonly ICoachService iCoachService;
+        public ObservableCollection<Coach> Coaches { get; }
 
-        private CoachViewModel _selectedCoach;
-        public CoachViewModel SelectedCoach
+        private Coach _selectedCoach;
+        public Coach SelectedCoach
         {
             get => _selectedCoach;
             set
@@ -24,18 +27,20 @@ namespace WPFApp.ViewModels
         }
 
         public ICommand SelectCoachCommand { get; set; } // Chỉ cần property, không khởi tạo ở đây
-        public Action<CoachViewModel> OpenChatAction { get; set; }
+        public Action<Coach> OpenChatAction { get; set; }
 
         public CoachListViewModel()
         {
-            Coaches = new ObservableCollection<CoachViewModel>();
+            Coaches = new ObservableCollection<Coach>();
             SelectCoachCommand = new RelayCommand(SelectCoach);
+            iCoachService = new CoachService();
+
             LoadCoaches();
         }
 
         private void SelectCoach(object parameter)
         {
-            if (parameter is CoachViewModel coach)
+            if (parameter is Coach coach)
             {
                 SelectedCoach = coach;
                 OpenChatAction?.Invoke(coach);
@@ -44,23 +49,12 @@ namespace WPFApp.ViewModels
 
         private void LoadCoaches()
         {
-            var coach1 = new CoachViewModel();
-            coach1.Name = "John Doe";
-            coach1.Specialization = "Behavioral Therapy";
-            coach1.ExperienceYears = 5;
-            Coaches.Add(coach1);
-
-            var coach2 = new CoachViewModel();
-            coach2.Name = "Jane Smith";
-            coach2.Specialization = "Cognitive Behavioral Therapy";
-            coach2.ExperienceYears = 8;
-            Coaches.Add(coach2);
-
-            var coach3 = new CoachViewModel();
-            coach3.Name = "Alice Johnson";
-            coach3.Specialization = "Motivational Interviewing";
-            coach3.ExperienceYears = 6;
-            Coaches.Add(coach3);
+            var coaches = iCoachService.GetAllCoaches();
+            Coaches.Clear();
+            foreach (var coach in coaches)
+            {
+                Coaches.Add(coach);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

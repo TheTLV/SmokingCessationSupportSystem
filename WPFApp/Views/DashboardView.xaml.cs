@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System;
 
 namespace WPFApp.Views
 {
@@ -10,6 +11,16 @@ namespace WPFApp.Views
         public DashboardView()
         {
             InitializeComponent();
+            this.DataContext = new WPFApp.ViewModels.DashboardViewModel();
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            if (DataContext is WPFApp.ViewModels.DashboardViewModel vm)
+            {
+                vm.GetType().GetMethod("LoadNotifications", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)?.Invoke(vm, null);
+            }
         }
 
         private void GoToSmokingStatusButton_Click(object sender, RoutedEventArgs e)
@@ -54,7 +65,7 @@ namespace WPFApp.Views
             this.Close();
         }
 
-        private void GoToCoachChatButton_Click(object sender, RoutedEventArgs e)
+        private void GoToCoachListButton_Click(object sender, RoutedEventArgs e)
         {
             var coachChatView = new CoachListView();
             coachChatView.Show();

@@ -72,8 +72,8 @@ namespace Services
                 int dayCount = (DateTime.Today - quitPlan.StartDate).Days;
                 message = GetMotivationalMessage(quitPlan, dayCount);
             }
-            var notifications = iNotificationRepository.GetNotificationsByUserId(userId);
-            if (!notifications.Any(n => n.SentDate.Date == DateTime.Today))
+            var notifications = iNotificationRepository.GetNotificationToday(userId);
+            if (notifications == null)
             {
                 iNotificationRepository.AddNotification(new Notification
                 {
@@ -83,6 +83,16 @@ namespace Services
                     IsRead = false
                 });
             }
+        }
+
+        public Notification GetNotificationToday(int userId)
+        {
+            return iNotificationRepository.GetNotificationToday(userId);
+        }
+
+        public List<Notification> GetAllNotificationsByUserId(int userId)
+        {
+            return iNotificationRepository.GetAllNotificationsByUserId(userId);
         }
     }
 }
