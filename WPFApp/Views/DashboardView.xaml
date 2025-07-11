@@ -1,0 +1,260 @@
+﻿<Window
+    x:Class="WPFApp.Views.DashboardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:WPFApp.Converters"
+    xmlns:local="clr-namespace:WPFApp.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Tổng quan"
+    Width="900"
+    Height="650"
+    FontFamily="Segoe UI"
+    WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <conv:MoneyConverter x:Key="MoneyConverter" />
+        <conv:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
+        <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+        <conv:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
+        <conv:DateToStringConverter x:Key="DateToStringConverter" />
+
+        <Style TargetType="materialDesign:Card">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect
+                        BlurRadius="10"
+                        ShadowDepth="2"
+                        Color="#10000000" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style
+            x:Key="NavigationButtonStyle"
+            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+            TargetType="Button">
+            <Setter Property="Width" Value="160" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <Style x:Key="StatCardStyle" TargetType="materialDesign:Card">
+            <Setter Property="Width" Value="250" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Background" Value="#FAFAFA" />
+        </Style>
+
+        <Style x:Key="NotificationIconStyle" TargetType="materialDesign:PackIcon">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Header Section with Notification Icon  -->
+        <Border
+            Grid.Row="0"
+            Padding="15"
+            Background="#1976D2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Width="32"
+                        Height="32"
+                        Foreground="White"
+                        Kind="ViewDashboard" />
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="22"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="TỔNG QUAN CAI THUỐC LÁ" />
+                </StackPanel>
+
+                <!--  Notification Bell with Custom Badge  -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Grid Width="32" Height="32">
+                        <materialDesign:PackIcon
+                            x:Name="NotificationBell"
+                            Foreground="White"
+                            Kind="Bell"
+                            MouseLeftButtonUp="NotificationBell_MouseLeftButtonUp"
+                            Style="{StaticResource NotificationIconStyle}" />
+                        <Ellipse
+                            Width="16"
+                            Height="16"
+                            Margin="0,0,2,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Fill="#FF5252" />
+                        <TextBlock
+                            Margin="0,0,2,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="3"
+                            TextAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!--  Main Content (giữ nguyên như trước)  -->
+        <ScrollViewer Grid.Row="1" Padding="5">
+            <!--  ... (giữ nguyên nội dung như trước) ...  -->
+        </ScrollViewer>
+
+        <!--  Navigation Buttons - Redesigned  -->
+        <Border
+            Grid.Row="2"
+            Padding="10"
+            Background="#F5F5F5"
+            BorderBrush="#E0E0E0"
+            BorderThickness="0,1,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Primary Navigation Buttons  -->
+                <UniformGrid
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    Columns="4">
+                    <Button
+                        x:Name="GoToSmokingStatusButton"
+                        Click="GoToSmokingStatusButton_Click"
+                        Style="{StaticResource NavigationButtonStyle}"
+                        ToolTip="Xem tình trạng hút thuốc">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="0,0,5,0"
+                                Kind="Smoking" />
+                            <TextBlock
+                                Text="Tình trạng"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        x:Name="GoToQuitPlanButton"
+                        Click="GoToQuitPlanButton_Click"
+                        Style="{StaticResource NavigationButtonStyle}"
+                        ToolTip="Xem kế hoạch cai thuốc">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="0,0,5,0"
+                                Kind="CalendarEdit" />
+                            <TextBlock
+                                Text="Kế hoạch"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        x:Name="GoToMembershipButton"
+                        Click="GoToMembershipButton_Click"
+                        Style="{StaticResource NavigationButtonStyle}"
+                        ToolTip="Xem gói thành viên">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="0,0,5,0"
+                                Kind="AccountStar" />
+                            <TextBlock
+                                Text="Thành viên"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        x:Name="GoToAchievementButton"
+                        Click="GoToAchievementButton_Click"
+                        Style="{StaticResource NavigationButtonStyle}"
+                        ToolTip="Xem thành tích">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="0,0,5,0"
+                                Kind="Trophy" />
+                            <TextBlock
+                                Text="Thành tích"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+                </UniformGrid>
+
+                <!--  Community Button (separate for emphasis)  -->
+                <Button
+                    x:Name="GoToCommunityButton"
+                    Grid.Column="1"
+                    Width="160"
+                    Height="50"
+                    Margin="5,0"
+                    VerticalAlignment="Center"
+                    Click="GoToCommunityButton_Click"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    ToolTip="Tham gia cộng đồng">
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Margin="0,0,5,0"
+                            Kind="AccountGroup" />
+                        <TextBlock Text="Cộng đồng" />
+                    </StackPanel>
+                </Button>
+
+                <Button
+                    x:Name="GoToCoachChatButton"
+                    Click="GoToCoachChatButton_Click"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    ToolTip="Chat với huấn luyện viên">
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Margin="0,0,5,0"
+                            Kind="MessageText" />
+                        <TextBlock
+                            Text="Chat với Coach"
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

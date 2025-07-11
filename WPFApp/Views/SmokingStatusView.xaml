@@ -1,0 +1,268 @@
+﻿<Window
+    x:Class="WPFApp.Views.SmokingStatusView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:WPFApp.Converters"
+    xmlns:local="clr-namespace:WPFApp.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Tình trạng hút thuốc"
+    Width="900"
+    Height="650"
+    FontFamily="Segoe UI"
+    WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <conv:MoneyConverter x:Key="MoneyConverter" />
+        <conv:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
+        <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+        <conv:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
+        <conv:DateToStringConverter x:Key="DateToStringConverter" />
+
+        <Style x:Key="StatCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#EEEEEE" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="Margin" Value="0,0,10,10" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect
+                        BlurRadius="10"
+                        ShadowDepth="2"
+                        Color="#10000000" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="InputFieldStyle" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,0,0,15" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Header Section  -->
+        <materialDesign:Card
+            Grid.Row="0"
+            Padding="15"
+            Background="#F5F5F5">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <materialDesign:PackIcon
+                    Width="32"
+                    Height="32"
+                    Foreground="#E53935"
+                    Kind="Smoking" />
+                <TextBlock
+                    Margin="10,0,0,0"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Text="NHẬT KÝ HÚT THUỐC" />
+                <Button
+                    x:Name="GoToDashboardButton"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    Click="GoToDashboardButton_Click"
+                    Content="Về trang tổng quan"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!--  Main Content  -->
+        <Grid Grid.Row="1" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Input Section  -->
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <materialDesign:Card>
+                    <StackPanel Margin="10">
+                        <TextBlock
+                            Margin="0,0,0,15"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="NHẬP THÔNG TIN" />
+
+                        <!--  Record Date  -->
+                        <StackPanel Style="{StaticResource InputFieldStyle}">
+                            <TextBlock
+                                Margin="0,0,0,5"
+                                FontWeight="SemiBold"
+                                Text="Ngày ghi nhận:" />
+                            <DatePicker materialDesign:HintAssist.Hint="Chọn ngày" SelectedDate="{Binding RecordDate}" />
+                        </StackPanel>
+
+                        <!--  Cigarettes Per Day  -->
+                        <StackPanel Style="{StaticResource InputFieldStyle}">
+                            <TextBlock
+                                Margin="0,0,0,5"
+                                FontWeight="SemiBold"
+                                Text="Số điếu hút mỗi ngày:" />
+                            <TextBox
+                                materialDesign:HintAssist.Hint="Nhập số điếu"
+                                PreviewTextInput="NumberOnly_PreviewTextInput"
+                                Text="{Binding CigarettesPerDay}" />
+                        </StackPanel>
+
+                        <!--  Cost Per Pack  -->
+                        <StackPanel Style="{StaticResource InputFieldStyle}">
+                            <TextBlock
+                                Margin="0,0,0,5"
+                                FontWeight="SemiBold"
+                                Text="Giá tiền mỗi bao:" />
+                            <TextBox
+                                materialDesign:HintAssist.Hint="VNĐ"
+                                PreviewTextInput="NumberOnly_PreviewTextInput"
+                                Text="{Binding CostPerPack}" />
+                        </StackPanel>
+
+                        <!--  Packs Per Week  -->
+                        <StackPanel Style="{StaticResource InputFieldStyle}">
+                            <TextBlock
+                                Margin="0,0,0,5"
+                                FontWeight="SemiBold"
+                                Text="Số bao hút mỗi tuần:" />
+                            <TextBox
+                                materialDesign:HintAssist.Hint="Nhập số bao"
+                                PreviewTextInput="NumberOnly_PreviewTextInput"
+                                Text="{Binding PacksPerWeek}" />
+                        </StackPanel>
+
+                        <!--  Save Button  -->
+                        <Button
+                            Margin="0,10,0,0"
+                            Background="#1976D2"
+                            Command="{Binding SaveCommand}"
+                            Content="LƯU THÔNG TIN"
+                            Foreground="White"
+                            Style="{StaticResource MaterialDesignRaisedButton}" />
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <!--  Statistics Section  -->
+                <materialDesign:Card Margin="0,15,0,0">
+                    <StackPanel Margin="10">
+                        <TextBlock
+                            Margin="0,0,0,10"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="THỐNG KÊ NHANH" />
+
+                        <!--  Weekly Cost  -->
+                        <Border Style="{StaticResource StatCardStyle}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="#4CAF50" Kind="Cash" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontWeight="SemiBold"
+                                        Text="Chi phí hàng tuần:" />
+                                </StackPanel>
+                                <TextBlock
+                                    Margin="25,5,0,0"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Text="{Binding WeeklyCost, Converter={StaticResource MoneyConverter}}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!--  Monthly Cost  -->
+                        <Border Style="{StaticResource StatCardStyle}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="#2196F3" Kind="CashMultiple" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontWeight="SemiBold"
+                                        Text="Chi phí hàng tháng:" />
+                                </StackPanel>
+                                <TextBlock
+                                    Margin="25,5,0,0"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Text="{Binding MonthlyCost, Converter={StaticResource MoneyConverter}}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!--  Total Cigarettes  -->
+                        <Border Style="{StaticResource StatCardStyle}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="#F44336" Kind="Smoking" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontWeight="SemiBold"
+                                        Text="Tổng điếu đã hút:" />
+                                </StackPanel>
+                                <TextBlock
+                                    Margin="25,5,0,0"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Text="{Binding TotalCigarettes}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+
+            <!--  History Section  -->
+            <materialDesign:Card Grid.Column="1">
+                <StackPanel Margin="10">
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Text="LỊCH SỬ GHI NHẬN" />
+
+                    <StackPanel>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="14"
+                            FontStyle="Italic"
+                            Foreground="Gray"
+                            Text="Chưa có lịch sử nhật ký nào"
+                            Visibility="{Binding HistoryRecords.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}" />
+                        <DataGrid
+                            AutoGenerateColumns="False"
+                            CanUserSortColumns="True"
+                            GridLinesVisibility="None"
+                            HeadersVisibility="Column"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding HistoryRecords}"
+                            SelectionMode="Single"
+                            SelectionUnit="FullRow"
+                            Visibility="{Binding HistoryRecords.Count, Converter={StaticResource ZeroToVisibilityConverter}}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding RecordDate, StringFormat='dd/MM/yyyy'}"
+                                    FontWeight="SemiBold"
+                                    Header="Ngày" />
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding CigarettesPerDay}"
+                                    Header="Số điếu/ngày" />
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding CostPerPack, Converter={StaticResource MoneyConverter}}"
+                                    Header="Giá/bao" />
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding PacksPerWeek}"
+                                    Header="Số bao/tuần" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>
