@@ -45,7 +45,8 @@
             </Setter>
             <Setter Property="Margin" Value="10" />
             <Setter Property="Width" Value="200" />
-            <Setter Property="Height" Value="220" />
+            <Setter Property="Height" Value="250" />
+            <!--  Tăng chiều cao để chứa nút chia sẻ  -->
         </Style>
 
         <!--  Badge Style  -->
@@ -64,6 +65,34 @@
             <Setter Property="Margin" Value="0,10" />
             <Setter Property="Foreground" Value="{StaticResource PrimaryGradient}" />
         </Style>
+
+        <!--  Back Button Style  -->
+        <Style
+            x:Key="BackButtonStyle"
+            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+            TargetType="Button">
+            <Setter Property="Width" Value="120" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="Foreground" Value="#1976D2" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+
+        <!--  Share Button Style  -->
+        <Style
+            x:Key="ShareButtonStyle"
+            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+            TargetType="Button">
+            <Setter Property="Width" Value="120" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="#1976D2" />
+            <Setter Property="BorderBrush" Value="#1976D2" />
+        </Style>
     </Window.Resources>
 
     <Grid Background="#FAFAFA">
@@ -77,20 +106,44 @@
             Grid.Row="0"
             Padding="20"
             Background="{StaticResource PrimaryGradient}">
-            <StackPanel>
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontSize="24"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Text="THÀNH TỰU CAI THUỐC" />
-                <TextBlock
-                    Margin="0,5,0,0"
-                    HorizontalAlignment="Center"
-                    FontSize="14"
-                    Foreground="#EEFFFFFF"
-                    Text="Các mốc quan trọng trên hành trình của bạn" />
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Back Button  -->
+                <Button
+                    Grid.Column="0"
+                    Click="BackButton_Click"
+                    Command="{Binding BackCommand}"
+                    Style="{StaticResource BackButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="24"
+                            Height="24"
+                            Kind="ArrowLeft" />
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Quay lại" />
+                    </StackPanel>
+                </Button>
+
+                <!--  Title  -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="THÀNH TỰU CAI THUỐC" />
+                    <TextBlock
+                        Margin="0,5,0,0"
+                        FontSize="14"
+                        Foreground="#EEFFFFFF"
+                        Text="Các mốc quan trọng trên hành trình của bạn" />
+                </StackPanel>
+            </Grid>
         </Border>
 
         <!--  Main Content  -->
@@ -145,14 +198,21 @@
                                         Text="{Binding Description}"
                                         TextWrapping="Wrap" />
 
-                                    <!--  Unlock Date  -->
-                                    <TextBlock
-                                        Margin="0,10,0,0"
-                                        HorizontalAlignment="Center"
-                                        FontSize="11"
-                                        Foreground="{StaticResource PrimaryColor}"
-                                        Text="{Binding UnlockDate, StringFormat='Ngày đạt: {0:dd/MM/yyyy}'}"
-                                        Visibility="{Binding IsUnlocked, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    <!--  Share Button (only show when unlocked)  -->
+                                    <Button
+                                        Command="{Binding DataContext.ShareAchievementCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource ShareButtonStyle}"
+                                        Visibility="{Binding IsUnlocked, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon
+                                                Width="16"
+                                                Height="16"
+                                                Margin="0,0,5,0"
+                                                Kind="ShareVariant" />
+                                            <TextBlock Text="Chia sẻ" />
+                                        </StackPanel>
+                                    </Button>
 
                                     <!--  Progress for upcoming achievements  -->
                                     <StackPanel Visibility="{Binding IsUnlocked, Converter={StaticResource InverseBoolToVisibilityConverter}}">

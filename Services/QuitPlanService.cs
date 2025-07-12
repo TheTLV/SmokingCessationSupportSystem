@@ -15,6 +15,11 @@ namespace Services
             return iQuitPlanRepository.AddQuitPlan(quitPlan);
         }
 
+        public List<QuitPlan> GetAllQuitPlansByUserId(int userId)
+        {
+            return iQuitPlanRepository.GetAllQuitPlansByUserId(userId);
+        }
+
         public QuitPlan? GetCurrentQuitPlanById(int userId)
         {
             return iQuitPlanRepository.GetCurrentQuitPlanById(userId);

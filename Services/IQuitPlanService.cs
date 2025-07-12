@@ -6,5 +6,6 @@ namespace Services
     {
         bool AddQuitPlan(QuitPlan quitPlan);
         QuitPlan? GetCurrentQuitPlanById(int userId);
+        List<QuitPlan> GetAllQuitPlansByUserId(int userId);
     }
 }

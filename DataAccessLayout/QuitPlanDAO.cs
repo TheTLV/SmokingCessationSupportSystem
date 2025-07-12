@@ -19,5 +19,14 @@ namespace DataAccessLayout
                 .OrderByDescending(qp => qp.StartDate)
                 .FirstOrDefault();
         }
+
+        public static List<QuitPlan> GetAllQuitPlansByUserId(int userId)
+        {
+            using var db = new AppDbContext();
+            return db.QuitPlans
+                .Where(qp => qp.UserId == userId)
+                .OrderByDescending(qp => qp.StartDate)
+                .ToList();
+        }
     }
 }

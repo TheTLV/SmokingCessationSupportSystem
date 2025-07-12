@@ -10,6 +10,11 @@ namespace Repositories
             return QuitPlanDAO.AddQuitPlan(quitPlan);
         }
 
+        public List<QuitPlan> GetAllQuitPlansByUserId(int userId)
+        {
+            return QuitPlanDAO.GetAllQuitPlansByUserId(userId);
+        }
+
         public QuitPlan? GetCurrentQuitPlanById(int userId)
         {
             return QuitPlanDAO.GetCurrentQuitPlanById(userId);
