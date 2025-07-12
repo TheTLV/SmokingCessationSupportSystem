@@ -9,5 +9,6 @@ namespace Repositories
         User GetUserByNameAndPassword(string username, string password);
         bool AddUser(string username, string password, string email, string fullName, DateTime dateOfBirth);
         List<User> GetAllUsers();
+        List<User> GetUserChatWithCoach(List<int> idUser);
     }
 }

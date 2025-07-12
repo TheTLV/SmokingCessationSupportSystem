@@ -63,18 +63,23 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--  Header Section  -->
+        <!--  Trong phần Header Section  -->
         <Border
             Grid.Row="0"
             Padding="15"
             Background="#1976D2">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <!--  Logo/Title  -->
+                <StackPanel
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
                     <materialDesign:PackIcon
                         Width="32"
                         Height="32"
@@ -89,15 +94,14 @@
                 </StackPanel>
 
                 <!--  Notification  -->
-                <Button Grid.Column="1" Style="{StaticResource MaterialDesignIconButton}">
-                    <StackPanel Orientation="Horizontal">
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Style="{StaticResource MaterialDesignIconButton}">
                         <Grid>
                             <materialDesign:PackIcon
                                 Width="24"
                                 Height="24"
                                 Foreground="White"
-                                Kind="Bell"
-                                MouseLeftButtonDown="NotificationBell_MouseLeftButtonUp" />
+                                Kind="Bell" />
                             <Border
                                 x:Name="NotificationBadge"
                                 Width="16"
@@ -106,18 +110,35 @@
                                 VerticalAlignment="Top"
                                 Background="#FF5252"
                                 CornerRadius="8"
-                                Visibility="{Binding DataContext.UnreadNotificationCount, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                Visibility="{Binding UnreadNotificationCount, Converter={StaticResource ZeroToVisibilityConverter}}">
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     FontSize="10"
                                     FontWeight="Bold"
                                     Foreground="White"
-                                    Text="{Binding DataContext.UnreadNotificationCount, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                    Text="{Binding UnreadNotificationCount}" />
                             </Border>
                         </Grid>
-                    </StackPanel>
-                </Button>
+                    </Button>
+
+                    <Button
+                        Click="Button_Click"
+                        Command="{Binding LogoutCommand}"
+                        Style="{StaticResource MaterialDesignIconButton}">
+                        <StackPanel Margin="5,0" Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                Foreground="White"
+                                Kind="Logout" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="White" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </Grid>
         </Border>
 
@@ -277,7 +298,7 @@
             <UniformGrid
                 Margin="10"
                 HorizontalAlignment="Center"
-                Columns="5">
+                Columns="6">
                 <Button Click="GoToSmokingStatusButton_Click" Style="{StaticResource SecondaryButton}">
                     <StackPanel>
                         <materialDesign:PackIcon
@@ -325,6 +346,16 @@
                             Height="20"
                             Kind="AccountMultiple" />
                         <TextBlock Margin="0,5,0,0" Text="Huấn luyện viên" />
+                    </StackPanel>
+                </Button>
+
+                <Button Click="GoToAIChatSupportButton_Click" Style="{StaticResource SecondaryButton}">
+                    <StackPanel>
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Kind="Robot" />
+                        <TextBlock Margin="0,5,0,0" Text="Hỗ trợ AI" />
                     </StackPanel>
                 </Button>
             </UniformGrid>

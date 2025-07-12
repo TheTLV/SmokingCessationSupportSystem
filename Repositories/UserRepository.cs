@@ -20,6 +20,11 @@ namespace Repositories
             return UserDAO.GetUserByNameAndPassword(username, password);
         }
 
+        public List<User> GetUserChatWithCoach(List<int> idUser)
+        {
+            return UserDAO.GetUserChatWithCoach(idUser);
+        }
+
         public bool IsEmailExists(string email)
         {
             return UserDAO.IsEmailExists(email);

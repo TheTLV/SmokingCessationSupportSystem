@@ -21,5 +21,10 @@ namespace Services
         {
             _chatMessageRepository.AddChatMessage(message);
         }
+
+        public List<int> GetUserChatWithCoah(int coachId)
+        {
+            return _chatMessageRepository.GetUserChatWithCoah(coachId);
+        }
     }
 }

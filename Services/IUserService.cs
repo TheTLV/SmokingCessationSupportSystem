@@ -9,5 +9,6 @@ namespace Services
         bool IsUsernameExists(string username);
         bool IsEmailExists(string email);
         List<User> GetAllUsers();
+        List<User> GetUserChatWithCoach(List<int> idUser);
     }
 }

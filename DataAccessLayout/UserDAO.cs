@@ -45,5 +45,13 @@ namespace DataAccessLayout
             using var db = new AppDbContext();
             return db.Users.ToList();
         }
+
+        public static List<User> GetUserChatWithCoach(List<int> idUser)
+        {
+            using var db = new AppDbContext();
+            return db.Users
+                .Where(u => idUser.Contains(u.Id))
+                .ToList();
+        }
     }
 }

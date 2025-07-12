@@ -41,12 +41,23 @@ namespace WPFApp.Views
             User user = iUserService.GetUserByNameAndPassword(UsernameTextBox.Text, PasswordBox.Password);
             if (user != null)
             {
-                MessageBox.Show("Login Success!");
-                AppSession.CurrentUser = user;
-                iNotificationService.SendDailyNotificationForUser(user.Id);
-                this.Hide();
-                DashboardView dashboardView = new DashboardView();
-                dashboardView.Show();
+                if (user.Role == "User")
+                {
+                    MessageBox.Show("Login Success!");
+                    AppSession.CurrentUser = user;
+                    iNotificationService.SendDailyNotificationForUser(user.Id);
+                    this.Hide();
+                    DashboardView dashboardView = new DashboardView();
+                    dashboardView.Show();
+                }
+                else if (user.Role == "Coach")
+                {
+                    MessageBox.Show("Login Success!");
+                    AppSession.CurrentUser = user;
+                    this.Hide();
+                    CoachDashboardView coachDashboardView = new CoachDashboardView();
+                    coachDashboardView.Show();
+                }
             }
             else
             {

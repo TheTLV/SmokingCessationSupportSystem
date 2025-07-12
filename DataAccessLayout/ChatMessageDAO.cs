@@ -20,5 +20,15 @@ namespace DataAccessLayout
             db.ChatMessages.Add(message);
             db.SaveChanges();
         }
+
+        public static List<int> GetUserChatWithCoah(int coachId)
+        {
+            using var db = new AppDbContext();
+            return db.ChatMessages
+                .Where(m => m.ReceiverId == coachId)
+                .Select(m => m.SenderId)
+                .Distinct()
+                .ToList();
+        }
     }
 }

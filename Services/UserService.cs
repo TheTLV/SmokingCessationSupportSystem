@@ -34,5 +34,10 @@ namespace Services
         {
             return iUserRepository.GetAllUsers();
         }
+
+        public List<User> GetUserChatWithCoach(List<int> idUser)
+        {
+            return iUserRepository.GetUserChatWithCoach(idUser);
+        }
     }
 }

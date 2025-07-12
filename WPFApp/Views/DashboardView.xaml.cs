@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System;
 
 namespace WPFApp.Views
 {
@@ -69,6 +68,20 @@ namespace WPFApp.Views
         {
             var coachChatView = new CoachListView();
             coachChatView.Show();
+            this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LoginView loginView = new LoginView();
+            loginView.Show();
+            this.Close();
+        }
+
+        private void GoToAIChatSupportButton_Click(object sender, RoutedEventArgs e)
+        {
+            var aiChatSupportView = new AIChatSupportView();
+            aiChatSupportView.Show();
             this.Close();
         }
     }

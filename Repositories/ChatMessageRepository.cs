@@ -14,5 +14,10 @@ namespace Repositories
         {
             return ChatMessageDAO.GetChatMessages(userId, coachId);
         }
+
+        public List<int> GetUserChatWithCoah(int coachId)
+        {
+            return ChatMessageDAO.GetUserChatWithCoah(coachId);
+        }
     }
 }
