@@ -10,5 +10,7 @@ namespace Repositories
         bool AddUser(string username, string password, string email, string fullName, DateTime dateOfBirth);
         List<User> GetAllUsers();
         List<User> GetUserChatWithCoach(List<int> idUser);
+        User GetUserById(int id);
+        void UpdateUser(User user);
     }
 }

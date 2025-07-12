@@ -10,5 +10,7 @@ namespace Services
         bool IsEmailExists(string email);
         List<User> GetAllUsers();
         List<User> GetUserChatWithCoach(List<int> idUser);
+        User GetUserById(int id);
+        void UpdateUser(User user);
     }
 }

@@ -84,5 +84,12 @@ namespace WPFApp.Views
             aiChatSupportView.Show();
             this.Close();
         }
+
+        private void GoToProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            ProfileView profileView = new ProfileView();
+            profileView.Show();
+            this.Close();
+        }
     }
 }

@@ -53,5 +53,24 @@ namespace DataAccessLayout
                 .Where(u => idUser.Contains(u.Id))
                 .ToList();
         }
+
+        public static User GetUserById(int id)
+        {
+            using var db = new AppDbContext();
+            return db.Users.FirstOrDefault(u => u.Id == id);
+        }
+
+        public static void UpdateUser(User user)
+        {
+            using var db = new AppDbContext();
+            var existingUser = db.Users.FirstOrDefault(u => u.Id == user.Id);
+            if (existingUser != null)
+            {
+                existingUser.Email = user.Email;
+                existingUser.FullName = user.FullName;
+                existingUser.DateOfBirth = user.DateOfBirth;
+                db.SaveChanges();
+            }
+        }
     }
 }

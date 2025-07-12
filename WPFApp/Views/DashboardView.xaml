@@ -95,6 +95,17 @@
 
                 <!--  Notification  -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button
+                        Click="GoToProfileButton_Click"
+                        Style="{StaticResource MaterialDesignIconButton}"
+                        ToolTip="Hồ sơ cá nhân">
+                        <materialDesign:PackIcon
+                            Width="24"
+                            Height="24"
+                            Foreground="White"
+                            Kind="AccountCircle" />
+                    </Button>
+
                     <Button Style="{StaticResource MaterialDesignIconButton}">
                         <Grid>
                             <materialDesign:PackIcon

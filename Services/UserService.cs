@@ -39,5 +39,19 @@ namespace Services
         {
             return iUserRepository.GetUserChatWithCoach(idUser);
         }
+
+        public User GetUserById(int id)
+        {
+            return iUserRepository.GetUserById(id);
+        }
+
+        public void UpdateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User cannot be null");
+            }
+            iUserRepository.UpdateUser(user);
+        }
     }
 }

@@ -15,6 +15,11 @@ namespace Repositories
             return UserDAO.GetAllUsers();
         }
 
+        public User GetUserById(int id)
+        {
+            return UserDAO.GetUserById(id);
+        }
+
         public User GetUserByNameAndPassword(string username, string password)
         {
             return UserDAO.GetUserByNameAndPassword(username, password);
@@ -33,6 +38,15 @@ namespace Repositories
         public bool IsUsernameExists(string username)
         {
             return UserDAO.IsUsernameExists(username);
+        }
+
+        public void UpdateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User cannot be null");
+            }
+            UserDAO.UpdateUser(user);
         }
     }
 }
