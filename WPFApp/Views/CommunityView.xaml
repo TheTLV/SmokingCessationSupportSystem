@@ -85,14 +85,33 @@
         </Grid.RowDefinitions>
 
         <!--  Header  -->
-        <StackPanel
+        <Grid
             Grid.Row="0"
             Margin="0,0,0,20"
-            VerticalAlignment="Center"
-            Orientation="Horizontal">
+            VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon
+                Grid.Column="0"
+                Width="28"
+                Height="28"
+                Foreground="#4285F4"
+                Kind="AccountGroup" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="12,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="22"
+                FontWeight="Bold"
+                Foreground="#333"
+                Text="Cộng đồng" />
             <Button
-                Margin="0,0,16,0"
+                Grid.Column="2"
                 Padding="10,4"
+                HorizontalAlignment="Right"
                 Background="#4285F4"
                 BorderThickness="0"
                 Click="BackToDashboard_Click"
@@ -100,18 +119,7 @@
                 Cursor="Hand"
                 FontWeight="SemiBold"
                 Foreground="White" />
-            <materialDesign:PackIcon
-                Width="28"
-                Height="28"
-                Foreground="#4285F4"
-                Kind="AccountGroup" />
-            <TextBlock
-                Margin="12,0,0,0"
-                FontSize="22"
-                FontWeight="Bold"
-                Foreground="#333"
-                Text="Cộng đồng" />
-        </StackPanel>
+        </Grid>
 
         <!--  New Post Section  -->
         <Border

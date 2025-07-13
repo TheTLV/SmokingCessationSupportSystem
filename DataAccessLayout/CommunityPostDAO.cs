@@ -11,6 +11,7 @@ namespace DataAccessLayout
             return db.CommunityPosts
                 .Include(p => p.User) // Bao gồm thông tin người dùng
                 .Include(p => p.Comments) // Bao gồm các bình luận
+                .ThenInclude(c => c.User) // Bao gồm cả thông tin người dùng của comment
                 .ToList();
         }
 

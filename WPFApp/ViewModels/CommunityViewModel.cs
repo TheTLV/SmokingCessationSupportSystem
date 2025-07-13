@@ -66,6 +66,7 @@ namespace WPFApp.ViewModels
                 postVM.DeletePostAction = DeletePost;
                 CommunityPosts.Insert(0, postVM);
                 NewPostContent = string.Empty;
+                MessageBox.Show("Bài viết đã được tạo thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -73,6 +74,7 @@ namespace WPFApp.ViewModels
         {
             CommunityPosts.Remove(postVM);
             _communityPostRepository.DeletePost(postVM.Post.Id);
+            MessageBox.Show("Bài viết đã được xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void AddComment(CommunityPostViewModel postVM, string commentContent)
@@ -93,6 +95,7 @@ namespace WPFApp.ViewModels
                 var commentVM = new CommentViewModel(createdComment ?? newComment, DeleteComment);
                 postVM.Comments.Add(commentVM);
                 postVM.NewCommentContent = string.Empty;
+                MessageBox.Show("Bình luận đã được thêm thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -111,6 +114,7 @@ namespace WPFApp.ViewModels
                         {
                             postVM.Comments.Remove(toRemove);
                             _commentRepository.DeleteComment(comment.Id);
+                            MessageBox.Show("Bình luận đã được xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
