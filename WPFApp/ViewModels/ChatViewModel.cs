@@ -51,8 +51,6 @@ namespace WPFApp.ViewModels
             {
                 Messages.Add(message);
             }
-
-            System.Windows.MessageBox.Show("Số lượng tin nhắn: " + Messages.Count);
         }
 
         private void SendMessage(object parameter)

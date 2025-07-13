@@ -53,7 +53,7 @@
                     VerticalAlignment="Center"
                     FontWeight="Bold"
                     Foreground="White"
-                    Text="TRỢ LÝ AI" />
+                    Text="HỖ TRỢ" />
             </Grid>
         </Border>
 

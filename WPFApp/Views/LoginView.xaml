@@ -93,25 +93,6 @@
                         </PasswordBox.InputBindings>
                     </PasswordBox>
 
-                    <TextBlock
-                        Grid.Row="2"
-                        Margin="0,0,0,16"
-                        HorizontalAlignment="Right"
-                        Cursor="Hand"
-                        FontSize="12"
-                        Foreground="#1976D2"
-                        Text="Quên mật khẩu?">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="TextDecorations" Value="Underline" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-
                     <Button
                         Grid.Row="3"
                         Height="42"
