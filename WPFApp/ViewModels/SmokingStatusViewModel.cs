@@ -69,7 +69,7 @@ namespace WPFApp.Views
 
         public decimal WeeklyCost => CostPerPack * PacksPerWeek;
         public decimal MonthlyCost => WeeklyCost * 4;
-        public int TotalCigarettes => CigarettesPerDay * 7 * PacksPerWeek / 20;
+        public int TotalCigarettes => CigarettesPerDay * 7;
 
         public ICommand SaveCommand { get; }
         public ICommand ExportCommand { get; }

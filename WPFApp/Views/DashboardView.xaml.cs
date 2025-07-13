@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Services;
+using System.Windows;
 
 namespace WPFApp.Views
 {
@@ -7,10 +8,13 @@ namespace WPFApp.Views
     /// </summary>
     public partial class DashboardView : Window
     {
+        private readonly IMembershipService membershipService;
+
         public DashboardView()
         {
             InitializeComponent();
             this.DataContext = new WPFApp.ViewModels.DashboardViewModel();
+            membershipService = new MembershipService();
         }
 
         protected override void OnActivated(EventArgs e)
@@ -66,6 +70,12 @@ namespace WPFApp.Views
 
         private void GoToCoachListButton_Click(object sender, RoutedEventArgs e)
         {
+            var currentPackage = membershipService.GetCurrentMembership(AppSession.CurrentUser.Id);
+            if (currentPackage == null)
+            {
+                MessageBox.Show("Bạn cần nâng cấp tài khoản để có thể sử dụng tính năng này.");
+                return;
+            }
             var coachChatView = new CoachListView();
             coachChatView.Show();
             this.Close();
