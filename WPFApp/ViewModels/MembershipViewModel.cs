@@ -66,29 +66,29 @@ namespace WPFApp.ViewModels
                 new MembershipPackage
                 {
                     PackageName = "Basic Membership",
-                    Price = 9.99m,
+                    Price = 100000,
                     DurationMonths = 1,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddMonths(1),
-                    Description = "Access to basic features."
+                    Description = "Được sử dụng tính năng chat với coach trong 1 tháng."
                 },
                 new MembershipPackage
                 {
                     PackageName = "Premium Membership",
-                    Price = 19.99m,
+                    Price = 300000,
                     DurationMonths = 3,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddMonths(3),
-                    Description = "Access to all features with premium support."
+                    Description = "Được sử dụng tính năng chat với coach trong 3 tháng."
                 },
                 new MembershipPackage
                 {
                     PackageName = "Family Plan",
-                    Price = 29.99m,
+                    Price = 500000,
                     DurationMonths = 6,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddMonths(6),
-                    Description = "Family plan for up to 5 members."
+                    Description = "Được sử dụng tính năng chat với coach trong 6 tháng."
                 }
             };
 

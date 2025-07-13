@@ -44,6 +44,13 @@
         </Style>
 
         <Style
+            x:Key="ActivePackageHeaderStyle"
+            BasedOn="{StaticResource PackageHeaderStyle}"
+            TargetType="Border">
+            <Setter Property="Background" Value="#388E3C" />
+        </Style>
+
+        <Style
             x:Key="SelectButtonStyle"
             BasedOn="{StaticResource MaterialDesignRaisedButton}"
             TargetType="Button">
@@ -68,6 +75,16 @@
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Margin" Value="10,0,0,0" />
             <Setter Property="Padding" Value="15,5" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style
+            x:Key="CancelButtonStyle"
+            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+            TargetType="Button">
+            <Setter Property="Foreground" Value="#F44336" />
+            <Setter Property="BorderBrush" Value="#F44336" />
+            <Setter Property="Margin" Value="15" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
     </Window.Resources>
@@ -105,8 +122,103 @@
             Padding="0,15"
             VerticalScrollBarVisibility="Auto">
             <StackPanel>
+                <!--  Current Active Package  -->
                 <TextBlock
                     Margin="0,0,0,20"
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Foreground="#388E3C"
+                    Text="GÓI ĐANG KÍCH HOẠT"
+                    Visibility="{Binding CurrentPackage, Converter={StaticResource NullToVisibilityConverter}}" />
+
+                <ContentControl Content="{Binding CurrentPackage}" Visibility="{Binding CurrentPackage, Converter={StaticResource NullToVisibilityConverter}}">
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource PackageCardStyle}">
+                                <Grid Width="280">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <!--  Package Header  -->
+                                    <Border Style="{StaticResource ActivePackageHeaderStyle}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontSize="18"
+                                            FontWeight="Bold"
+                                            Foreground="White"
+                                            Text="{Binding PackageName}" />
+                                    </Border>
+                                    <!--  Package Content  -->
+                                    <StackPanel Grid.Row="1" Margin="15">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="24"
+                                            FontWeight="Bold"
+                                            Foreground="#388E3C"
+                                            Text="{Binding Price, Converter={StaticResource MoneyConverter}}" />
+                                        <TextBlock
+                                            Margin="0,15,0,10"
+                                            HorizontalAlignment="Center"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding DurationMonths, StringFormat={}{0} tháng}" />
+                                        <StackPanel Margin="0,0,0,10">
+                                            <TextBlock FontWeight="SemiBold" Text="Đặc điểm nổi bật:" />
+                                            <ItemsControl ItemsSource="{Binding Features}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Style="{StaticResource FeatureItemStyle}">
+                                                            <materialDesign:PackIcon
+                                                                Width="16"
+                                                                Height="16"
+                                                                Margin="0,0,5,0"
+                                                                Foreground="#4CAF50"
+                                                                Kind="CheckCircle" />
+                                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                        <!--  Expiration Info  -->
+                                        <Border
+                                            Margin="0,10,0,0"
+                                            Padding="10"
+                                            Background="#FFF8E1"
+                                            BorderBrush="#FFE0B2"
+                                            BorderThickness="1"
+                                            CornerRadius="5">
+                                            <StackPanel>
+                                                <TextBlock
+                                                    FontWeight="SemiBold"
+                                                    Foreground="#E65100"
+                                                    Text="Ngày hết hạn:" />
+                                                <TextBlock
+                                                    Margin="0,5,0,0"
+                                                    FontWeight="Bold"
+                                                    Foreground="#E65100"
+                                                    Text="{Binding EndDate, StringFormat={}{0:dd/MM/yyyy}}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <!--  Cancel Button  -->
+                                    <Button
+                                        Grid.Row="2"
+                                        Command="{Binding DataContext.DeleteCurrentPackageCommand, RelativeSource={RelativeSource AncestorType=ContentControl}}"
+                                        Content="HỦY GÓI"
+                                        Style="{StaticResource CancelButtonStyle}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+
+                <!--  Available Packages  -->
+                <TextBlock
+                    Margin="0,30,0,20"
                     HorizontalAlignment="Center"
                     FontSize="16"
                     FontWeight="Bold"
@@ -196,32 +308,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!--  Current Package Info  -->
-                <materialDesign:Card Margin="20,10,20,10" Visibility="{Binding CurrentPackage, Converter={StaticResource NullToVisibilityConverter}}">
-                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                        <StackPanel Width="220">
-                            <TextBlock
-                                FontSize="15"
-                                FontWeight="Bold"
-                                Foreground="#388E3C"
-                                Text="GÓI ĐANG SỬ DỤNG" />
-                            <TextBlock FontWeight="SemiBold" Text="Tên gói:" />
-                            <TextBlock Margin="0,5,0,10" Text="{Binding CurrentPackage.PackageName}" />
-                            <TextBlock FontWeight="SemiBold" Text="Giá:" />
-                            <TextBlock Margin="0,5,0,10" Text="{Binding CurrentPackage.Price, Converter={StaticResource MoneyConverter}}" />
-                            <TextBlock FontWeight="SemiBold" Text="Thời hạn:" />
-                            <TextBlock Margin="0,5,0,10" Text="{Binding CurrentPackage.DurationMonths, StringFormat={}{0} tháng}" />
-                            <TextBlock FontWeight="SemiBold" Text="Ngày hết hạn:" />
-                            <TextBlock Margin="0,5,0,0" Text="{Binding CurrentPackage.EndDate, StringFormat={}{0:dd/MM/yyyy}}" />
-                        </StackPanel>
-                        <Button
-                            Margin="30,0,0,0"
-                            VerticalAlignment="Center"
-                            Command="{Binding DeleteCurrentPackageCommand}"
-                            Content="XÓA"
-                            Style="{StaticResource MaterialDesignOutlinedButton}" />
-                    </StackPanel>
-                </materialDesign:Card>
                 <!--  Selected Package Info  -->
                 <materialDesign:Card Margin="20,30,20,10" Visibility="{Binding SelectedPackage, Converter={StaticResource NullToVisibilityConverter}}">
                     <StackPanel>
