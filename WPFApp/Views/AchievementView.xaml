@@ -66,17 +66,17 @@
             <Setter Property="Foreground" Value="{StaticResource PrimaryGradient}" />
         </Style>
 
-        <!--  Back Button Style  -->
         <Style
             x:Key="BackButtonStyle"
-            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+            BasedOn="{StaticResource MaterialDesignFlatButton}"
             TargetType="Button">
             <Setter Property="Width" Value="120" />
             <Setter Property="Height" Value="36" />
             <Setter Property="Margin" Value="0,0,10,0" />
-            <Setter Property="Foreground" Value="#1976D2" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Background" Value="Transparent" />
         </Style>
 
         <!--  Share Button Style  -->
