@@ -26,5 +26,12 @@ namespace WPFApp.Views
                 e.Handled = true;
             }
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardView dashboardView = new DashboardView();
+            dashboardView.Show();
+            this.Close();
+        }
     }
 }

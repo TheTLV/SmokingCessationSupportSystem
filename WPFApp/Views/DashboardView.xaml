@@ -369,6 +369,16 @@
                         <TextBlock Margin="0,5,0,0" Text="Hỗ trợ AI" />
                     </StackPanel>
                 </Button>
+
+                <Button Click="GoToFeedbackButton_Click" Style="{StaticResource SecondaryButton}">
+                    <StackPanel>
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Kind="MessageAlert" />
+                        <TextBlock Margin="0,5,0,0" Text="Phản hồi" />
+                    </StackPanel>
+                </Button>
             </UniformGrid>
         </Border>
     </Grid>

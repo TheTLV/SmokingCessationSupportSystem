@@ -10,6 +10,11 @@ namespace Repositories
             return UserDAO.AddUser(username, password, email, fullName, dateOfBirth);
         }
 
+        public void DeleteUser(int userId)
+        {
+            UserDAO.DeleteUser(userId);
+        }
+
         public List<User> GetAllUsers()
         {
             return UserDAO.GetAllUsers();
@@ -28,6 +33,11 @@ namespace Repositories
         public List<User> GetUserChatWithCoach(List<int> idUser)
         {
             return UserDAO.GetUserChatWithCoach(idUser);
+        }
+
+        public List<User> GetUsersForManagement()
+        {
+            return UserDAO.GetUsersForManagement();
         }
 
         public bool IsEmailExists(string email)

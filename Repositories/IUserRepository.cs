@@ -12,5 +12,7 @@ namespace Repositories
         List<User> GetUserChatWithCoach(List<int> idUser);
         User GetUserById(int id);
         void UpdateUser(User user);
+        List<User> GetUsersForManagement();
+        void DeleteUser(int userId);
     }
 }

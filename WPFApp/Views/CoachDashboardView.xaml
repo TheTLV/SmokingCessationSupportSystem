@@ -88,39 +88,14 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <!--  Patient Info  -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Ellipse
-                                Width="40"
-                                Height="40"
-                                Margin="0,0,10,0"
-                                Fill="#E0E0E0">
-                                <Ellipse.OpacityMask>
-                                    <VisualBrush Stretch="Fill">
-                                        <VisualBrush.Visual>
-                                            <materialDesign:PackIcon
-                                                Width="40"
-                                                Height="40"
-                                                Kind="Account" />
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Ellipse.OpacityMask>
-                            </Ellipse>
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontWeight="Bold"
-                                Text="{Binding SelectedPatient.FullName}" />
-                        </StackPanel>
-
-                        <!--  Logout Button  -->
+                        <!--  Logout Button - Đã chuyển về bên trái  -->
                         <Button
-                            Grid.Column="2"
+                            Grid.Column="0"
                             Width="122"
                             Margin="0,4,10,4"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             Click="Button_Click"
                             Command="{Binding LogoutCommand}"
                             Style="{StaticResource MaterialDesignOutlinedButton}">

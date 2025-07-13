@@ -2,12 +2,188 @@
     x:Class="WPFApp.Views.FeedbackView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WPFApp.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="FeedbackView"
-    Width="800"
-    Height="450"
-    mc:Ignorable="d">
-    <Grid />
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Gửi phản hồi"
+    Width="600"
+    Height="500"
+    FontFamily="Segoe UI"
+    WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!--  Rating Button Style  -->
+        <Style
+            x:Key="RatingButtonStyle"
+            BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}"
+            TargetType="RadioButton">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Foreground" Value="#FFC107" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="#FFC107" />
+            <Setter Property="IsChecked" Value="{Binding IsSelected, RelativeSource={RelativeSource Self}}" />
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#FFC107" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--  Submit Button Style  -->
+        <Style
+            x:Key="SubmitButtonStyle"
+            BasedOn="{StaticResource MaterialDesignRaisedButton}"
+            TargetType="Button">
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Margin" Value="0,20,0,0" />
+            <Setter Property="Background" Value="#1976D2" />
+            <!--  Đổi màu xanh  -->
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <!--  Back Button Style  -->
+        <Style
+            x:Key="BackButtonStyle"
+            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+            TargetType="Button">
+            <Setter Property="Width" Value="150" />
+            <!--  Cùng kích thước với nút Gửi  -->
+            <Setter Property="Height" Value="40" />
+            <!--  Cùng kích thước với nút Gửi  -->
+            <Setter Property="Margin" Value="0,20,10,0" />
+            <!--  Căn chỉnh margin  -->
+            <Setter Property="Foreground" Value="#1976D2" />
+            <Setter Property="BorderBrush" Value="#1976D2" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Header  -->
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,0,0,20"
+            Orientation="Horizontal">
+            <materialDesign:PackIcon
+                Width="32"
+                Height="32"
+                Margin="0,0,10,0"
+                Foreground="#1976D2"
+                Kind="MessageAlert" />
+            <TextBlock
+                VerticalAlignment="Center"
+                FontSize="22"
+                FontWeight="Bold"
+                Text="GỬI PHẢN HỒI" />
+        </StackPanel>
+
+        <!--  Feedback Form  -->
+        <materialDesign:Card Grid.Row="1" Padding="20">
+            <StackPanel>
+                <!--  Rating Section  -->
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontSize="16"
+                    Text="Đánh giá của bạn:" />
+                <StackPanel
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <RadioButton
+                        Command="{Binding SetRatingCommand}"
+                        CommandParameter="1"
+                        Content="1"
+                        GroupName="Rating"
+                        Style="{StaticResource RatingButtonStyle}" />
+                    <RadioButton
+                        Command="{Binding SetRatingCommand}"
+                        CommandParameter="2"
+                        Content="2"
+                        GroupName="Rating"
+                        Style="{StaticResource RatingButtonStyle}" />
+                    <RadioButton
+                        Command="{Binding SetRatingCommand}"
+                        CommandParameter="3"
+                        Content="3"
+                        GroupName="Rating"
+                        Style="{StaticResource RatingButtonStyle}" />
+                    <RadioButton
+                        Command="{Binding SetRatingCommand}"
+                        CommandParameter="4"
+                        Content="4"
+                        GroupName="Rating"
+                        Style="{StaticResource RatingButtonStyle}" />
+                    <RadioButton
+                        Command="{Binding SetRatingCommand}"
+                        CommandParameter="5"
+                        Content="5"
+                        GroupName="Rating"
+                        Style="{StaticResource RatingButtonStyle}" />
+                </StackPanel>
+
+                <!--  Feedback Type  -->
+                <ComboBox
+                    Margin="0,0,0,15"
+                    materialDesign:HintAssist.Hint="Loại phản hồi"
+                    ItemsSource="{Binding FeedbackTypes}"
+                    SelectedItem="{Binding SelectedFeedbackType}"
+                    Style="{StaticResource MaterialDesignFilledComboBox}" />
+
+                <!--  Feedback Content  -->
+                <TextBox
+                    MinHeight="150"
+                    materialDesign:HintAssist.Hint="Nội dung phản hồi"
+                    AcceptsReturn="True"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding FeedbackContent, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!--  Action Buttons  -->
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <!--  Nút back  -->
+            <Button
+                Click="BackButton_Click"
+                Command="{Binding BackCommand}"
+                Style="{StaticResource BackButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Width="24"
+                        Height="24"
+                        Kind="ArrowLeft" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Quay lại" />
+                </StackPanel>
+            </Button>
+
+            <!--  Nút gửi phản hồi  -->
+            <Button Command="{Binding SubmitFeedbackCommand}" Style="{StaticResource SubmitButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Width="20"
+                        Margin="0,0,5,0"
+                        Kind="Send" />
+                    <TextBlock Text="Gửi phản hồi" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
 </Window>

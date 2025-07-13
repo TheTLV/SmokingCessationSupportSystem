@@ -58,6 +58,18 @@ namespace WPFApp.Views
                     CoachDashboardView coachDashboardView = new CoachDashboardView();
                     coachDashboardView.Show();
                 }
+                else if (user.Role == "Admin")
+                {
+                    MessageBox.Show("Login Success!");
+                    AppSession.CurrentUser = user;
+                    this.Hide();
+                    DashboardAdminView dashboardAdminView = new DashboardAdminView();
+                    dashboardAdminView.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password.");
+                }
             }
             else
             {

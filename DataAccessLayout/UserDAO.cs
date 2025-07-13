@@ -72,5 +72,24 @@ namespace DataAccessLayout
                 db.SaveChanges();
             }
         }
+
+        public static List<User> GetUsersForManagement()
+        {
+            using var db = new AppDbContext();
+            return db.Users
+                .Where(u => u.Role == "User")
+                .ToList();
+        }
+
+        public static void DeleteUser(int userId)
+        {
+            using var db = new AppDbContext();
+            var user = db.Users.FirstOrDefault(u => u.Id == userId);
+            if (user != null)
+            {
+                user.Role = "Deleted";
+                db.SaveChanges();
+            }
+        }
     }
 }

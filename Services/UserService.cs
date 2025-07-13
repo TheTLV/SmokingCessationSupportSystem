@@ -53,5 +53,15 @@ namespace Services
             }
             iUserRepository.UpdateUser(user);
         }
+
+        public List<User> GetUsersForManagement()
+        {
+            return iUserRepository.GetUsersForManagement();
+        }
+
+        public void DeleteUser(int userId)
+        {
+            iUserRepository.DeleteUser(userId);
+        }
     }
 }

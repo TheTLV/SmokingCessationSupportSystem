@@ -91,5 +91,12 @@ namespace WPFApp.Views
             profileView.Show();
             this.Close();
         }
+
+        private void GoToFeedbackButton_Click(object sender, RoutedEventArgs e)
+        {
+            FeedbackView feedbackView = new FeedbackView();
+            feedbackView.Show();
+            this.Close();
+        }
     }
 }
