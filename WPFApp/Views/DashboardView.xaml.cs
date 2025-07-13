@@ -43,7 +43,7 @@ namespace WPFApp.Views
             this.Close();
         }
 
-        private void NotificationBell_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void GotoNotificationButton_Click(object sender, RoutedEventArgs e)
         {
             var notificationView = new NotificationView();
             notificationView.Show();

@@ -1,6 +1,7 @@
 ﻿using BusinessObjects;
 using Services;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace WPFApp.ViewModels
@@ -38,8 +39,9 @@ namespace WPFApp.ViewModels
 
         private void MarkAsRead(int notificationId)
         {
-            // Logic đánh dấu đã đọc
             _notificationService.MarkAsRead(notificationId);
+            LoadNotifications(AppSession.CurrentUser.Id);
+            MessageBox.Show("Thông báo đã được đánh dấu là đã đọc.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void MarkAllAsRead()
@@ -53,6 +55,8 @@ namespace WPFApp.ViewModels
                     notification.IsRead = true; // Cập nhật trạng thái trong ObservableCollection
                 }
             }
+            MessageBox.Show("Tất cả thông báo đã được đánh dấu là đã đọc.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            LoadNotifications(AppSession.CurrentUser.Id);
         }
 
         private void CloseWindow()

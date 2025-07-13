@@ -93,7 +93,7 @@
                         Text="TỔNG QUAN CAI THUỐC LÁ" />
                 </StackPanel>
 
-                <!--  Notification  -->
+                <!--  Profile  -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button
                         Click="GoToProfileButton_Click"
@@ -106,7 +106,8 @@
                             Kind="AccountCircle" />
                     </Button>
 
-                    <Button Style="{StaticResource MaterialDesignIconButton}">
+                    <!--  Notification  -->
+                    <Button Click="GotoNotificationButton_Click" Style="{StaticResource MaterialDesignIconButton}">
                         <Grid>
                             <materialDesign:PackIcon
                                 Width="24"
@@ -133,6 +134,8 @@
                         </Grid>
                     </Button>
 
+
+                    <!--  Logout  -->
                     <Button
                         Click="Button_Click"
                         Command="{Binding LogoutCommand}"
