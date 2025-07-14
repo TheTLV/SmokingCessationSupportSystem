@@ -73,7 +73,6 @@ namespace WPFApp.Views
 
         public ICommand SaveCommand { get; }
         public ICommand ExportCommand { get; }
-        public ICommand ViewChartCommand { get; }
 
         public SmokingStatusViewModel()
         {
@@ -81,8 +80,7 @@ namespace WPFApp.Views
             HistoryRecords = new ObservableCollection<SmokingStatus>();
 
             SaveCommand = new RelayCommand(_ => SaveSmokingStatus(), _ => CanSaveSmokingStatus());
-            ExportCommand = new RelayCommand(_ => ExportReport());
-            ViewChartCommand = new RelayCommand(_ => ViewChart());
+            ExportCommand = new RelayCommand(_ => ShowChartPopup());
 
             LoadSmokingHistory();
         }
@@ -160,9 +158,10 @@ namespace WPFApp.Views
             MessageBox.Show("Tính năng xuất báo cáo sẽ được phát triển sau.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void ViewChart()
+        private void ShowChartPopup()
         {
-            MessageBox.Show("Tính năng xem biểu đồ sẽ được phát triển sau.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            var chartWindow = new WPFApp.Views.SmokingChartView(HistoryRecords);
+            chartWindow.ShowDialog();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -13,8 +13,6 @@ public partial class AppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Achievement> Achievements { get; set; }
-
     public virtual DbSet<ChatMessage> ChatMessages { get; set; }
 
     public virtual DbSet<Coach> Coaches { get; set; }
@@ -28,8 +26,6 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<Membership> Memberships { get; set; }
 
     public virtual DbSet<Notification> Notifications { get; set; }
-
-    public virtual DbSet<Progress> Progresses { get; set; }
 
     public virtual DbSet<QuitPlan> QuitPlans { get; set; }
 
@@ -49,26 +45,6 @@ public partial class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Achievement>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Achievem__3214EC07B65586BD");
-
-            entity.ToTable("Achievement");
-
-            entity.HasIndex(e => e.UserId, "IX_Achievement_UserId");
-
-            entity.Property(e => e.AchievedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Description).HasMaxLength(500);
-            entity.Property(e => e.Title).HasMaxLength(100);
-
-            entity.HasOne(d => d.User).WithMany(p => p.Achievements)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Achieveme__UserI__5535A963");
-        });
-
         modelBuilder.Entity<ChatMessage>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__ChatMess__3214EC070208E26B");
@@ -215,25 +191,6 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Notificat__UserI__5CD6CB2B");
-        });
-
-        modelBuilder.Entity<Progress>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Progress__3214EC078210C09B");
-
-            entity.ToTable("Progress");
-
-            entity.HasIndex(e => e.Date, "IX_Progress_Date");
-
-            entity.HasIndex(e => e.UserId, "IX_Progress_UserId");
-
-            entity.Property(e => e.Date).HasColumnType("datetime");
-            entity.Property(e => e.HealthStatus).HasMaxLength(100);
-
-            entity.HasOne(d => d.User).WithMany(p => p.Progresses)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Progress__UserId__5812160E");
         });
 
         modelBuilder.Entity<QuitPlan>(entity =>

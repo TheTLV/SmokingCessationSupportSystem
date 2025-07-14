@@ -24,7 +24,7 @@ namespace WPFApp.Views
                     continue;
                 var start = plan.StartDate;
                 var end = plan.TargetDate < System.DateTime.Today ? plan.TargetDate : System.DateTime.Today;
-                for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
+                for (var date = start.Date.AddDays(1); date <= end.Date; date = date.AddDays(1))
                 {
                     noSmokingDays.Add(date);
                 }

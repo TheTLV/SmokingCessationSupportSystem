@@ -16,8 +16,6 @@ public partial class User
 
     public string Role { get; set; } = null!;
 
-    public virtual ICollection<Achievement> Achievements { get; set; } = new List<Achievement>();
-
     public virtual ICollection<ChatMessage> ChatMessageReceivers { get; set; } = new List<ChatMessage>();
 
     public virtual ICollection<ChatMessage> ChatMessageSenders { get; set; } = new List<ChatMessage>();
@@ -33,8 +31,6 @@ public partial class User
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
 
     public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
-
-    public virtual ICollection<Progress> Progresses { get; set; } = new List<Progress>();
 
     public virtual ICollection<QuitPlan> QuitPlans { get; set; } = new List<QuitPlan>();
 

@@ -433,6 +433,21 @@
                             Text="Hỗ trợ" />
                     </StackPanel>
                 </Button>
+                <Button
+                    Click="GoToFeedbackButton_Click"
+                    Style="{StaticResource NavButton}"
+                    ToolTip="Phản hồi">
+                    <StackPanel>
+                        <materialDesign:PackIcon
+                            Width="24"
+                            Height="24"
+                            Kind="MessageAlert" />
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            FontSize="10"
+                            Text="Phản hồi" />
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </Border>
     </Grid>

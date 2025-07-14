@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using WPFApp.Views;
-using System.Linq;
 
 namespace WPFApp.ViewModels
 {
@@ -113,12 +112,14 @@ namespace WPFApp.ViewModels
         {
             var userId = AppSession.CurrentUser?.Id ?? 0;
             if (userId == 0) return;
-            // Tính tổng số ngày không hút thuốc từ tất cả QuitPlan
+            // Tính tổng số ngày không hút thuốc từ tất cả QuitPlan, chỉ tính những ngày đã qua
             var plans = _quitPlanService.GetAllQuitPlansByUserId(userId);
             int totalDays = 0;
             foreach (var plan in plans)
             {
-                int days = (plan.TargetDate - plan.StartDate).Days;
+                if (plan.StartDate > DateTime.Today) continue; // Kế hoạch chưa bắt đầu
+                var end = plan.TargetDate < DateTime.Today ? plan.TargetDate : DateTime.Today;
+                int days = (end - plan.StartDate).Days;
                 if (days > 0) totalDays += days;
             }
             TotalQuitDays = totalDays;
