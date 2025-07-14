@@ -104,7 +104,6 @@ namespace WPFApp.Views
 
         private void LoadStageTemplates()
         {
-            // Hardcode danh sách Stage mẫu ở đây
             var templates = new[]
             {
                 new QuitPlanStage { Name = "Giảm số điếu hút mỗi ngày", Description = "Giảm dần số điếu hút mỗi ngày trong tuần đầu tiên." },
@@ -172,7 +171,6 @@ namespace WPFApp.Views
 
         public void CreateQuitPlan()
         {
-            // Validate input
             if (string.IsNullOrEmpty(NewPlanReason))
             {
                 MessageBox.Show("Vui lòng nhập lý do cai thuốc!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -205,7 +203,6 @@ namespace WPFApp.Views
                 }
             }
 
-            // TODO: Save to database
             var newPlan = new QuitPlan
             {
                 UserId = AppSession.CurrentUser.Id,
@@ -215,16 +212,13 @@ namespace WPFApp.Views
                 Stages = selectedStages.ToArray().Select(s => s.Name).Aggregate((current, next) => current + ", " + next)
             };
 
-            // For now, just update the current plan
             CurrentPlan = newPlan;
 
-            // Clear form
             NewPlanReason = "";
             NewPlanStartDate = DateTime.Today;
             NewPlanTargetDate = DateTime.Today.AddMonths(1);
             PlanProgress = 0;
 
-            // Uncheck all stages
             foreach (var stage in StageTemplates)
             {
                 stage.IsSelected = false;

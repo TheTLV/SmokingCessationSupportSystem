@@ -21,7 +21,6 @@ namespace WPFApp.ViewModels
 
             Notifications = new ObservableCollection<Notification>();
             LoadNotifications(AppSession.CurrentUser.Id);
-            // Khởi tạo các command
             MarkAsReadCommand = new RelayCommand(obj => MarkAsRead((int)obj));
             MarkAllAsReadCommand = new RelayCommand(obj => MarkAllAsRead());
             CloseCommand = new RelayCommand(obj => CloseWindow());
@@ -46,13 +45,12 @@ namespace WPFApp.ViewModels
 
         private void MarkAllAsRead()
         {
-            // Logic đánh dấu tất cả đã đọc
             foreach (var notification in Notifications)
             {
                 if (!notification.IsRead)
                 {
                     _notificationService.MarkAsRead(notification.Id);
-                    notification.IsRead = true; // Cập nhật trạng thái trong ObservableCollection
+                    notification.IsRead = true;
                 }
             }
             MessageBox.Show("Tất cả thông báo đã được đánh dấu là đã đọc.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);

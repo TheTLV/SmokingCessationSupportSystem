@@ -32,7 +32,6 @@ namespace WPFApp.ViewModels
             _communityPostRepository = new CommunityPostRepository();
             _commentRepository = new CommentRepository();
             CreatePostCommand = new RelayCommand(_ => CreatePost());
-            // Xóa DeleteCommentCommand khỏi đây
             LoadCommunityPosts();
         }
 
@@ -42,7 +41,7 @@ namespace WPFApp.ViewModels
             CommunityPosts.Clear();
             foreach (CommunityPost post in posts)
             {
-                var postVM = new CommunityPostViewModel(post, AddComment, DeleteComment); // Truyền callback DeleteComment
+                var postVM = new CommunityPostViewModel(post, AddComment, DeleteComment);
                 postVM.DeletePostAction = DeletePost;
                 CommunityPosts.Add(postVM);
             }
@@ -99,7 +98,6 @@ namespace WPFApp.ViewModels
             }
         }
 
-        // Sửa lại DeleteComment nhận trực tiếp Comment
         private void DeleteComment(Comment comment)
         {
             if (comment != null)

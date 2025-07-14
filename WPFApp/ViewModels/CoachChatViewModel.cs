@@ -88,41 +88,6 @@ namespace WPFApp.ViewModels
                     IsIncomingMessage = message.SenderId != _currentCoachId
                 });
             }
-
-            //// Sample messages based on selected patient
-            //var sampleMessages = new[]
-            //{
-            //    new ChatMessage
-            //    {
-            //        Id = 1,
-            //        SenderId = SelectedPatient.Id,
-            //        ReceiverId = _currentCoachId,
-            //        Message = $"Xin chào bác sĩ, tôi là {SelectedPatient.FullName}",
-            //    },
-            //    new ChatMessage
-            //    {
-            //        Id = 2,
-            //        SenderId = _currentCoachId,
-            //        ReceiverId = SelectedPatient.Id,
-            //        Message = "Tôi có thể giúp gì cho bạn?",
-            //        IsRead = true,
-            //    },
-            //    new ChatMessage
-            //    {
-            //        Id = 3,
-            //        SenderId = SelectedPatient.Id,
-            //        ReceiverId = _currentCoachId,
-            //        Message = "Tôi cần tư vấn về phương pháp cai thuốc lá",
-            //    }
-            //};
-
-            //foreach (var message in sampleMessages.OrderBy(m => m.SentAt))
-            //{
-            //    Messages.Add(new ChatMessageViewModel(message)
-            //    {
-            //        IsIncomingMessage = message.SenderId != _currentCoachId
-            //    });
-            //}
         }
 
         private void MarkMessagesAsRead()

@@ -49,7 +49,7 @@ namespace WPFApp.ViewModels
             _membershipService = new MembershipService();
 
             LoadPackages();
-            LoadCurrentPackage(); // Gọi hàm này khi khởi tạo nếu cần
+            LoadCurrentPackage();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -101,7 +101,7 @@ namespace WPFApp.ViewModels
 
         private void LoadCurrentPackage()
         {
-            var userId = AppSession.CurrentUser?.Id ?? 0; // Lấy user ID từ session
+            var userId = AppSession.CurrentUser?.Id ?? 0;
             var currentPackage = _membershipService.GetCurrentMembership(userId);
             if (currentPackage != null)
             {
@@ -129,14 +129,13 @@ namespace WPFApp.ViewModels
             {
                 try
                 {
-                    // Tạo membership object từ selected package
                     var membership = new Membership
                     {
                         PackageName = SelectedPackage.PackageName,
                         Price = SelectedPackage.Price,
                         StartDate = SelectedPackage.StartDate,
                         EndDate = SelectedPackage.EndDate,
-                        UserId = AppSession.CurrentUser?.Id ?? 0 // Lấy user ID từ session
+                        UserId = AppSession.CurrentUser?.Id ?? 0
                     };
 
                     bool isExisting = _membershipService.IsExistingPackage(membership.UserId);
@@ -146,7 +145,6 @@ namespace WPFApp.ViewModels
                             System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
                         return;
                     }
-                    // Lưu vào database
                     bool success = _membershipService.AddMembershipPackage(membership);
 
                     if (success)

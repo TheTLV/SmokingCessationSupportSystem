@@ -112,25 +112,21 @@ namespace WPFApp.ViewModels
         {
             var userId = AppSession.CurrentUser?.Id ?? 0;
             if (userId == 0) return;
-            // Tính tổng số ngày không hút thuốc từ tất cả QuitPlan, chỉ tính những ngày đã qua
             var plans = _quitPlanService.GetAllQuitPlansByUserId(userId);
             int totalDays = 0;
             foreach (var plan in plans)
             {
-                if (plan.StartDate > DateTime.Today) continue; // Kế hoạch chưa bắt đầu
+                if (plan.StartDate > DateTime.Today) continue;
                 var end = plan.TargetDate < DateTime.Today ? plan.TargetDate : DateTime.Today;
                 int days = (end - plan.StartDate).Days;
                 if (days > 0) totalDays += days;
             }
             TotalQuitDays = totalDays;
 
-            // Lấy SmokingStatus mới nhất để tính tiền tiết kiệm
             var statuses = _smokingStatusService.GetSmokingStatusesByUserId(userId);
             var latest = statuses.OrderByDescending(s => s.RecordDate).FirstOrDefault();
             if (latest != null)
             {
-                // Tiền tiết kiệm = tổng số ngày không hút * (chi phí/ngày)
-                // chi phí/ngày = (PacksPerWeek * CostPerPack) / 7
                 decimal dailyCost = (latest.PacksPerWeek * latest.CostPerPack) / 7;
                 MoneySaved = dailyCost * TotalQuitDays;
             }
@@ -144,7 +140,6 @@ namespace WPFApp.ViewModels
         {
             var userId = AppSession.CurrentUser?.Id ?? 0;
             if (userId == 0) return;
-            // Kế hoạch hiện tại
             var plan = _quitPlanService.GetCurrentQuitPlanById(userId);
             if (plan != null)
             {
@@ -171,7 +166,6 @@ namespace WPFApp.ViewModels
                     EndDate = DateTime.Today
                 };
             }
-            // Nhật ký gần đây
             var statuses = _smokingStatusService.GetSmokingStatusesByUserId(userId)
                 .OrderByDescending(s => s.RecordDate)
                 .Take(10)

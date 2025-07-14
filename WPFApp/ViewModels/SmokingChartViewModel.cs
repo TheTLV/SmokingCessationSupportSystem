@@ -17,7 +17,6 @@ namespace WPFApp.ViewModels
             {
                 _smokingData = value;
                 OnPropertyChanged();
-                // KHÔNG gọi UpdateChart() ở đây để tránh lỗi null SeriesCollection
             }
         }
 
@@ -58,7 +57,7 @@ namespace WPFApp.ViewModels
                 PointGeometry = DefaultGeometries.Circle,
                 PointGeometrySize = 10,
                 StrokeThickness = 2,
-                Fill = System.Windows.Media.Brushes.LightSkyBlue // hoặc để mặc định nếu đã có lớp phủ
+                Fill = System.Windows.Media.Brushes.LightSkyBlue
             });
             SeriesCollection.Add(new LineSeries
             {
@@ -68,7 +67,7 @@ namespace WPFApp.ViewModels
                 PointGeometrySize = 10,
                 StrokeThickness = 2,
                 Stroke = System.Windows.Media.Brushes.Gold,
-                Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(80, 255, 215, 0)) // vàng nhạt, 80/255 alpha
+                Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(80, 255, 215, 0))
             });
 
             OnPropertyChanged(nameof(SeriesCollection));

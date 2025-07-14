@@ -26,7 +26,7 @@ namespace WPFApp.ViewModels
             }
         }
 
-        public ICommand SelectCoachCommand { get; set; } // Chỉ cần property, không khởi tạo ở đây
+        public ICommand SelectCoachCommand { get; set; }
         public Action<Coach> OpenChatAction { get; set; }
 
         public CoachListViewModel()

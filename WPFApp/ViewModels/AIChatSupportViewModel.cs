@@ -41,7 +41,6 @@ namespace WPFApp.ViewModels
 
             SendCommand = new RelayCommand(SendMessage, CanSendMessage);
 
-            // Thêm lời chào ban đầu từ AI
             Messages.Add(new ChatMessage
             {
                 Content = "Xin chào! Tôi là trợ lý AI hỗ trợ cai thuốc lá. Bạn có câu hỏi gì muốn hỏi tôi không?",
@@ -59,7 +58,6 @@ namespace WPFApp.ViewModels
             if (string.IsNullOrWhiteSpace(CurrentMessage))
                 return;
 
-            // Thêm tin nhắn người dùng
             var userMessage = new ChatMessage
             {
                 Content = CurrentMessage,
@@ -67,9 +65,8 @@ namespace WPFApp.ViewModels
             };
             Messages.Add(userMessage);
 
-            CurrentMessage = string.Empty; // Xóa nội dung sau khi gửi
+            CurrentMessage = string.Empty;
 
-            // Giả lập AI đang nhập
             var thinkingMessage = new ChatMessage
             {
                 Content = "AI đang suy nghĩ...",

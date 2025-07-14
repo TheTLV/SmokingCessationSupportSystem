@@ -38,7 +38,7 @@ namespace WPFApp.ViewModels
 
         public ProfileViewModel()
         {
-            _userService = new UserService(); // Assuming UserService implements IUserService
+            _userService = new UserService();
 
             LoadUserData();
 
