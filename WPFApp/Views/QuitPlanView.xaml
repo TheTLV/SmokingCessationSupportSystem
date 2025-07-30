@@ -5,13 +5,19 @@
     xmlns:conv="clr-namespace:WPFApp.Converters"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="Kế hoạch cai thuốc"
+<<<<<<< HEAD
     Width="1100"
     Height="750"
+=======
+    Width="1000"
+    Height="700"
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
     FontFamily="Roboto"
     Background="#FFF3E0"
     WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
+<<<<<<< HEAD
         <!--  Color Palette - Matching DashboardView theme  -->
         <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
         <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
@@ -88,10 +94,42 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
+=======
+        <!-- Style cơ bản -->
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="materialDesign:HintAssist.Foreground" Value="#FFB300" />
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="materialDesign:HintAssist.Foreground" Value="#FFB300" />
+        </Style>
+
+        <Style x:Key="TitleText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#FFB300" />
+        </Style>
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Color="#22000000" />
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
                 </Setter.Value>
             </Setter>
         </Style>
 
+<<<<<<< HEAD
         <!--  Back Button Style  -->
         <Style x:Key="BackButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
@@ -168,19 +206,41 @@
             <Setter Property="FontSize" Value="32" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+=======
+        <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="Background" Value="#FFB300" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
 
-        <!--  Converters  -->
+        <Style x:Key="OutlinedButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+            <Setter Property="Foreground" Value="#FFB300" />
+            <Setter Property="BorderBrush" Value="#FFB300" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="FontWeight" Value="Bold" />
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
+        </Style>
+
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
     </Window.Resources>
 
+<<<<<<< HEAD
     <Grid Background="{StaticResource PageBackground}">
+=======
+    <Grid Margin="20">
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+<<<<<<< HEAD
         <!--  Header Section  -->
         <materialDesign:Card Grid.Row="0" Style="{StaticResource HeaderCard}">
             <Grid>
@@ -228,12 +288,23 @@
             Grid.Row="1"
             Padding="5"
             VerticalScrollBarVisibility="Auto">
+=======
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20" VerticalAlignment="Center">
+            <materialDesign:PackIcon Kind="CalendarEdit" Width="32" Height="32" Foreground="#FFB300" />
+            <TextBlock Text="KẾ HOẠCH CAI THUỐC LÁ" Style="{StaticResource TitleText}" Margin="10,0,0,0" />
+        </StackPanel>
+
+        <!-- Nội dung chính -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+<<<<<<< HEAD
                 <!--  Create New Plan Section  -->
                 <materialDesign:Card Grid.Column="0" Style="{StaticResource SectionCardStyle}">
                     <StackPanel>
@@ -264,20 +335,39 @@
 
                         <!--  Date Range  -->
                         <Grid Margin="0,0,0,20">
+=======
+                <!-- Tạo kế hoạch -->
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="TẠO KẾ HOẠCH MỚI" FontWeight="SemiBold" FontSize="16" Foreground="#FFB300" Margin="0,0,0,10" />
+
+                        <TextBlock Text="Lý do:" FontWeight="SemiBold" />
+                        <TextBox AcceptsReturn="True" MinHeight="80" Text="{Binding NewPlanReason}" TextWrapping="Wrap" />
+
+                        <!-- Date -->
+                        <Grid Margin="0,15,0,15">
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="15" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
+<<<<<<< HEAD
                             
                             <StackPanel Grid.Column="0">
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="📅 Ngày bắt đầu:" />
                                 <DatePicker 
                                     SelectedDate="{Binding NewPlanStartDate}" 
                                     Style="{StaticResource DatePickerStyle}" />
+=======
+                            <StackPanel>
+                                <TextBlock Text="Ngày bắt đầu:" FontWeight="SemiBold" />
+                                <DatePicker SelectedDate="{Binding NewPlanStartDate}" />
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
                             </StackPanel>
                             
                             <StackPanel Grid.Column="2">
+<<<<<<< HEAD
                                 <TextBlock Style="{StaticResource LabelStyle}" Text="🏁 Ngày kết thúc:" />
                                 <DatePicker 
                                     SelectedDate="{Binding NewPlanTargetDate}" 
@@ -342,6 +432,97 @@
                                                     </StackPanel>
                                                 </Grid>
                                             </materialDesign:Card>
+=======
+                                <TextBlock Text="Ngày kết thúc:" FontWeight="SemiBold" />
+                                <DatePicker SelectedDate="{Binding NewPlanTargetDate}" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Chọn stage -->
+                        <TextBlock Text="Giai đoạn:" FontWeight="SemiBold" />
+                        <ScrollViewer MaxHeight="250" Margin="0,5,0,15">
+                            <ItemsControl ItemsSource="{Binding StageTemplates}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#FFF9C4" CornerRadius="6" Padding="12" Margin="0,5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox Grid.Column="0" Margin="0,2,10,0" IsChecked="{Binding IsSelected}" />
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock FontWeight="SemiBold" Text="{Binding Name}" />
+                                                    <TextBlock FontSize="13" Foreground="#666" Text="{Binding Description}" TextWrapping="Wrap" />
+                                                    <TextBlock FontSize="12" Foreground="#888" Text="{Binding Duration, StringFormat='Thời lượng: {0} ngày'}" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <Button Command="{Binding CreatePlanCommand}" Content="TẠO KẾ HOẠCH" Style="{StaticResource ActionButton}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Kế hoạch hiện tại -->
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="KẾ HOẠCH HIỆN TẠI" FontWeight="SemiBold" FontSize="16" Foreground="#FFB300" Margin="0,0,0,10" />
+
+                        <!-- Nếu không có kế hoạch -->
+                        <TextBlock
+                            Text="Bạn chưa có kế hoạch cai thuốc nào"
+                            FontStyle="Italic"
+                            Foreground="#666"
+                            Visibility="{Binding HasCurrentPlan, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                            HorizontalAlignment="Center" />
+
+                        <!-- Nếu có kế hoạch -->
+                        <StackPanel Visibility="{Binding HasCurrentPlan, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="Lý do:" FontWeight="SemiBold" />
+                            <TextBlock Text="{Binding CurrentPlan.Reason}" Background="#F5F5F5" Padding="10" Margin="0,0,0,10" />
+
+                            <!-- Dates -->
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Bắt đầu:" FontWeight="SemiBold" />
+                                    <TextBlock Text="{Binding CurrentPlan.StartDate, StringFormat='dd/MM/yyyy'}" Background="#F5F5F5" Padding="10" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Kết thúc:" FontWeight="SemiBold" />
+                                    <TextBlock Text="{Binding CurrentPlan.TargetDate, StringFormat='dd/MM/yyyy'}" Background="#F5F5F5" Padding="10" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Tiến độ -->
+                            <TextBlock Text="Tiến độ:" FontWeight="SemiBold" />
+                            <StackPanel Margin="0,0,0,15">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding PlanProgress}" FontSize="28" FontWeight="Bold" Foreground="#FFB300" />
+                                    <TextBlock Text="%" FontSize="20" VerticalAlignment="Bottom" />
+                                </StackPanel>
+                                <ProgressBar Height="8" Value="{Binding PlanProgress}" Maximum="100" />
+                                <TextBlock Text="{Binding DaysRemaining, StringFormat='Còn {0} ngày'}" HorizontalAlignment="Center" Margin="0,5" />
+                            </StackPanel>
+
+                            <!-- Giai đoạn hiện tại -->
+                            <TextBlock Text="Giai đoạn:" FontWeight="SemiBold" />
+                            <ScrollViewer MaxHeight="150">
+                                <ItemsControl ItemsSource="{Binding CurrentStages}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="#FFF9C4" CornerRadius="6" Padding="10" Margin="0,5">
+                                                <TextBlock Text="{Binding}" />
+                                            </Border>
+>>>>>>> 7f1789faf138182ff7bf292a0978ab50fa8f9d91
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
