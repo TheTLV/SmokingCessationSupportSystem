@@ -7,116 +7,227 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="NHẬT KÝ HÚT THUỐC"
-    Width="800"
-    Height="600"
-    FontFamily="Segoe UI"
+    Width="900"
+    Height="700"
+    FontFamily="Roboto"
+    Background="#FFF3E0"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
     <Window.Resources>
-        <Style x:Key="CardStyle" TargetType="Border">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="Padding" Value="15" />
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
+
+        <!--  Card Style  -->
+        <Style x:Key="CardStyle" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Margin" Value="15" />
+            <Setter Property="Padding" Value="20" />
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect
-                        BlurRadius="10"
-                        ShadowDepth="2"
-                        Color="#10000000" />
+                    <DropShadowEffect BlurRadius="8" ShadowDepth="3" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Header Card Style  -->
+        <Style x:Key="HeaderCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="20,20,20,15" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Header Text Style  -->
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+            <Setter Property="Margin" Value="0,0,0,15" />
+        </Style>
+
+        <!--  Section Header Style  -->
+        <Style x:Key="SectionHeaderStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="0,0,0,20" />
+        </Style>
+
+        <!--  Input Label Style  -->
+        <Style x:Key="InputLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,8,0,5" />
+            <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+        </Style>
+
+        <!--  Primary Button Style  -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Padding" Value="20,10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="#1976D2" />
-            <Setter Property="Margin" Value="0,0,0,10" />
-        </Style>
-
-        <Style x:Key="InputLabelStyle" TargetType="TextBlock">
+        <!--  Secondary Button Style  -->
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Padding" Value="15,8" />
             <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Margin" Value="0,5,0,2" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFF8E1" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <Style
-            x:Key="PrimaryButton"
-            BasedOn="{StaticResource MaterialDesignRaisedButton}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#1976D2" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="15,5" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-        </Style>
-
-        <Style
-            x:Key="SecondaryButton"
-            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
-            TargetType="Button">
-            <Setter Property="BorderBrush" Value="#1976D2" />
-            <Setter Property="Foreground" Value="#1976D2" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="15,5" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-        </Style>
-
+        <!--  DataGrid Style  -->
         <Style x:Key="DataGridStyle" TargetType="DataGrid">
-            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="Margin" Value="0,15,0,0" />
             <Setter Property="AutoGenerateColumns" Value="False" />
             <Setter Property="IsReadOnly" Value="True" />
             <Setter Property="CanUserAddRows" Value="False" />
             <Setter Property="CanUserDeleteRows" Value="False" />
             <Setter Property="CanUserResizeRows" Value="False" />
             <Setter Property="AlternationCount" Value="2" />
-            <Setter Property="AlternatingRowBackground" Value="#FAFAFA" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="AlternatingRowBackground" Value="#FFFDE7" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
             <Setter Property="RowHeaderWidth" Value="0" />
             <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="Background" Value="White" />
         </Style>
 
+        <!--  DataGrid Header Style  -->
         <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#1976D2" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Padding" Value="10,5" />
-        </Style>
-
-        <Style x:Key="StatCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="#F5F7FA" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="15" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Width" Value="200" />
-        </Style>
-
-        <Style x:Key="StatValueStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="#1976D2" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="0,0,1,2" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <!--  Stat Card Style  -->
+        <Style x:Key="StatCardStyle" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Width" Value="220" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Stat Value Style  -->
+        <Style x:Key="StatValueStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
             <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="0,5,0,0" />
+            <Setter Property="Margin" Value="0,8,0,0" />
+        </Style>
+
+        <!--  Stat Label Style  -->
+        <Style x:Key="StatLabelStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+
+        <!--  Input Field Style  -->
+        <Style x:Key="InputFieldStyle" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+
+        <!--  DatePicker Style  -->
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="White" />
         </Style>
     </Window.Resources>
 
-    <Grid Background="#F5F7FA">
+    <Grid Background="{StaticResource PageBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  Header với nút quay lại  -->
-        <Border
-            Grid.Row="0"
-            Padding="10"
-            Background="#E3F2FD">
+        <!--  Header Section  -->
+        <materialDesign:Card Grid.Row="0" Style="{StaticResource HeaderCard}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -124,12 +235,9 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!--  Nút quay về Dashboard  -->
+                <!--  Back Button  -->
                 <Button
                     Grid.Column="0"
-                    Margin="10,0,0,0"
-                    Padding="10,5"
-                    HorizontalAlignment="Left"
                     Click="GoToDashboardButton_Click"
                     Command="{Binding BackToDashboardCommand}"
                     Style="{StaticResource SecondaryButton}">
@@ -137,34 +245,32 @@
                         <materialDesign:PackIcon
                             Width="20"
                             Height="20"
+                            Foreground="{StaticResource HeaderBackground}"
                             Kind="ArrowLeft" />
                         <TextBlock
-                            Margin="5,0,0,0"
+                            Margin="8,0,0,0"
                             VerticalAlignment="Center"
                             Text="Dashboard" />
                     </StackPanel>
                 </Button>
 
-                <!--  Tiêu đề chính  -->
-                <StackPanel
-                    Grid.Column="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
+                <!--  Title  -->
+                <StackPanel Grid.Column="1" Style="{StaticResource SectionHeaderStyle}" HorizontalAlignment="Center">
                     <materialDesign:PackIcon
-                        Width="32"
-                        Height="32"
-                        Margin="0,0,10,0"
-                        Foreground="#1976D2"
+                        Width="36"
+                        Height="36"
+                        Foreground="{StaticResource PrimaryColor}"
                         Kind="NotebookEdit" />
                     <TextBlock
-                        FontSize="24"
+                        Margin="12,0,0,0"
+                        FontSize="26"
                         FontWeight="Bold"
-                        Foreground="#1976D2"
-                        Text="NHẬT KÝ HÚT THUỐC" />
+                        Foreground="{StaticResource HeaderBackground}"
+                        Text="NHẬT KÝ HÚT THUỐC"
+                        VerticalAlignment="Center" />
                 </StackPanel>
             </Grid>
-        </Border>
+        </materialDesign:Card>
 
         <!--  Main Content  -->
         <ScrollViewer
@@ -173,9 +279,19 @@
             VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <!--  Input Section  -->
-                <Border Style="{StaticResource CardStyle}">
+                <materialDesign:Card Style="{StaticResource CardStyle}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="NHẬP THÔNG TIN" />
+                        <StackPanel Style="{StaticResource SectionHeaderStyle}">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                Foreground="{StaticResource PrimaryColor}"
+                                Kind="Pencil" />
+                            <TextBlock 
+                                Margin="10,0,0,0"
+                                Style="{StaticResource HeaderTextStyle}" 
+                                Text="NHẬP THÔNG TIN HÚT THUỐC" />
+                        </StackPanel>
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -189,118 +305,159 @@
                             </Grid.RowDefinitions>
 
                             <!--  Date Input  -->
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="0,0,10,0">
-                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="Ngày ghi nhận" />
+                            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="📅 Ngày ghi nhận" />
                                 <DatePicker
                                     materialDesign:HintAssist.Hint="Chọn ngày"
                                     SelectedDate="{Binding RecordDate}"
-                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                                    Style="{StaticResource DatePickerStyle}" />
                             </StackPanel>
 
                             <!--  Cigarettes Input  -->
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Margin="5,0">
-                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="Số điếu/ngày" />
+                            <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0">
+                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="🚬 Số điếu/ngày" />
                                 <TextBox
                                     materialDesign:HintAssist.Hint="Nhập số điếu"
-                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                    Text="{Binding CigarettesPerDay}" />
+                                    Style="{StaticResource InputFieldStyle}"
+                                    Text="{Binding CigarettesPerDay}"
+                                    PreviewTextInput="NumberOnly_PreviewTextInput" />
                             </StackPanel>
 
                             <!--  Cost Input  -->
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="2"
-                                Margin="10,0,0,0">
-                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="Giá mỗi bao (VND)" />
+                            <StackPanel Grid.Row="0" Grid.Column="2" Margin="10,0,0,0">
+                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="💰 Giá mỗi bao (VND)" />
                                 <TextBox
                                     materialDesign:HintAssist.Hint="Nhập giá tiền"
-                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                    Text="{Binding CostPerPack}" />
+                                    Style="{StaticResource InputFieldStyle}"
+                                    Text="{Binding CostPerPack}"
+                                    PreviewTextInput="NumberOnly_PreviewTextInput" />
                             </StackPanel>
 
                             <!--  Packs Input  -->
-                            <StackPanel
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="0,10,10,0">
-                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="Số bao/tuần" />
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,15,10,0">
+                                <TextBlock Style="{StaticResource InputLabelStyle}" Text="📦 Số bao/tuần" />
                                 <TextBox
                                     materialDesign:HintAssist.Hint="Nhập số bao"
-                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                    Text="{Binding PacksPerWeek}" />
+                                    Style="{StaticResource InputFieldStyle}"
+                                    Text="{Binding PacksPerWeek}"
+                                    PreviewTextInput="NumberOnly_PreviewTextInput" />
                             </StackPanel>
                         </Grid>
 
-                        <StackPanel
-                            Margin="0,15,0,0"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal">
-                            <Button
-                                Command="{Binding SaveCommand}"
-                                Content="LƯU THÔNG TIN"
-                                Style="{StaticResource PrimaryButton}" />
+                        <StackPanel Margin="0,25,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="18"
+                                        Height="18"
+                                        Foreground="Black"
+                                        Kind="ContentSave"
+                                        Margin="0,0,8,0" />
+                                    <TextBlock Text="LƯU THÔNG TIN" />
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
-                </Border>
+                </materialDesign:Card>
 
-                <!--  Quick Stats  -->
-                <Border Margin="0,10,0,0" Style="{StaticResource CardStyle}">
+                <!--  Statistics Section  -->
+                <materialDesign:Card Style="{StaticResource CardStyle}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="THỐNG KÊ NHANH" />
+                        <StackPanel Style="{StaticResource SectionHeaderStyle}">
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                Foreground="{StaticResource SecondaryColor}"
+                                Kind="ChartLine" />
+                            <TextBlock 
+                                Margin="10,0,0,0"
+                                Style="{StaticResource HeaderTextStyle}" 
+                                Text="THỐNG KÊ CHI PHÍ" />
+                        </StackPanel>
 
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                             <!--  Weekly Cost  -->
-                            <Border Style="{StaticResource StatCardStyle}">
+                            <materialDesign:Card Style="{StaticResource StatCardStyle}">
                                 <StackPanel>
-                                    <TextBlock HorizontalAlignment="Center" Text="Chi phí tuần" />
-                                    <TextBlock Style="{StaticResource StatValueStyle}" Text="{Binding WeeklyCost, StringFormat={}{0:N0} VND}" />
+                                    <materialDesign:PackIcon
+                                        Width="32"
+                                        Height="32"
+                                        HorizontalAlignment="Center"
+                                        Foreground="{StaticResource SecondaryColor}"
+                                        Kind="Calendar" />
+                                    <TextBlock Style="{StaticResource StatLabelStyle}" Text="Chi phí tuần" />
+                                    <TextBlock Style="{StaticResource StatValueStyle}" Text="{Binding WeeklyCost, StringFormat={}{0:N0} ₫}" />
                                 </StackPanel>
-                            </Border>
+                            </materialDesign:Card>
 
                             <!--  Monthly Cost  -->
-                            <Border Style="{StaticResource StatCardStyle}">
+                            <materialDesign:Card Style="{StaticResource StatCardStyle}">
                                 <StackPanel>
-                                    <TextBlock HorizontalAlignment="Center" Text="Chi phí tháng" />
-                                    <TextBlock Style="{StaticResource StatValueStyle}" Text="{Binding MonthlyCost, StringFormat={}{0:N0} VND}" />
+                                    <materialDesign:PackIcon
+                                        Width="32"
+                                        Height="32"
+                                        HorizontalAlignment="Center"
+                                        Foreground="#E91E63"
+                                        Kind="CalendarMonth" />
+                                    <TextBlock Style="{StaticResource StatLabelStyle}" Text="Chi phí tháng" />
+                                    <TextBlock Style="{StaticResource StatValueStyle}" Text="{Binding MonthlyCost, StringFormat={}{0:N0} ₫}" />
                                 </StackPanel>
-                            </Border>
+                            </materialDesign:Card>
 
                             <!--  Total Cigarettes  -->
-                            <Border Style="{StaticResource StatCardStyle}">
+                            <materialDesign:Card Style="{StaticResource StatCardStyle}">
                                 <StackPanel>
-                                    <TextBlock HorizontalAlignment="Center" Text="Tổng điếu/tuần" />
+                                    <materialDesign:PackIcon
+                                        Width="32"
+                                        Height="32"
+                                        HorizontalAlignment="Center"
+                                        Foreground="#F44336"
+                                        Kind="Smoking" />
+                                    <TextBlock Style="{StaticResource StatLabelStyle}" Text="Tổng điếu/tuần" />
                                     <TextBlock Style="{StaticResource StatValueStyle}" Text="{Binding TotalCigarettes}" />
                                 </StackPanel>
-                            </Border>
+                            </materialDesign:Card>
                         </StackPanel>
                     </StackPanel>
-                </Border>
+                </materialDesign:Card>
 
                 <!--  History Section  -->
-                <Border Margin="0,10,0,0" Style="{StaticResource CardStyle}">
+                <materialDesign:Card Style="{StaticResource CardStyle}">
                     <StackPanel>
-                        <!--  Thay thế StackPanel lỗi bằng Grid  -->
-                        <Grid>
+                        <Grid Margin="0,0,0,15">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Style="{StaticResource HeaderTextStyle}"
-                                Text="LỊCH SỬ GHI NHẬN" />
+                            
+                            <StackPanel Grid.Column="0" Style="{StaticResource SectionHeaderStyle}">
+                                <materialDesign:PackIcon
+                                    Width="24"
+                                    Height="24"
+                                    Foreground="#4CAF50"
+                                    Kind="History" />
+                                <TextBlock 
+                                    Margin="10,0,0,0"
+                                    Style="{StaticResource HeaderTextStyle}" 
+                                    Text="LỊCH SỬ GHI NHẬN" />
+                            </StackPanel>
+                            
                             <Button
                                 Grid.Column="1"
                                 HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
                                 Command="{Binding ExportCommand}"
-                                Content="XUẤT BÁO CÁO"
-                                Style="{StaticResource SecondaryButton}" />
+                                Style="{StaticResource SecondaryButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="16"
+                                        Height="16"
+                                        Foreground="{StaticResource HeaderBackground}"
+                                        Kind="FileChart"
+                                        Margin="0,0,6,0" />
+                                    <TextBlock Text="XUẤT BÁO CÁO" />
+                                </StackPanel>
+                            </Button>
                         </Grid>
 
                         <DataGrid ItemsSource="{Binding HistoryRecords}" Style="{StaticResource DataGridStyle}">
@@ -312,23 +469,23 @@
                                 <DataGridTextColumn
                                     Width="*"
                                     Binding="{Binding RecordDate, StringFormat={}{0:dd/MM/yyyy}}"
-                                    Header="Ngày" />
+                                    Header="📅 NGÀY" />
                                 <DataGridTextColumn
                                     Width="*"
                                     Binding="{Binding CigarettesPerDay}"
-                                    Header="Số điếu/ngày" />
+                                    Header="🚬 ĐIẾU/NGÀY" />
                                 <DataGridTextColumn
                                     Width="*"
-                                    Binding="{Binding CostPerPack, StringFormat={}{0:N0}}"
-                                    Header="Giá mỗi bao (VND)" />
+                                    Binding="{Binding CostPerPack, StringFormat={}{0:N0} ₫}"
+                                    Header="💰 GIÁ/BAO" />
                                 <DataGridTextColumn
                                     Width="*"
                                     Binding="{Binding PacksPerWeek}"
-                                    Header="Số bao/tuần" />
+                                    Header="📦 BAO/TUẦN" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
-                </Border>
+                </materialDesign:Card>
             </StackPanel>
         </ScrollViewer>
     </Grid>

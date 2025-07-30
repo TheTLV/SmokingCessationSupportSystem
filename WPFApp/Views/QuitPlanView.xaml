@@ -5,66 +5,169 @@
     xmlns:conv="clr-namespace:WPFApp.Converters"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="Kế hoạch cai thuốc"
-    Width="1000"
-    Height="700"
-    FontFamily="Segoe UI"
+    Width="1100"
+    Height="750"
+    FontFamily="Roboto"
+    Background="#FFF3E0"
     WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <!--  Styles  -->
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
+
+        <!--  Header Text Style  -->
         <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="22" />
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="#1976D2" />
-            <Setter Property="Margin" Value="0,0,0,15" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+            <Setter Property="Margin" Value="0,0,0,20" />
         </Style>
 
-        <Style x:Key="SectionCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="20" />
-            <Setter Property="Margin" Value="10" />
+        <!--  Section Card Style  -->
+        <Style x:Key="SectionCardStyle" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Padding" Value="25" />
+            <Setter Property="Margin" Value="15" />
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect
-                        BlurRadius="10"
-                        ShadowDepth="2"
-                        Color="#10000000" />
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="4" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Stage Card Style  -->
+        <Style x:Key="StageCardStyle" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="Margin" Value="0,8,0,0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFECB3" />
+        </Style>
+
+        <!--  Primary Button Style  -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="20,12" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="0,20,0,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="#55000000" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="StageCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="#FAFAFA" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="6" />
-            <Setter Property="Padding" Value="12" />
-            <Setter Property="Margin" Value="0,8,0,0" />
-        </Style>
-
-        <Style
-            x:Key="PrimaryButton"
-            BasedOn="{StaticResource MaterialDesignRaisedButton}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#1976D2" />
-            <Setter Property="Foreground" Value="White" />
+        <!--  Back Button Style  -->
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="BorderThickness" Value="2" />
             <Setter Property="Padding" Value="15,8" />
             <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Margin" Value="0,15,0,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFF8E1" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <Style
-            x:Key="BackButtonStyle"
-            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
-            TargetType="Button">
-            <Setter Property="Foreground" Value="#1976D2" />
-            <Setter Property="BorderBrush" Value="#1976D2" />
-            <Setter Property="Padding" Value="10,5" />
+        <!--  Header Card Style  -->
+        <Style x:Key="HeaderCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="20,20,20,15" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Input Field Styles  -->
+        <Style x:Key="InputFieldStyle" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+
+        <!--  Label Style  -->
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+
+        <!--  Progress Styles  -->
+        <Style x:Key="ProgressValueStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
         </Style>
 
         <!--  Converters  -->
@@ -72,37 +175,37 @@
         <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
     </Window.Resources>
 
-    <Grid Background="#F5F7FA">
+    <Grid Background="{StaticResource PageBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  Header with Back Button  -->
-        <Border
-            Grid.Row="0"
-            Padding="15"
-            Background="#E3F2FD">
+        <!--  Header Section  -->
+        <materialDesign:Card Grid.Row="0" Style="{StaticResource HeaderCard}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <!--  Title Section  -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
                     <materialDesign:PackIcon
-                        Width="32"
-                        Height="32"
-                        Foreground="#1976D2"
+                        Width="36"
+                        Height="36"
+                        Foreground="{StaticResource PrimaryColor}"
                         Kind="CalendarEdit" />
                     <TextBlock
-                        Margin="10,0,0,0"
-                        FontSize="22"
+                        Margin="15,0,0,0"
+                        FontSize="26"
                         FontWeight="Bold"
-                        Foreground="#0D47A1"
-                        Text="KẾ HOẠCH CAI THUỐC LÁ" />
+                        Foreground="{StaticResource HeaderBackground}"
+                        Text="KẾ HOẠCH CAI THUỐC LÁ"
+                        VerticalAlignment="Center" />
                 </StackPanel>
 
+                <!--  Back Button  -->
                 <Button
                     Grid.Column="1"
                     Click="GoToDashboardButton_Click"
@@ -112,17 +215,18 @@
                         <materialDesign:PackIcon
                             Width="20"
                             Height="20"
+                            Foreground="{StaticResource HeaderBackground}"
                             Kind="ArrowLeft" />
-                        <TextBlock Margin="5,0,0,0" Text="Quay lại" />
+                        <TextBlock Margin="8,0,0,0" Text="Quay lại Dashboard" />
                     </StackPanel>
                 </Button>
             </Grid>
-        </Border>
+        </materialDesign:Card>
 
         <!--  Main Content  -->
         <ScrollViewer
             Grid.Row="1"
-            Padding="15"
+            Padding="5"
             VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -131,212 +235,315 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  Create New Plan Section  -->
-                <Border Grid.Column="0" Style="{StaticResource SectionCardStyle}">
+                <materialDesign:Card Grid.Column="0" Style="{StaticResource SectionCardStyle}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="TẠO KẾ HOẠCH MỚI" />
+                        <!--  Section Header  -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <materialDesign:PackIcon
+                                Width="28"
+                                Height="28"
+                                Foreground="{StaticResource PrimaryColor}"
+                                Kind="PlusCircle" />
+                            <TextBlock 
+                                Margin="12,0,0,0"
+                                Style="{StaticResource HeaderTextStyle}" 
+                                Text="TẠO KẾ HOẠCH MỚI" />
+                        </StackPanel>
 
                         <!--  Reason Input  -->
-                        <TextBlock
-                            Margin="0,0,0,5"
-                            FontWeight="SemiBold"
-                            Text="Lý do cai thuốc:" />
-                        <TextBox
-                            MinHeight="80"
-                            materialDesign:HintAssist.Hint="Nhập lý do của bạn"
-                            AcceptsReturn="True"
-                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                            Text="{Binding NewPlanReason}"
-                            TextWrapping="Wrap" />
+                        <StackPanel Margin="0,0,0,20">
+                            <TextBlock Style="{StaticResource LabelStyle}" Text="🎯 Lý do cai thuốc:" />
+                            <TextBox
+                                MinHeight="90"
+                                materialDesign:HintAssist.Hint="Ví dụ: Vì sức khỏe, tiết kiệm tiền, làm gương cho con..."
+                                AcceptsReturn="True"
+                                Style="{StaticResource InputFieldStyle}"
+                                Text="{Binding NewPlanReason}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
 
                         <!--  Date Range  -->
-                        <Grid Margin="0,15,0,15">
+                        <Grid Margin="0,0,0,20">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="15" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <StackPanel>
-                                <TextBlock
-                                    Margin="0,0,0,5"
-                                    FontWeight="SemiBold"
-                                    Text="Ngày bắt đầu:" />
-                                <DatePicker SelectedDate="{Binding NewPlanStartDate}" Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                            
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Style="{StaticResource LabelStyle}" Text="📅 Ngày bắt đầu:" />
+                                <DatePicker 
+                                    SelectedDate="{Binding NewPlanStartDate}" 
+                                    Style="{StaticResource DatePickerStyle}" />
                             </StackPanel>
+                            
                             <StackPanel Grid.Column="2">
-                                <TextBlock
-                                    Margin="0,0,0,5"
-                                    FontWeight="SemiBold"
-                                    Text="Ngày kết thúc:" />
-                                <DatePicker SelectedDate="{Binding NewPlanTargetDate}" Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                                <TextBlock Style="{StaticResource LabelStyle}" Text="🏁 Ngày kết thúc:" />
+                                <DatePicker 
+                                    SelectedDate="{Binding NewPlanTargetDate}" 
+                                    Style="{StaticResource DatePickerStyle}" />
                             </StackPanel>
                         </Grid>
 
                         <!--  Stages Selection  -->
-                        <TextBlock FontWeight="SemiBold" Text="Chọn các giai đoạn:" />
-                        <ScrollViewer MaxHeight="250" Margin="0,5,0,15">
-                            <ItemsControl ItemsSource="{Binding StageTemplates}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Style="{StaticResource StageCardStyle}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <CheckBox
-                                                    Grid.Column="0"
-                                                    Margin="0,2,10,0"
-                                                    VerticalAlignment="Top"
-                                                    IsChecked="{Binding IsSelected}" />
-
-                                                <StackPanel Grid.Column="1">
-                                                    <TextBlock FontWeight="SemiBold" Text="{Binding Name}" />
-                                                    <TextBlock
-                                                        Margin="0,3,0,0"
-                                                        FontSize="13"
-                                                        Foreground="#666666"
-                                                        Text="{Binding Description}"
-                                                        TextWrapping="Wrap" />
-                                                    <TextBlock
-                                                        Margin="0,5,0,0"
-                                                        FontSize="12"
-                                                        Foreground="#888888"
-                                                        Text="{Binding Duration, StringFormat='Thời lượng: {0} ngày'}" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-
-                        <Button
-                            Command="{Binding CreatePlanCommand}"
-                            Content="TẠO KẾ HOẠCH"
-                            Style="{StaticResource PrimaryButton}" />
-                    </StackPanel>
-                </Border>
-
-                <!--  Current Plan Section  -->
-                <Border
-                    Grid.Column="1"
-                    Margin="10,0,0,0"
-                    Style="{StaticResource SectionCardStyle}">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="KẾ HOẠCH HIỆN TẠI" />
-
-                        <!--  No Plan Message  -->
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontStyle="Italic"
-                            Foreground="#666666"
-                            Text="Bạn chưa có kế hoạch cai thuốc nào"
-                            Visibility="{Binding HasCurrentPlan, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-                        <!--  Plan Details  -->
-                        <StackPanel Visibility="{Binding HasCurrentPlan, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <!--  Reason  -->
-                            <TextBlock
-                                Margin="0,0,0,5"
-                                FontWeight="SemiBold"
-                                Text="Lý do cai thuốc:" />
-                            <Border
-                                Padding="10"
-                                Background="#F5F5F5"
-                                BorderBrush="#E0E0E0"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                                <TextBlock Text="{Binding CurrentPlan.Reason}" TextWrapping="Wrap" />
-                            </Border>
-
-                            <!--  Date Range  -->
-                            <Grid Margin="0,15,0,15">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                    <TextBlock
-                                        Margin="0,0,0,5"
-                                        FontWeight="SemiBold"
-                                        Text="Ngày bắt đầu:" />
-                                    <Border
-                                        Padding="10"
-                                        Background="#F5F5F5"
-                                        BorderBrush="#E0E0E0"
-                                        BorderThickness="1"
-                                        CornerRadius="4">
-                                        <TextBlock Text="{Binding CurrentPlan.StartDate, StringFormat='dd/MM/yyyy'}" />
-                                    </Border>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock
-                                        Margin="0,0,0,5"
-                                        FontWeight="SemiBold"
-                                        Text="Ngày kết thúc:" />
-                                    <Border
-                                        Padding="10"
-                                        Background="#F5F5F5"
-                                        BorderBrush="#E0E0E0"
-                                        BorderThickness="1"
-                                        CornerRadius="4">
-                                        <TextBlock Text="{Binding CurrentPlan.TargetDate, StringFormat='dd/MM/yyyy'}" />
-                                    </Border>
-                                </StackPanel>
-                            </Grid>
-
-                            <!--  Progress  -->
-                            <TextBlock
-                                Margin="0,0,0,5"
-                                FontWeight="SemiBold"
-                                Text="Tiến độ:" />
-                            <StackPanel Margin="0,0,0,15">
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        FontSize="28"
-                                        FontWeight="Bold"
-                                        Foreground="#1976D2"
-                                        Text="{Binding PlanProgress}" />
-                                    <TextBlock
-                                        Margin="2,0,0,0"
-                                        VerticalAlignment="Bottom"
-                                        FontSize="20"
-                                        Text="%" />
-                                </StackPanel>
-                                <ProgressBar
-                                    Height="8"
-                                    Margin="0,5,0,0"
-                                    HorizontalAlignment="Stretch"
-                                    Maximum="100"
-                                    Value="{Binding PlanProgress}" />
-                                <TextBlock
-                                    Margin="0,5,0,0"
-                                    HorizontalAlignment="Center"
-                                    Text="{Binding DaysRemaining, StringFormat='Còn {0} ngày'}" />
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                <materialDesign:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Foreground="{StaticResource SecondaryColor}"
+                                    Kind="CheckboxMultipleMarked" />
+                                <TextBlock 
+                                    Margin="8,0,0,0"
+                                    Style="{StaticResource LabelStyle}" 
+                                    Text="Chọn các giai đoạn thực hiện:" />
                             </StackPanel>
-
-                            <!--  Stages  -->
-                            <TextBlock
-                                Margin="0,0,0,5"
-                                FontWeight="SemiBold"
-                                Text="Các giai đoạn:" />
-                            <ScrollViewer MaxHeight="150">
-                                <ItemsControl ItemsSource="{Binding CurrentStages}">
+                            
+                            <ScrollViewer MaxHeight="280" Margin="0,0,0,10">
+                                <ItemsControl ItemsSource="{Binding StageTemplates}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Style="{StaticResource StageCardStyle}">
-                                                <TextBlock Text="{Binding}" />
-                                            </Border>
+                                            <materialDesign:Card Style="{StaticResource StageCardStyle}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <CheckBox
+                                                        Grid.Column="0"
+                                                        Margin="0,2,15,0"
+                                                        VerticalAlignment="Top"
+                                                        IsChecked="{Binding IsSelected}" />
+
+                                                    <StackPanel Grid.Column="1">
+                                                        <TextBlock 
+                                                            FontWeight="Bold" 
+                                                            Foreground="{StaticResource HeaderBackground}"
+                                                            Text="{Binding Name}" />
+                                                        <TextBlock
+                                                            Margin="0,5,0,0"
+                                                            FontSize="13"
+                                                            Foreground="{StaticResource LightTextColor}"
+                                                            Text="{Binding Description}"
+                                                            TextWrapping="Wrap" />
+                                                        <Border
+                                                            Background="{StaticResource AccentColor}"
+                                                            CornerRadius="10"
+                                                            Padding="8,3"
+                                                            HorizontalAlignment="Left"
+                                                            Margin="0,8,0,0">
+                                                            <TextBlock
+                                                                FontSize="11"
+                                                                FontWeight="SemiBold"
+                                                                Foreground="{StaticResource DarkTextColor}"
+                                                                Text="{Binding Duration, StringFormat='⏱️ {0} ngày'}" />
+                                                        </Border>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </materialDesign:Card>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
                         </StackPanel>
+
+                        <!--  Create Button  -->
+                        <Button
+                            Command="{Binding CreatePlanCommand}"
+                            Style="{StaticResource PrimaryButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Foreground="Black"
+                                    Kind="Plus"
+                                    Margin="0,0,10,0" />
+                                <TextBlock Text="TẠO KẾ HOẠCH" />
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
-                </Border>
+                </materialDesign:Card>
+
+                <!--  Current Plan Section  -->
+                <materialDesign:Card Grid.Column="1" Style="{StaticResource SectionCardStyle}">
+                    <StackPanel>
+                        <!--  Section Header  -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <materialDesign:PackIcon
+                                Width="28"
+                                Height="28"
+                                Foreground="{StaticResource SecondaryColor}"
+                                Kind="ClipboardText" />
+                            <TextBlock 
+                                Margin="12,0,0,0"
+                                Style="{StaticResource HeaderTextStyle}" 
+                                Text="KẾ HOẠCH HIỆN TẠI" />
+                        </StackPanel>
+
+                        <!--  No Plan Message  -->
+                        <Border
+                            Background="#FFF8E1"
+                            CornerRadius="10"
+                            Padding="20"
+                            Visibility="{Binding HasCurrentPlan, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <materialDesign:PackIcon
+                                    Width="48"
+                                    Height="48"
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource LightTextColor}"
+                                    Kind="ClipboardOff"
+                                    Margin="0,0,0,15" />
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource LightTextColor}"
+                                    Text="Chưa có kế hoạch cai thuốc"
+                                    TextAlignment="Center" />
+                                <TextBlock
+                                    FontSize="14"
+                                    Foreground="{StaticResource LightTextColor}"
+                                    Text="Hãy tạo kế hoạch đầu tiên của bạn!"
+                                    TextAlignment="Center"
+                                    Margin="0,5,0,0" />
+                            </StackPanel>
+                        </Border>
+
+                        <!--  Plan Details  -->
+                        <StackPanel Visibility="{Binding HasCurrentPlan, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <!--  Progress Circle  -->
+                            <Border
+                                Background="#FFF8E1"
+                                CornerRadius="15"
+                                Padding="20"
+                                Margin="0,0,0,20">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource ProgressValueStyle}" Text="{Binding PlanProgress}" />
+                                        <TextBlock
+                                            Margin="3,0,0,0"
+                                            VerticalAlignment="Bottom"
+                                            FontSize="24"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource HeaderBackground}"
+                                            Text="%" />
+                                    </StackPanel>
+                                    <ProgressBar
+                                        Height="12"
+                                        Margin="0,10,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        Maximum="100"
+                                        Value="{Binding PlanProgress}"
+                                        Foreground="{StaticResource PrimaryColor}" />
+                                    <TextBlock
+                                        Margin="0,8,0,0"
+                                        HorizontalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource DarkTextColor}"
+                                        Text="{Binding DaysRemaining, StringFormat='⏳ Còn {0} ngày'}" />
+                                </StackPanel>
+                            </Border>
+
+                            <!--  Reason  -->
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Style="{StaticResource LabelStyle}" Text="🎯 Lý do cai thuốc:" />
+                                <Border
+                                    Padding="12"
+                                    Background="#FFFDE7"
+                                    BorderBrush="#FFECB3"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                                    <TextBlock 
+                                        Text="{Binding CurrentPlan.Reason}" 
+                                        TextWrapping="Wrap"
+                                        Foreground="{StaticResource DarkTextColor}" />
+                                </Border>
+                            </StackPanel>
+
+                            <!--  Date Range  -->
+                            <Grid Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="15" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="📅 Ngày bắt đầu:" />
+                                    <Border
+                                        Padding="12"
+                                        Background="#FFFDE7"
+                                        BorderBrush="#FFECB3"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                        <TextBlock 
+                                            Text="{Binding CurrentPlan.StartDate, StringFormat='dd/MM/yyyy'}"
+                                            Foreground="{StaticResource DarkTextColor}" />
+                                    </Border>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Style="{StaticResource LabelStyle}" Text="🏁 Ngày kết thúc:" />
+                                    <Border
+                                        Padding="12"
+                                        Background="#FFFDE7"
+                                        BorderBrush="#FFECB3"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                        <TextBlock 
+                                            Text="{Binding CurrentPlan.TargetDate, StringFormat='dd/MM/yyyy'}"
+                                            Foreground="{StaticResource DarkTextColor}" />
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+
+                            <!--  Stages  -->
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <materialDesign:PackIcon
+                                        Width="20"
+                                        Height="20"
+                                        Foreground="{StaticResource SecondaryColor}"
+                                        Kind="CheckboxMultipleMarked" />
+                                    <TextBlock 
+                                        Margin="8,0,0,0"
+                                        Style="{StaticResource LabelStyle}" 
+                                        Text="Các giai đoạn thực hiện:" />
+                                </StackPanel>
+                                
+                                <ScrollViewer MaxHeight="180">
+                                    <ItemsControl ItemsSource="{Binding CurrentStages}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border
+                                                    Background="#FFF8E1"
+                                                    BorderBrush="#FFECB3"
+                                                    BorderThickness="1"
+                                                    CornerRadius="8"
+                                                    Padding="12"
+                                                    Margin="0,5,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon
+                                                            Width="16"
+                                                            Height="16"
+                                                            Foreground="#4CAF50"
+                                                            Kind="CheckCircle"
+                                                            Margin="0,0,10,0" />
+                                                        <TextBlock 
+                                                            Text="{Binding}" 
+                                                            TextWrapping="Wrap"
+                                                            Foreground="{StaticResource DarkTextColor}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:Card>
             </Grid>
         </ScrollViewer>
     </Grid>
