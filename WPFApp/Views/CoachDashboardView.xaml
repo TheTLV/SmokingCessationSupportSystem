@@ -7,6 +7,8 @@
     Title="Coach Dashboard"
     Width="1200"
     Height="800"
+    FontFamily="Roboto"
+    Background="#FFF3E0"
     WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -16,60 +18,172 @@
         <conv:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
         <conv:BoolToAlignmentConverter x:Key="BoolToAlignmentConverter" />
 
-        <!--  Styles  -->
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
+
+        <!--  Patient Card Style  -->
         <Style x:Key="PatientCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="5" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="10" />
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Padding" Value="12" />
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect
-                        BlurRadius="5"
+                        BlurRadius="6"
                         ShadowDepth="2"
-                        Color="#10000000" />
+                        Color="#55000000" />
                 </Setter.Value>
             </Setter>
         </Style>
 
+        <!--  Patient Message Style  -->
         <Style x:Key="PatientMessageStyle" TargetType="Border">
-            <Setter Property="Background" Value="#E3F2FD" />
-            <Setter Property="CornerRadius" Value="10 10 10 0" />
-            <Setter Property="Padding" Value="10" />
-            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="CornerRadius" Value="12 12 12 4" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="0,5,50,5" />
+            <Setter Property="BorderBrush" Value="#FFECB3" />
+            <Setter Property="BorderThickness" Value="1" />
         </Style>
 
+        <!--  Coach Message Style  -->
         <Style x:Key="CoachMessageStyle" TargetType="Border">
-            <Setter Property="Background" Value="#1976D2" />
-            <Setter Property="CornerRadius" Value="10 10 0 10" />
-            <Setter Property="Padding" Value="10" />
-            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="CornerRadius" Value="12 12 4 12" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="50,5,0,5" />
             <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
 
+        <!--  Header Card Style  -->
+        <Style x:Key="HeaderCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="0,0,0,2" />
+            <Setter Property="Padding" Value="15" />
+        </Style>
+
+        <!--  Sidebar Header Style  -->
+        <Style x:Key="SidebarHeaderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="0,0,2,2" />
+            <Setter Property="Padding" Value="15" />
+        </Style>
+
+        <!--  Chat Header Style  -->
+        <Style x:Key="ChatHeaderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="0,0,0,2" />
+            <Setter Property="Padding" Value="15" />
+        </Style>
+
+        <!--  Logout Button Style  -->
+        <Style x:Key="LogoutButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Send Button Style  -->
+        <Style x:Key="SendButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Empty State Text Style  -->
         <Style x:Key="EmptyStateTextStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Foreground" Value="#757575" />
+            <Setter Property="Foreground" Value="{StaticResource LightTextColor}" />
             <Setter Property="FontSize" Value="16" />
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
+
+        <!--  Message Input Style  -->
+        <Style x:Key="MessageInputStyle" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="{StaticResource PageBackground}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="320" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!--  Patients List Column  -->
         <Border
             Grid.Column="0"
-            BorderBrush="#E0E0E0"
-            BorderThickness="0,0,1,0">
+            Background="{StaticResource CardBackground}"
+            BorderBrush="#FFD54F"
+            BorderThickness="0,0,2,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -77,121 +191,153 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!--  Trong phần Header của cột chat  -->
-                <Border
-                    Grid.Row="0"
-                    Padding="10"
-                    Background="#FAFAFA"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="0,0,0,1">
+                <!--  Sidebar Header  -->
+                <Border Grid.Row="0" Style="{StaticResource SidebarHeaderStyle}">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                        <!--  Logout Button - Đã chuyển về bên trái  -->
+                        <!--  Title  -->
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+                            <materialDesign:PackIcon
+                                Width="28"
+                                Height="28"
+                                Foreground="{StaticResource PrimaryColor}"
+                                Kind="AccountSupervisor"
+                                Margin="0,0,10,0" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource HeaderBackground}"
+                                Text="BẢNG ĐIỀU KHIỂN COACH" />
+                        </StackPanel>
+
+                        <!--  Logout Button  -->
                         <Button
-                            Grid.Column="0"
-                            Width="122"
-                            Margin="0,4,10,4"
+                            Grid.Row="1"
                             HorizontalAlignment="Left"
                             Click="Button_Click"
                             Command="{Binding LogoutCommand}"
-                            Style="{StaticResource MaterialDesignOutlinedButton}">
+                            Style="{StaticResource LogoutButtonStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon
-                                    Width="20"
-                                    Height="20"
-                                    Margin="0,0,5,0"
+                                    Width="18"
+                                    Height="18"
+                                    Margin="0,0,8,0"
+                                    Foreground="Black"
                                     Kind="Logout" />
                                 <TextBlock Text="Đăng xuất" />
                             </StackPanel>
                         </Button>
                     </Grid>
                 </Border>
+
                 <!--  Patients List  -->
-                <ScrollViewer Grid.Row="1">
-                    <ItemsControl Margin="5" ItemsSource="{Binding Patients}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource PatientCardStyle}">
-                                    <Button
-                                        Padding="0"
-                                        Command="{Binding DataContext.SelectPatientCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Row="1" Padding="10">
+                    <StackPanel>
+                        <!--  Section Title  -->
+                        <TextBlock
+                            Margin="8,0,8,15"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource HeaderBackground}"
+                            Text="DANH SÁCH BỆNH NHÂN" />
 
-                                            <!--  Patient Avatar  -->
-                                            <Ellipse
-                                                Width="50"
-                                                Height="50"
-                                                Fill="#E0E0E0">
-                                                <Ellipse.OpacityMask>
-                                                    <VisualBrush Stretch="Fill">
-                                                        <VisualBrush.Visual>
-                                                            <materialDesign:PackIcon
-                                                                Width="50"
-                                                                Height="50"
-                                                                Kind="Account" />
-                                                        </VisualBrush.Visual>
-                                                    </VisualBrush>
-                                                </Ellipse.OpacityMask>
-                                            </Ellipse>
+                        <!--  Patients ItemsControl  -->
+                        <ItemsControl ItemsSource="{Binding Patients}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource PatientCardStyle}">
+                                        <Button
+                                            Padding="0"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Command="{Binding DataContext.SelectPatientCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding}"
+                                            Cursor="Hand">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
 
-                                            <!--  Patient Info  -->
-                                            <StackPanel Grid.Column="1" Margin="10,0">
-                                                <TextBlock
-                                                    FontWeight="Bold"
-                                                    Text="{Binding FullName}"
-                                                    TextTrimming="CharacterEllipsis" />
-                                                <TextBlock
-                                                    FontSize="12"
-                                                    Foreground="#757575"
-                                                    Text="{Binding LastMessageTime, StringFormat='HH:mm dd/MM'}" />
-                                                <TextBlock
-                                                    FontSize="12"
-                                                    Foreground="#1976D2"
-                                                    Text="{Binding UnreadCount, StringFormat='{}{0} tin nhắn mới'}"
-                                                    Visibility="{Binding UnreadCount, Converter={StaticResource ZeroToVisibilityConverter}}" />
-                                            </StackPanel>
+                                                <!--  Patient Avatar  -->
+                                                <Ellipse
+                                                    Width="45"
+                                                    Height="45"
+                                                    Fill="{StaticResource PrimaryColor}">
+                                                    <Ellipse.OpacityMask>
+                                                        <VisualBrush Stretch="Fill" Visual="{materialDesign:PackIcon Kind=Account}" />
+                                                    </Ellipse.OpacityMask>
+                                                </Ellipse>
 
-                                            <!--  Navigation Icon  -->
-                                            <materialDesign:PackIcon
-                                                Grid.Column="2"
-                                                VerticalAlignment="Center"
-                                                Kind="ChevronRight" />
-                                        </Grid>
-                                    </Button>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                                                <!--  Patient Info  -->
+                                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                    <TextBlock
+                                                        FontWeight="Bold"
+                                                        FontSize="14"
+                                                        Foreground="{StaticResource HeaderBackground}"
+                                                        Text="{Binding FullName}"
+                                                        TextTrimming="CharacterEllipsis" />
+                                                    <TextBlock
+                                                        FontSize="12"
+                                                        Foreground="{StaticResource LightTextColor}"
+                                                        Text="{Binding LastMessageTime, StringFormat='HH:mm dd/MM'}" />
+                                                    <Border
+                                                        Background="{StaticResource AccentColor}"
+                                                        CornerRadius="10"
+                                                        Padding="6,2"
+                                                        Visibility="{Binding UnreadCount, Converter={StaticResource ZeroToVisibilityConverter}}"
+                                                        HorizontalAlignment="Left"
+                                                        Margin="0,3,0,0">
+                                                        <TextBlock
+                                                            FontSize="11"
+                                                            FontWeight="Bold"
+                                                            Foreground="Black"
+                                                            Text="{Binding UnreadCount, StringFormat='{}{0} tin nhắn mới'}" />
+                                                    </Border>
+                                                </StackPanel>
+
+                                                <!--  Navigation Icon  -->
+                                                <materialDesign:PackIcon
+                                                    Grid.Column="2"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource PrimaryColor}"
+                                                    Kind="ChevronRight" />
+                                            </Grid>
+                                        </Button>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </ScrollViewer>
 
                 <!--  Status Bar  -->
-                <Border
-                    Grid.Row="2"
-                    Padding="10"
-                    Background="#FAFAFA"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="0,1,0,0">
-                    <TextBlock
-                        FontSize="12"
-                        Foreground="#757575"
-                        Text="{Binding Patients.Count, StringFormat='Tổng: {0} bệnh nhân'}" />
+                <Border Grid.Row="2" Style="{StaticResource SidebarHeaderStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="16"
+                            Height="16"
+                            Foreground="{StaticResource SecondaryColor}"
+                            Kind="AccountMultiple"
+                            Margin="0,0,8,0" />
+                        <TextBlock
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource HeaderBackground}"
+                            Text="{Binding Patients.Count, StringFormat='Tổng: {0} bệnh nhân'}" />
+                    </StackPanel>
                 </Border>
             </Grid>
         </Border>
 
         <!--  Chat Column  -->
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="{StaticResource CardBackground}">
             <!--  Chat Panel (visible when patient selected)  -->
             <Grid Visibility="{Binding IsPatientSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid.RowDefinitions>
@@ -201,40 +347,36 @@
                 </Grid.RowDefinitions>
 
                 <!--  Chat Header  -->
-                <Border
-                    Grid.Row="0"
-                    Padding="10"
-                    Background="#FAFAFA"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="0,0,0,1">
+                <Border Grid.Row="0" Style="{StaticResource ChatHeaderStyle}">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse
                             Width="40"
                             Height="40"
-                            Margin="0,0,10,0"
-                            Fill="#E0E0E0">
+                            Margin="0,0,12,0"
+                            Fill="{StaticResource PrimaryColor}">
                             <Ellipse.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <materialDesign:PackIcon
-                                            Width="40"
-                                            Height="40"
-                                            Kind="Account" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
+                                <VisualBrush Stretch="Fill" Visual="{materialDesign:PackIcon Kind=Account}" />
                             </Ellipse.OpacityMask>
                         </Ellipse>
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontWeight="Bold"
-                            Text="{Binding SelectedPatient.FullName}" />
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock
+                                FontWeight="Bold"
+                                FontSize="16"
+                                Foreground="{StaticResource HeaderBackground}"
+                                Text="{Binding SelectedPatient.FullName}" />
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{StaticResource LightTextColor}"
+                                Text="Đang hoạt động" />
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
                 <!--  Messages  -->
                 <ScrollViewer
                     Grid.Row="1"
-                    Padding="15"
+                    Padding="20"
+                    Background="#FFFDE7"
                     VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Messages}">
                         <ItemsControl.ItemTemplate>
@@ -246,27 +388,33 @@
                                         Style="{StaticResource PatientMessageStyle}"
                                         Visibility="{Binding IsIncomingMessage, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Content}" TextWrapping="Wrap" />
+                                            <TextBlock 
+                                                Text="{Binding Content}" 
+                                                TextWrapping="Wrap"
+                                                Foreground="{StaticResource DarkTextColor}" />
                                             <TextBlock
                                                 HorizontalAlignment="Right"
                                                 FontSize="10"
-                                                Foreground="#757575"
-                                                Text="{Binding TimeDisplay}" />
+                                                Foreground="{StaticResource LightTextColor}"
+                                                Text="{Binding TimeDisplay}"
+                                                Margin="0,5,0,0" />
                                         </StackPanel>
                                     </Border>
 
                                     <!--  Coach Message  -->
-                                    <Border Style="{StaticResource CoachMessageStyle}" Visibility="{Binding IsIncomingMessage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                    <Border Style="{StaticResource CoachMessageStyle}" 
+                                            Visibility="{Binding IsIncomingMessage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                         <StackPanel>
                                             <TextBlock
-                                                Foreground="White"
+                                                Foreground="Black"
                                                 Text="{Binding Content}"
                                                 TextWrapping="Wrap" />
                                             <TextBlock
                                                 HorizontalAlignment="Right"
                                                 FontSize="10"
-                                                Foreground="#BBDEFB"
-                                                Text="{Binding TimeDisplay}" />
+                                                Foreground="#755000"
+                                                Text="{Binding TimeDisplay}"
+                                                Margin="0,5,0,0" />
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -276,12 +424,7 @@
                 </ScrollViewer>
 
                 <!--  Message Input  -->
-                <Border
-                    Grid.Row="2"
-                    Padding="10"
-                    Background="#FAFAFA"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="0,1,0,0">
+                <Border Grid.Row="2" Style="{StaticResource ChatHeaderStyle}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -289,31 +432,41 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox
-                            VerticalContentAlignment="Center"
-                            materialDesign:HintAssist.Hint="Nhập tin nhắn..."
+                            Style="{StaticResource MessageInputStyle}"
+                            materialDesign:HintAssist.Hint="Nhập tin nhắn hỗ trợ..."
                             Text="{Binding NewMessage, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Button
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             Command="{Binding SendCommand}"
-                            Style="{StaticResource MaterialDesignIconButton}">
-                            <materialDesign:PackIcon Foreground="#1976D2" Kind="Send" />
+                            Style="{StaticResource SendButtonStyle}">
+                            <materialDesign:PackIcon Foreground="Black" Kind="Send" />
                         </Button>
                     </Grid>
                 </Border>
             </Grid>
 
             <!--  Empty State (visible when no patient selected)  -->
-            <Border Background="#FAFAFA" Visibility="{Binding IsPatientSelected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <Border 
+                Background="#FFFDE7" 
+                Visibility="{Binding IsPatientSelected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <materialDesign:PackIcon
-                        Width="64"
-                        Height="64"
+                        Width="80"
+                        Height="80"
                         Margin="0,0,0,20"
-                        Foreground="#BDBDBD"
-                        Kind="MessageQuestion" />
-                    <TextBlock Style="{StaticResource EmptyStateTextStyle}" Text="Chọn bệnh nhân từ danh sách bên trái để bắt đầu trò chuyện" />
+                        Foreground="{StaticResource PrimaryColor}"
+                        Kind="MessageTextOutline" />
+                    <TextBlock 
+                        Style="{StaticResource EmptyStateTextStyle}" 
+                        Text="Chọn bệnh nhân từ danh sách bên trái"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource HeaderBackground}" />
+                    <TextBlock 
+                        Style="{StaticResource EmptyStateTextStyle}" 
+                        Text="để bắt đầu cuộc trò chuyện hỗ trợ"
+                        Margin="0,5,0,0" />
                 </StackPanel>
             </Border>
         </Grid>

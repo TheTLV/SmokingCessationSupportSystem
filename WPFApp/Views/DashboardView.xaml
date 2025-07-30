@@ -8,35 +8,36 @@
     Title="Tổng quan"
     Width="1200"
     Height="800"
-    FontFamily="Segoe UI"
-    WindowStartupLocation="CenterScreen">
+    FontFamily="Roboto"
+    WindowStartupLocation="CenterScreen"
+    Background="#FFF3E0">
 
     <Window.Resources>
         <!--  Converters  -->
         <conv:BoolToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
         <!--  Color Palette  -->
-        <SolidColorBrush x:Key="PrimaryColor" Color="#1976D2" />
-        <SolidColorBrush x:Key="SecondaryColor" Color="#4CAF50" />
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
         <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
         <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
         <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
-        <SolidColorBrush x:Key="PageBackground" Color="#FAFAFA" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
 
         <!--  Card Style  -->
         <Style TargetType="materialDesign:Card">
             <Setter Property="Background" Value="{StaticResource CardBackground}" />
-            <Setter Property="Margin" Value="10" />
+            <Setter Property="Margin" Value="15" />
             <Setter Property="Padding" Value="20" />
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect
-                        BlurRadius="15"
-                        ShadowDepth="3"
-                        Color="#10000000" />
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
                 </Setter.Value>
             </Setter>
-            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
         </Style>
 
         <!--  Stat Card Style  -->
@@ -44,15 +45,18 @@
             x:Key="StatCard"
             BasedOn="{StaticResource {x:Type materialDesign:Card}}"
             TargetType="materialDesign:Card">
-            <Setter Property="Width" Value="280" />
-            <Setter Property="Height" Value="140" />
-            <Setter Property="Padding" Value="15" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
         </Style>
 
         <!--  Primary Button Style  -->
         <Style x:Key="PrimaryButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Height" Value="50" />
@@ -73,42 +77,67 @@
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="ToolTipService.Placement" Value="Bottom" />
         </Style>
+
+        <!--  Header Icon Button Style  -->
+        <Style x:Key="HeaderIconButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignIconButton}">
+            <Setter Property="Foreground" Value="#F57F17" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
         <!--  Stat Title Style  -->
         <Style x:Key="StatTitle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="#1976D2" />
-            <Setter Property="Margin" Value="0,0,0,5" />
-        </Style>
-        <!--  Stat Value Style  -->
-        <Style x:Key="StatValue" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="28" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="#212121" />
-            <Setter Property="Margin" Value="0,0,0,2" />
-        </Style>
-        <!--  Stat SubText Style  -->
-        <Style x:Key="StatSubText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Foreground" Value="#757575" />
-            <Setter Property="Margin" Value="0,0,0,0" />
-        </Style>
-        <!--  Section Title Style  -->
-        <Style x:Key="SectionTitle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="#1976D2" />
+            <Setter Property="Foreground" Value="#F57F17" />
             <Setter Property="Margin" Value="0,0,0,10" />
         </Style>
+
+        <!--  Stat Value Style  -->
+        <Style x:Key="StatValue" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#FBC02D" />
+            <Setter Property="Margin" Value="0,0,0,5" />
+        </Style>
+
+        <!--  Section Title Style  -->
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#F57F17" />
+            <Setter Property="Margin" Value="0,0,0,15" />
+        </Style>
+
         <!--  Body Text Style  -->
         <Style x:Key="BodyText" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="#212121" />
         </Style>
+
         <!--  Caption Text Style  -->
         <Style x:Key="CaptionText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="Foreground" Value="#757575" />
+        </Style>
+
+        <!--  Progress Bar Style  -->
+        <Style x:Key="CustomProgressBar" TargetType="ProgressBar">
+            <Setter Property="Height" Value="12" />
+            <Setter Property="Foreground" Value="#4CAF50" />
+            <Setter Property="Background" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <!--  DataGrid Style  -->
+        <Style x:Key="CustomDataGrid" TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="RowHeight" Value="45" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0" />
         </Style>
     </Window.Resources>
 
@@ -120,10 +149,7 @@
         </Grid.RowDefinitions>
 
         <!--  Header  -->
-        <Border
-            Grid.Row="0"
-            Padding="15"
-            Background="{StaticResource PrimaryColor}">
+        <materialDesign:Card Grid.Row="0" Background="#FFF8E1" Padding="20" Margin="20,20,20,10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -133,37 +159,37 @@
 
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                     <materialDesign:PackIcon
-                        Width="32"
-                        Height="32"
-                        Foreground="White"
+                        Width="36"
+                        Height="36"
+                        Foreground="#FBC02D"
                         Kind="ViewDashboard" />
                     <TextBlock
-                        Margin="10,0,0,0"
-                        FontSize="22"
+                        Margin="15,0,0,0"
+                        FontSize="24"
                         FontWeight="Bold"
-                        Foreground="White"
+                        Foreground="#F57F17"
                         Text="TỔNG QUAN CAI THUỐC LÁ" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button
                         Click="GoToProfileButton_Click"
-                        Style="{StaticResource MaterialDesignIconButton}"
+                        Style="{StaticResource HeaderIconButton}"
                         ToolTip="Hồ sơ">
-                        <materialDesign:PackIcon Foreground="White" Kind="AccountCircle" />
+                        <materialDesign:PackIcon Foreground="#F57F17" Kind="AccountCircle" />
                     </Button>
                     <Button
                         Click="Button_Click"
-                        Style="{StaticResource MaterialDesignIconButton}"
+                        Style="{StaticResource HeaderIconButton}"
                         ToolTip="Đăng xuất">
-                        <materialDesign:PackIcon Foreground="White" Kind="Logout" />
+                        <materialDesign:PackIcon Foreground="#F57F17" Kind="Logout" />
                     </Button>
                 </StackPanel>
             </Grid>
-        </Border>
+        </materialDesign:Card>
 
         <!--  Main Content  -->
-        <ScrollViewer Grid.Row="1" Padding="20">
+        <ScrollViewer Grid.Row="1" Padding="20,0,20,20">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -176,113 +202,212 @@
                 <StackPanel
                     Grid.Row="0"
                     HorizontalAlignment="Center"
-                    Orientation="Horizontal">
-                    <materialDesign:Card Style="{StaticResource StatCard}">
+                    Orientation="Horizontal"
+                    Margin="0,0,0,20">
+                    <materialDesign:Card Style="{StaticResource StatCard}" Margin="0,0,10,0">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource StatTitle}" Text="SỐ NGÀY CAI THUỐC" />
-                            <TextBlock Style="{StaticResource StatValue}" Text="{Binding TotalQuitDays}" />
+                            <materialDesign:PackIcon 
+                                Kind="CalendarCheck" 
+                                Width="32" 
+                                Height="32"
+                                Foreground="#FBC02D"
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,10"/>
+                            <TextBlock Style="{StaticResource StatTitle}" 
+                                       Text="SỐ NGÀY CAI THUỐC" 
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource StatValue}" 
+                                       Text="{Binding TotalQuitDays}" 
+                                       HorizontalAlignment="Center"/>
                         </StackPanel>
                     </materialDesign:Card>
 
-                    <materialDesign:Card Style="{StaticResource StatCard}">
+                    <materialDesign:Card Style="{StaticResource StatCard}" Margin="0,0,0,0">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource StatTitle}" Text="TIỀN TIẾT KIỆM" />
-                            <TextBlock Style="{StaticResource StatValue}" Text="{Binding MoneySaved, StringFormat={}{0:N0} VND}" />
+                            <materialDesign:PackIcon 
+                                Kind="CurrencyUsd" 
+                                Width="32" 
+                                Height="32"
+                                Foreground="#4CAF50"
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,10"/>
+                            <TextBlock Style="{StaticResource StatTitle}" 
+                                       Text="TIỀN TIẾT KIỆM" 
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource StatValue}" 
+                                       Text="{Binding MoneySaved, StringFormat={}{0:N0} VND}" 
+                                       HorizontalAlignment="Center"
+                                       Foreground="#4CAF50"/>
                         </StackPanel>
                     </materialDesign:Card>
                 </StackPanel>
 
                 <!--  Kế hoạch hiện tại với thanh tiến độ  -->
-                <materialDesign:Card Grid.Row="1" Margin="0,20">
+                <materialDesign:Card Grid.Row="1" Margin="0,0,0,20">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource SectionTitle}" Text="KẾ HOẠCH HIỆN TẠI" />
-
-                        <StackPanel Margin="0,10" Orientation="Horizontal">
-                            <TextBlock
-                                FontWeight="SemiBold"
-                                Text="{Binding CurrentPlanDashboard.Name}"
-                                TextWrapping="Wrap" />
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <materialDesign:PackIcon Kind="Target" Width="24" Height="24" Foreground="#F57F17" Margin="0,0,10,0"/>
+                            <TextBlock Style="{StaticResource SectionTitle}" Text="KẾ HOẠCH HIỆN TẠI" />
                         </StackPanel>
 
-                        <Grid Margin="0,15">
+                        <Border Background="#FFF8E1" CornerRadius="8" Padding="15" Margin="0,0,0,15">
+                            <TextBlock
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                Foreground="#F57F17"
+                                Text="{Binding CurrentPlanDashboard.Name}"
+                                TextWrapping="Wrap" />
+                        </Border>
+
+                        <Grid Margin="0,0,0,15">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <ProgressBar
-                                Height="10"
-                                Foreground="{StaticResource SecondaryColor}"
+                                Style="{StaticResource CustomProgressBar}"
                                 Maximum="100"
                                 Value="{Binding CurrentPlanDashboard.Progress}" />
 
-                            <TextBlock
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                FontWeight="Bold"
-                                Text="{Binding CurrentPlanDashboard.Progress, StringFormat='{}{0:F2}%'}" />
+                            <Border Grid.Column="1" 
+                                    Background="#4CAF50" 
+                                    CornerRadius="12" 
+                                    Padding="10,5"
+                                    Margin="15,0,0,0">
+                                <TextBlock
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{Binding CurrentPlanDashboard.Progress, StringFormat='{}{0:F1}%'}" />
+                            </Border>
                         </Grid>
 
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource CaptionText}" Text="Bắt đầu: " />
-                            <TextBlock
-                                FontWeight="SemiBold"
-                                Style="{StaticResource CaptionText}"
-                                Text="{Binding CurrentPlanDashboard.StartDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
-                            <TextBlock
-                                Margin="10,0,0,0"
-                                Style="{StaticResource CaptionText}"
-                                Text=" - Kết thúc: " />
-                            <TextBlock
-                                FontWeight="SemiBold"
-                                Style="{StaticResource CaptionText}"
-                                Text="{Binding CurrentPlanDashboard.EndDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            <Border Background="#FFECB3" CornerRadius="5" Padding="8,4">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource CaptionText}" Text="Bắt đầu: " FontWeight="SemiBold"/>
+                                    <TextBlock
+                                        FontWeight="Bold"
+                                        Style="{StaticResource CaptionText}"
+                                        Text="{Binding CurrentPlanDashboard.StartDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        Style="{StaticResource CaptionText}"
+                                        Text=" - Kết thúc: " FontWeight="SemiBold"/>
+                                    <TextBlock
+                                        FontWeight="Bold"
+                                        Style="{StaticResource CaptionText}"
+                                        Text="{Binding CurrentPlanDashboard.EndDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                                </StackPanel>
+                            </Border>
                         </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>
 
                 <!--  Lịch sử nhật ký gần đây  -->
-                <materialDesign:Card Grid.Row="2" Margin="0,20">
+                <materialDesign:Card Grid.Row="2" Margin="0,0,0,20">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource SectionTitle}" Text="NHẬT KÝ GẦN ĐÂY" />
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <materialDesign:PackIcon Kind="Notebook" Width="24" Height="24" Foreground="#F57F17" Margin="0,0,10,0"/>
+                            <TextBlock Style="{StaticResource SectionTitle}" Text="NHẬT KÝ GẦN ĐÂY" />
+                        </StackPanel>
 
                         <DataGrid
-                            AutoGenerateColumns="False"
-                            BorderThickness="0"
-                            HeadersVisibility="Column"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding RecentJournals}"
-                            RowHeight="40">
+                            Style="{StaticResource CustomDataGrid}"
+                            ItemsSource="{Binding RecentJournals}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn
-                                    Width="120"
+                                    Width="130"
                                     Binding="{Binding Date, StringFormat='{}{0:dd/MM/yyyy}'}"
-                                    Header="Ngày" />
+                                    Header="Ngày">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#FFF8E1"/>
+                                            <Setter Property="Foreground" Value="#F57F17"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn
-                                    Width="100"
+                                    Width="110"
                                     Binding="{Binding Cigarettes}"
-                                    Header="Số điếu/ngày" />
+                                    Header="Số điếu/ngày">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#FFF8E1"/>
+                                            <Setter Property="Foreground" Value="#F57F17"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn
-                                    Width="100"
+                                    Width="110"
                                     Binding="{Binding Packs}"
-                                    Header="Số bao/tuần" />
+                                    Header="Số bao/tuần">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#FFF8E1"/>
+                                            <Setter Property="Foreground" Value="#F57F17"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn
-                                    Width="120"
+                                    Width="130"
                                     Binding="{Binding CostPerPack, StringFormat={}{0:N0} VND}"
-                                    Header="Giá mỗi bao" />
+                                    Header="Giá mỗi bao">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#FFF8E1"/>
+                                            <Setter Property="Foreground" Value="#F57F17"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn
-                                    Width="120"
+                                    Width="140"
                                     Binding="{Binding WeeklyCost, StringFormat={}{0:N0} VND}"
-                                    Header="Tổng chi phí/tuần" />
+                                    Header="Chi phí/tuần">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#FFF8E1"/>
+                                            <Setter Property="Foreground" Value="#F57F17"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn
-                                    Width="120"
+                                    Width="140"
                                     Binding="{Binding MonthlyCost, StringFormat={}{0:N0} VND}"
-                                    Header="Tổng chi phí/tháng" />
+                                    Header="Chi phí/tháng">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#FFF8E1"/>
+                                            <Setter Property="Foreground" Value="#F57F17"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn
-                                    Width="120"
+                                    Width="130"
                                     Binding="{Binding TotalCigarettes}"
-                                    Header="Tổng số điếu/tuần" />
+                                    Header="Tổng điếu/tuần">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#FFF8E1"/>
+                                            <Setter Property="Foreground" Value="#F57F17"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
@@ -290,25 +415,23 @@
             </Grid>
         </ScrollViewer>
 
-        <Border
-            Grid.Row="2"
-            Background="White"
-            BorderBrush="#E0E0E0"
-            BorderThickness="0,1,0,0">
+        <!-- Footer Navigation -->
+        <materialDesign:Card Grid.Row="2" Margin="20,10,20,20" Padding="15">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <!--  Đã bỏ Trang chủ và Tiến trình  -->
                 <Button
                     Click="GoToSmokingStatusButton_Click"
                     Style="{StaticResource NavButton}"
                     ToolTip="Nhật ký">
                     <StackPanel>
                         <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="Notebook" />
+                            Width="28"
+                            Height="28"
+                            Kind="Notebook"
+                            Foreground="#FBC02D" />
                         <TextBlock
                             Margin="0,5,0,0"
-                            FontSize="10"
+                            FontSize="11"
+                            FontWeight="SemiBold"
                             Text="Nhật ký" />
                     </StackPanel>
                 </Button>
@@ -318,12 +441,14 @@
                     ToolTip="Kế hoạch">
                     <StackPanel>
                         <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="CalendarEdit" />
+                            Width="28"
+                            Height="28"
+                            Kind="CalendarEdit"
+                            Foreground="#FBC02D" />
                         <TextBlock
                             Margin="0,5,0,0"
-                            FontSize="10"
+                            FontSize="11"
+                            FontWeight="SemiBold"
                             Text="Kế hoạch" />
                     </StackPanel>
                 </Button>
@@ -333,12 +458,14 @@
                     ToolTip="Cộng đồng">
                     <StackPanel>
                         <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="AccountGroup" />
+                            Width="28"
+                            Height="28"
+                            Kind="AccountGroup"
+                            Foreground="#FBC02D" />
                         <TextBlock
                             Margin="0,5,0,0"
-                            FontSize="10"
+                            FontSize="11"
+                            FontWeight="SemiBold"
                             Text="Cộng đồng" />
                     </StackPanel>
                 </Button>
@@ -348,12 +475,14 @@
                     ToolTip="Thành viên">
                     <StackPanel>
                         <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="AccountStar" />
+                            Width="28"
+                            Height="28"
+                            Kind="AccountStar"
+                            Foreground="#FBC02D" />
                         <TextBlock
                             Margin="0,5,0,0"
-                            FontSize="10"
+                            FontSize="11"
+                            FontWeight="SemiBold"
                             Text="Thành viên" />
                     </StackPanel>
                 </Button>
@@ -363,16 +492,18 @@
                     ToolTip="Coach">
                     <StackPanel>
                         <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="AccountSupervisor" />
+                            Width="28"
+                            Height="28"
+                            Kind="AccountSupervisor"
+                            Foreground="#FBC02D" />
                         <TextBlock
                             Margin="0,5,0,0"
-                            FontSize="10"
+                            FontSize="11"
+                            FontWeight="SemiBold"
                             Text="Coach" />
                     </StackPanel>
                 </Button>
             </StackPanel>
-        </Border>
+        </materialDesign:Card>
     </Grid>
 </Window>

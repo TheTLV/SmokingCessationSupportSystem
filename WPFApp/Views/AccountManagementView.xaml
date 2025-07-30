@@ -4,50 +4,393 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
-    <Grid>
-        <DataGrid
-            AutoGenerateColumns="False"
-            CanUserAddRows="False"
-            IsReadOnly="True"
-            ItemsSource="{Binding Users}">
-            <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding Id}"
-                    Header="ID" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding FullName}"
-                    Header="Tên" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Email}"
-                    Header="Email" />
-                <DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding DateOfBirth, StringFormat={}{0:dd/MM/yyyy}}"
-                    Header="Ngày sinh" />
-                <DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding Role}"
-                    Header="Vai trò" />
+    <UserControl.Resources>
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
 
-                <DataGridTemplateColumn Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button
-                                Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                CommandParameter="{Binding}"
-                                Style="{StaticResource MaterialDesignIconButton}">
-                                <materialDesign:PackIcon
-                                    Width="20"
-                                    Height="20"
-                                    Kind="Delete" />
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <!--  DataGrid Style  -->
+        <Style x:Key="CustomDataGrid" TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="RowHeight" Value="50" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#FFECB3" />
+            <Setter Property="VerticalGridLinesBrush" Value="Transparent" />
+            <Setter Property="AlternatingRowBackground" Value="#FFFDE7" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <!--  DataGrid Header Style  -->
+        <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Padding" Value="12,10" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="0,0,1,2" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <!--  DataGrid Row Style  -->
+        <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF8E1" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#FFECB3" />
+                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}" />
+                    <Setter Property="BorderThickness" Value="2,0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--  DataGrid Cell Style  -->
+        <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Delete Button Style  -->
+        <Style x:Key="DeleteButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF5722" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Width" Value="36" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F44336" />
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="#55000000" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#D32F2F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Section Card Style  -->
+        <Style x:Key="SectionCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="20" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="8" ShadowDepth="3" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Header Card Style  -->
+        <Style x:Key="HeaderCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="20,20,20,10" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource PageBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Header Section  -->
+        <materialDesign:Card Grid.Row="0" Style="{StaticResource HeaderCard}">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon
+                    Width="32"
+                    Height="32"
+                    Foreground="{StaticResource PrimaryColor}"
+                    Kind="AccountGroup" />
+                <TextBlock
+                    Margin="15,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="22"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource HeaderBackground}"
+                    Text="QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG" />
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!--  Statistics Section  -->
+        <materialDesign:Card Grid.Row="1" Style="{StaticResource HeaderCard}" Margin="20,0,20,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Total Users  -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon
+                        Width="24"
+                        Height="24"
+                        Foreground="{StaticResource PrimaryColor}"
+                        Kind="AccountMultiple"
+                        Margin="0,0,10,0" />
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource LightTextColor}"
+                            Text="TỔNG NGƯỜI DÙNG" />
+                        <TextBlock
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource HeaderBackground}"
+                            Text="{Binding Users.Count}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!--  Active Users  -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon
+                        Width="24"
+                        Height="24"
+                        Foreground="#4CAF50"
+                        Kind="AccountCheck"
+                        Margin="0,0,10,0" />
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource LightTextColor}"
+                            Text="ĐANG HOẠT ĐỘNG" />
+                        <TextBlock
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#4CAF50"
+                            Text="{Binding Users.Count}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!--  Coaches  -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon
+                        Width="24"
+                        Height="24"
+                        Foreground="{StaticResource SecondaryColor}"
+                        Kind="AccountSupervisor"
+                        Margin="0,0,10,0" />
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource LightTextColor}"
+                            Text="HUẤN LUYỆN VIÊN" />
+                        <TextBlock
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource SecondaryColor}"
+                            Text="0" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <!--  Data Grid Section  -->
+        <materialDesign:Card Grid.Row="2" Style="{StaticResource SectionCard}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  Table Header  -->
+                <Border Grid.Row="0" 
+                        Background="#FFF8E1" 
+                        BorderBrush="#FFD54F" 
+                        BorderThickness="0,0,0,2"
+                        Padding="20,15">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Foreground="{StaticResource HeaderBackground}"
+                            Kind="TableAccount"
+                            Margin="0,0,10,0" />
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource HeaderBackground}"
+                            Text="DANH SÁCH CHI TIẾT" />
+                    </StackPanel>
+                </Border>
+
+                <!--  DataGrid  -->
+                <DataGrid
+                    Grid.Row="1"
+                    Style="{StaticResource CustomDataGrid}"
+                    ItemsSource="{Binding Users}"
+                    RowStyle="{StaticResource DataGridRowStyle}"
+                    CellStyle="{StaticResource DataGridCellStyle}">
+                    
+                    <DataGrid.Columns>
+                        <!--  ID Column  -->
+                        <DataGridTextColumn
+                            Width="80"
+                            Binding="{Binding Id}"
+                            Header="ID"
+                            HeaderStyle="{StaticResource DataGridHeaderStyle}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!--  Name Column  -->
+                        <DataGridTextColumn
+                            Width="200"
+                            Binding="{Binding FullName}"
+                            Header="HỌ VÀ TÊN"
+                            HeaderStyle="{StaticResource DataGridHeaderStyle}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                    <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+                                    <Setter Property="Padding" Value="8,0" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!--  Email Column  -->
+                        <DataGridTextColumn
+                            Width="220"
+                            Binding="{Binding Email}"
+                            Header="EMAIL"
+                            HeaderStyle="{StaticResource DataGridHeaderStyle}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+                                    <Setter Property="Padding" Value="8,0" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!--  Date of Birth Column  -->
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding DateOfBirth, StringFormat={}{0:dd/MM/yyyy}}"
+                            Header="NGÀY SINH"
+                            HeaderStyle="{StaticResource DataGridHeaderStyle}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!--  Role Column  -->
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Role}"
+                            Header="VAI TRÒ"
+                            HeaderStyle="{StaticResource DataGridHeaderStyle}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                    <Setter Property="Foreground" Value="{StaticResource SecondaryColor}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!--  Action Column  -->
+                        <DataGridTemplateColumn Width="100" HeaderStyle="{StaticResource DataGridHeaderStyle}">
+                            <DataGridTemplateColumn.Header>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon
+                                        Width="16"
+                                        Height="16"
+                                        Foreground="{StaticResource HeaderBackground}"
+                                        Kind="Cog"
+                                        Margin="0,0,5,0" />
+                                    <TextBlock Text="THAO TÁC" />
+                                </StackPanel>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Button
+                                            Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource DeleteButtonStyle}"
+                                            ToolTip="Xóa người dùng">
+                                            <materialDesign:PackIcon
+                                                Width="16"
+                                                Height="16"
+                                                Kind="Delete" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </UserControl>

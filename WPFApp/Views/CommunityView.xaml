@@ -7,38 +7,48 @@
     Title="Cộng đồng"
     Width="900"
     Height="700"
-    Background="#F5F7FA"
-    FontFamily="Segoe UI">
+    FontFamily="Roboto"
+    Background="#FFF3E0">
 
     <Window.Resources>
         <convert:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <convert:MyCommentToVisibilityConverter x:Key="MyCommentToVisibilityConverter" />
 
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
+
         <!--  Post Card Style  -->
         <Style x:Key="PostCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
             <Setter Property="Margin" Value="0,0,0,20" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect
-                        BlurRadius="8"
-                        Opacity="0.1"
-                        ShadowDepth="2" />
+                        BlurRadius="6"
+                        ShadowDepth="2"
+                        Color="#55000000" />
                 </Setter.Value>
             </Setter>
         </Style>
 
         <!--  Comment Item Style  -->
         <Style x:Key="CommentItemStyle" TargetType="Border">
-            <Setter Property="Background" Value="#FAFAFA" />
+            <Setter Property="Background" Value="#FFF8E1" />
             <Setter Property="Margin" Value="10,8,10,0" />
             <Setter Property="Padding" Value="12" />
-            <Setter Property="CornerRadius" Value="6" />
-            <Setter Property="BorderBrush" Value="#EEEEEE" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderBrush" Value="#FFECB3" />
             <Setter Property="BorderThickness" Value="1" />
         </Style>
 
@@ -47,37 +57,100 @@
             x:Key="PrimaryButton"
             BasedOn="{StaticResource MaterialDesignRaisedButton}"
             TargetType="Button">
-            <Setter Property="Background" Value="#4285F4" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
             <Setter Property="Padding" Value="12,6" />
             <Setter Property="Margin" Value="0,10,0,0" />
             <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
 
         <Style
             x:Key="SecondaryButton"
             BasedOn="{StaticResource MaterialDesignOutlinedButton}"
             TargetType="Button">
-            <Setter Property="BorderBrush" Value="#4285F4" />
-            <Setter Property="Foreground" Value="#4285F4" />
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
             <Setter Property="Padding" Value="10,4" />
             <Setter Property="Margin" Value="5,0,0,0" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <!--  Back Button Style  -->
+        <Style x:Key="BackButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!--  TextBox Style  -->
         <Style x:Key="CommentTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Padding" Value="10" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
             <Setter Property="MinHeight" Value="40" />
             <Setter Property="VerticalContentAlignment" Value="Top" />
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="AcceptsReturn" Value="True" />
             <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+
+        <!--  Header Card Style  -->
+        <Style x:Key="HeaderCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="0,0,0,20" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  New Post Card Style  -->
+        <Style x:Key="NewPostCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,0,0,25" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
         </Style>
     </Window.Resources>
 
-    <Grid Margin="15">
+    <Grid Margin="20" Background="{StaticResource PageBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -85,71 +158,79 @@
         </Grid.RowDefinitions>
 
         <!--  Header  -->
-        <Grid
-            Grid.Row="0"
-            Margin="0,0,0,20"
-            VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <materialDesign:PackIcon
-                Grid.Column="0"
-                Width="28"
-                Height="28"
-                Foreground="#4285F4"
-                Kind="AccountGroup" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="12,0,0,0"
-                VerticalAlignment="Center"
-                FontSize="22"
-                FontWeight="Bold"
-                Foreground="#333"
-                Text="Cộng đồng" />
-            <Button
-                Grid.Column="2"
-                Padding="10,4"
-                HorizontalAlignment="Right"
-                Background="#4285F4"
-                BorderThickness="0"
-                Click="BackToDashboard_Click"
-                Content="← Quay về Dashboard"
-                Cursor="Hand"
-                FontWeight="SemiBold"
-                Foreground="White" />
-        </Grid>
+        <materialDesign:Card Grid.Row="0" Style="{StaticResource HeaderCard}">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
+                <materialDesign:PackIcon
+                    Grid.Column="0"
+                    Width="32"
+                    Height="32"
+                    Foreground="{StaticResource PrimaryColor}"
+                    Kind="AccountGroup" />
+                
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="15,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource HeaderBackground}"
+                    Text="CỘNG ĐỒNG CAI THUỐC" />
+                
+                <Button
+                    Grid.Column="2"
+                    Click="BackToDashboard_Click"
+                    Content="← Quay về Dashboard"
+                    Style="{StaticResource BackButton}" />
+            </Grid>
+        </materialDesign:Card>
 
         <!--  New Post Section  -->
-        <Border
-            Grid.Row="1"
-            Margin="0,0,0,25"
-            Padding="0"
-            Background="White"
-            BorderBrush="#E0E0E0"
-            BorderThickness="1"
-            CornerRadius="8">
+        <materialDesign:Card Grid.Row="1" Style="{StaticResource NewPostCard}">
             <StackPanel>
-                <TextBox
-                    x:Name="NewPostTextBox"
-                    MinHeight="100"
-                    Margin="15,15,15,0"
-                    materialDesign:HintAssist.Hint="Bạn đang nghĩ gì?"
-                    Style="{StaticResource CommentTextBoxStyle}"
-                    Text="{Binding NewPostContent, UpdateSourceTrigger=PropertyChanged}" />
+                <!--  New Post Header  -->
+                <Border Background="#FFF8E1" Padding="15,10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Foreground="{StaticResource HeaderBackground}"
+                            Kind="PencilPlus" />
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource HeaderBackground}"
+                            Text="Chia sẻ cảm nghĩ của bạn" />
+                    </StackPanel>
+                </Border>
 
-                <StackPanel
-                    Margin="0,0,15,15"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal">
-                    <Button
-                        Command="{Binding CreatePostCommand}"
-                        Content="Đăng bài"
-                        Style="{StaticResource PrimaryButton}" />
+                <!--  New Post Content  -->
+                <StackPanel Margin="15">
+                    <TextBox
+                        x:Name="NewPostTextBox"
+                        MinHeight="100"
+                        materialDesign:HintAssist.Hint="Bạn đang nghĩ gì về hành trình cai thuốc?"
+                        Style="{StaticResource CommentTextBoxStyle}"
+                        Text="{Binding NewPostContent, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <StackPanel
+                        Margin="0,15,0,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Command="{Binding CreatePostCommand}"
+                            Content="Đăng bài"
+                            Style="{StaticResource PrimaryButton}" />
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </Border>
+        </materialDesign:Card>
 
         <!--  Posts List  -->
         <ScrollViewer
@@ -162,65 +243,78 @@
                         <Border Style="{StaticResource PostCardStyle}">
                             <StackPanel>
                                 <!--  Post Header (User Info)  -->
-                                <StackPanel
-                                    Margin="15,15,15,10"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal">
-                                    <Ellipse
-                                        Width="40"
-                                        Height="40"
-                                        Fill="#E0E0E0">
-                                        <Ellipse.OpacityMask>
-                                            <VisualBrush Stretch="Fill" Visual="{materialDesign:PackIcon Kind=AccountCircle}" />
-                                        </Ellipse.OpacityMask>
-                                    </Ellipse>
-                                    <StackPanel Margin="10,0,0,0">
-                                        <TextBlock FontWeight="SemiBold" Text="{Binding AuthorName}" />
-                                        <TextBlock
-                                            FontSize="11"
-                                            Foreground="#888"
-                                            Text="{Binding CreatedAt, StringFormat={}{0:HH:mm dd/MM}}" />
+                                <Border Background="#FFF8E1" Padding="15,12">
+                                    <StackPanel
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <Ellipse
+                                            Width="40"
+                                            Height="40"
+                                            Fill="{StaticResource PrimaryColor}">
+                                            <Ellipse.OpacityMask>
+                                                <VisualBrush Stretch="Fill" Visual="{materialDesign:PackIcon Kind=AccountCircle}" />
+                                            </Ellipse.OpacityMask>
+                                        </Ellipse>
+                                        <StackPanel Margin="12,0,0,0">
+                                            <TextBlock 
+                                                FontWeight="Bold" 
+                                                Foreground="{StaticResource HeaderBackground}"
+                                                Text="{Binding AuthorName}" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{StaticResource LightTextColor}"
+                                                Text="{Binding CreatedAt, StringFormat={}{0:HH:mm dd/MM/yyyy}}" />
+                                        </StackPanel>
+                                        <Button
+                                            Width="28"
+                                            Height="28"
+                                            Margin="10,0,0,0"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Click="PostMenuButton_Click"
+                                            Content="⋮"
+                                            Foreground="{StaticResource HeaderBackground}"
+                                            Style="{x:Null}"
+                                            Visibility="{Binding IsMyPost, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <Button.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Command="{Binding DeletePostCommand}" Header="Xóa bài viết" />
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
+                                        </Button>
                                     </StackPanel>
-                                    <Button
-                                        Width="28"
-                                        Height="28"
-                                        Margin="8,0,0,0"
-                                        Padding="0"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Click="PostMenuButton_Click"
-                                        Content="⋮"
-                                        Style="{x:Null}"
-                                        Visibility="{Binding IsMyPost, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <Button.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Command="{Binding DeletePostCommand}" Header="Xóa bài viết" />
-                                            </ContextMenu>
-                                        </Button.ContextMenu>
-                                    </Button>
-                                </StackPanel>
+                                </Border>
 
                                 <!--  Post Content  -->
                                 <TextBlock
-                                    Margin="15,0,15,15"
+                                    Margin="15,15,15,15"
+                                    FontSize="14"
+                                    Foreground="{StaticResource DarkTextColor}"
+                                    LineHeight="20"
                                     Text="{Binding Content}"
                                     TextWrapping="Wrap" />
 
                                 <!--  Comment Input Area  -->
-                                <StackPanel Margin="15,0,15,15" Background="#F9F9F9">
-                                    <TextBox
-                                        materialDesign:HintAssist.Hint="Viết bình luận..."
-                                        Style="{StaticResource CommentTextBoxStyle}"
-                                        Text="{Binding NewCommentContent, UpdateSourceTrigger=PropertyChanged}" />
-                                    <Button
-                                        HorizontalAlignment="Right"
-                                        Command="{Binding AddCommentCommand}"
-                                        Content="Bình luận"
-                                        Style="{StaticResource SecondaryButton}" />
-                                </StackPanel>
+                                <Border Margin="15,0,15,15" 
+                                        Background="#FFFDE7"
+                                        CornerRadius="8"
+                                        Padding="12">
+                                    <StackPanel>
+                                        <TextBox
+                                            materialDesign:HintAssist.Hint="Viết bình luận hỗ trợ..."
+                                            Style="{StaticResource CommentTextBoxStyle}"
+                                            Text="{Binding NewCommentContent, UpdateSourceTrigger=PropertyChanged}" />
+                                        <Button
+                                            HorizontalAlignment="Right"
+                                            Command="{Binding AddCommentCommand}"
+                                            Content="Bình luận"
+                                            Style="{StaticResource SecondaryButton}" />
+                                    </StackPanel>
+                                </Border>
 
                                 <!--  Comments Section  -->
-                                <ItemsControl Margin="0,0,0,10" ItemsSource="{Binding Comments}">
+                                <ItemsControl Margin="0,0,0,15" ItemsSource="{Binding Comments}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Border Style="{StaticResource CommentItemStyle}">
@@ -229,25 +323,27 @@
                                                         <Ellipse
                                                             Width="24"
                                                             Height="24"
-                                                            Fill="#E0E0E0">
+                                                            Fill="{StaticResource SecondaryColor}">
                                                             <Ellipse.OpacityMask>
                                                                 <VisualBrush Stretch="Fill" Visual="{materialDesign:PackIcon Kind=AccountCircle}" />
                                                             </Ellipse.OpacityMask>
                                                         </Ellipse>
                                                         <TextBlock
-                                                            Margin="8,0,0,0"
+                                                            Margin="10,0,0,0"
                                                             FontWeight="SemiBold"
+                                                            Foreground="{StaticResource HeaderBackground}"
                                                             Text="{Binding AuthorName}" />
                                                         <Button
                                                             Width="20"
                                                             Height="20"
-                                                            Margin="8,0,0,0"
+                                                            Margin="10,0,0,0"
                                                             Padding="0"
                                                             Background="Transparent"
                                                             BorderThickness="0"
                                                             Click="CommentMenuButton_Click"
                                                             CommandParameter="{Binding}"
                                                             Content="⋮"
+                                                            Foreground="{StaticResource HeaderBackground}"
                                                             Style="{x:Null}"
                                                             Tag="{Binding}"
                                                             Visibility="{Binding UserId, Converter={StaticResource MyCommentToVisibilityConverter}}">
@@ -262,14 +358,15 @@
                                                         </Button>
                                                     </StackPanel>
                                                     <TextBlock
-                                                        Margin="0,5,0,0"
+                                                        Margin="0,8,0,0"
+                                                        Foreground="{StaticResource DarkTextColor}"
                                                         Text="{Binding Content}"
                                                         TextWrapping="Wrap" />
                                                     <TextBlock
-                                                        Margin="0,5,0,0"
-                                                        FontSize="10"
-                                                        Foreground="#999"
-                                                        Text="{Binding CreatedAt, StringFormat={}{0:HH:mm dd/MM}}" />
+                                                        Margin="0,8,0,0"
+                                                        FontSize="11"
+                                                        Foreground="{StaticResource LightTextColor}"
+                                                        Text="{Binding CreatedAt, StringFormat={}{0:HH:mm dd/MM/yyyy}}" />
                                                 </StackPanel>
                                             </Border>
                                         </DataTemplate>

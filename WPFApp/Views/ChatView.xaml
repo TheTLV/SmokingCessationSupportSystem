@@ -6,50 +6,220 @@
     xmlns:local="clr-namespace:WPFApp.ViewModels"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="Chat với huấn luyện viên"
-    Width="400"
-    Height="600"
+    Width="450"
+    Height="650"
+    FontFamily="Roboto"
+    Background="#FFF3E0"
     WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <conv:MessageAlignmentMultiConverter x:Key="MessageAlignmentMultiConverter" />
         <conv:MessageBackgroundMultiConverter x:Key="MessageBackgroundMultiConverter" />
         <conv:MessageForegroundMultiConverter x:Key="MessageForegroundMultiConverter" />
+
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
+
+        <!--  Chat Header Style  -->
+        <Style x:Key="ChatHeaderStyle" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="Margin" Value="15,15,15,10" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  User Message Style  -->
+        <Style x:Key="UserMessageStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="CornerRadius" Value="15 15 5 15" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="50,5,15,5" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="MaxWidth" Value="280" />
+        </Style>
+
+        <!--  Coach Message Style  -->
+        <Style x:Key="CoachMessageStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="CornerRadius" Value="15 15 15 5" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="15,5,50,5" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="MaxWidth" Value="280" />
+            <Setter Property="BorderBrush" Value="#FFECB3" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <!--  Back Button Style  -->
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Send Button Style  -->
+        <Style x:Key="SendButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Message Input Style  -->
+        <Style x:Key="MessageInputStyle" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+
+        <!--  Input Card Style  -->
+        <Style x:Key="InputCardStyle" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="Margin" Value="15,10,15,15" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="{StaticResource PageBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--  Header  -->
-        <Border
-            Grid.Row="0"
-            Padding="10"
-            Background="#1976D2">
-            <StackPanel Orientation="Horizontal">
-                <Button Click="BackButton_Click" Style="{StaticResource MaterialDesignIconButton}">
+        <!--  Header Card  -->
+        <materialDesign:Card Grid.Row="0" Style="{StaticResource ChatHeaderStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Back Button  -->
+                <Button 
+                    Grid.Column="0"
+                    Click="BackButton_Click" 
+                    Style="{StaticResource BackButtonStyle}"
+                    Margin="0,0,10,0">
                     <materialDesign:PackIcon
-                        Foreground="White"
-                        Kind="ArrowLeft"
-                        RenderTransformOrigin="-23.919,12.619" />
+                        Width="20"
+                        Height="20"
+                        Foreground="{StaticResource HeaderBackground}"
+                        Kind="ArrowLeft" />
                 </Button>
 
-                <TextBlock
-                    Margin="10,0,0,0"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Text="{Binding _currentCoach.Name}" />
-            </StackPanel>
-        </Border>
+                <!--  Coach Avatar  -->
+                <Ellipse
+                    Grid.Column="1"
+                    Width="45"
+                    Height="45"
+                    Fill="{StaticResource PrimaryColor}"
+                    Margin="0,0,12,0">
+                    <Ellipse.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{materialDesign:PackIcon Kind=AccountSupervisor}" />
+                    </Ellipse.OpacityMask>
+                </Ellipse>
 
-        <!--  Khu vực tin nhắn  -->
+                <!--  Coach Info  -->
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource HeaderBackground}"
+                        Text="{Binding _currentCoach.Name}" />
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="12"
+                            Height="12"
+                            Foreground="#4CAF50"
+                            Kind="Circle"
+                            Margin="0,0,5,0" />
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{StaticResource LightTextColor}"
+                            Text="Đang hoạt động" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <!--  Messages Area  -->
         <ScrollViewer
             Grid.Row="1"
-            Padding="10"
-            Background="#FAFAFA">
+            Padding="0,10,0,10"
+            Background="#FFFDE7"
+            VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Messages}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -60,32 +230,59 @@
                                     <Binding Path="DataContext.CurrentUserId" RelativeSource="{RelativeSource AncestorType=Window}" />
                                 </MultiBinding>
                             </Grid.HorizontalAlignment>
-                            <StackPanel MaxWidth="300">
-                                <Border Padding="10" CornerRadius="10">
-                                    <Border.Background>
-                                        <MultiBinding Converter="{StaticResource MessageBackgroundMultiConverter}">
-                                            <Binding Path="SenderId" />
-                                            <Binding Path="DataContext.CurrentUserId" RelativeSource="{RelativeSource AncestorType=Window}" />
-                                        </MultiBinding>
-                                    </Border.Background>
-                                    <TextBlock TextWrapping="Wrap">
-                                        <TextBlock.Foreground>
-                                            <MultiBinding Converter="{StaticResource MessageForegroundMultiConverter}">
-                                                <Binding Path="SenderId" />
-                                                <Binding Path="DataContext.CurrentUserId" RelativeSource="{RelativeSource AncestorType=Window}" />
-                                            </MultiBinding>
-                                        </TextBlock.Foreground>
-                                        <TextBlock.Text>
-                                            <Binding Path="Message" />
-                                        </TextBlock.Text>
-                                    </TextBlock>
+                            
+                            <StackPanel MaxWidth="280">
+                                <Border Padding="12" CornerRadius="15">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <!-- User Message Style -->
+                                                <DataTrigger Value="True">
+                                                    <DataTrigger.Binding>
+                                                        <MultiBinding Converter="{StaticResource MessageBackgroundMultiConverter}">
+                                                            <Binding Path="SenderId" />
+                                                            <Binding Path="DataContext.CurrentUserId" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                                        </MultiBinding>
+                                                    </DataTrigger.Binding>
+                                                    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+                                                    <Setter Property="CornerRadius" Value="15 15 5 15" />
+                                                    <Setter Property="Margin" Value="50,0,0,0" />
+                                                </DataTrigger>
+                                                <!-- Coach Message Style -->
+                                                <DataTrigger Value="False">
+                                                    <DataTrigger.Binding>
+                                                        <MultiBinding Converter="{StaticResource MessageBackgroundMultiConverter}">
+                                                            <Binding Path="SenderId" />
+                                                            <Binding Path="DataContext.CurrentUserId" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                                        </MultiBinding>
+                                                    </DataTrigger.Binding>
+                                                    <Setter Property="Background" Value="#FFF8E1" />
+                                                    <Setter Property="CornerRadius" Value="15 15 15 5" />
+                                                    <Setter Property="BorderBrush" Value="#FFECB3" />
+                                                    <Setter Property="BorderThickness" Value="1" />
+                                                    <Setter Property="Margin" Value="0,0,50,0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap">
+                                            <TextBlock.Foreground>
+                                                <MultiBinding Converter="{StaticResource MessageForegroundMultiConverter}">
+                                                    <Binding Path="SenderId" />
+                                                    <Binding Path="DataContext.CurrentUserId" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                                </MultiBinding>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock
+                                            HorizontalAlignment="Right"
+                                            FontSize="10"
+                                            Foreground="#666666"
+                                            Text="{Binding SentAt, StringFormat='HH:mm'}"
+                                            Margin="0,5,0,0" />
+                                    </StackPanel>
                                 </Border>
-                                <TextBlock
-                                    Margin="5,2,0,0"
-                                    HorizontalAlignment="Right"
-                                    FontSize="11"
-                                    Foreground="#666666"
-                                    Text="{Binding SentAt, StringFormat=HH:mm}" />
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -93,30 +290,38 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <!--  Khu vực nhập tin nhắn  -->
-        <Border
-            Grid.Row="2"
-            BorderBrush="#DDDDDD"
-            BorderThickness="0,1,0,0">
-            <Grid Margin="10">
+        <!--  Message Input Card  -->
+        <materialDesign:Card Grid.Row="2" Style="{StaticResource InputCardStyle}">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
+                <!--  Message Input  -->
                 <TextBox
-                    VerticalContentAlignment="Center"
-                    materialDesign:HintAssist.Hint="Nhập tin nhắn..."
+                    Grid.Column="0"
+                    Style="{StaticResource MessageInputStyle}"
+                    materialDesign:HintAssist.Hint="Nhập tin nhắn cho huấn luyện viên..."
                     Text="{Binding NewMessage, UpdateSourceTrigger=PropertyChanged}" />
 
+                <!--  Send Button  -->
                 <Button
                     Grid.Column="1"
-                    Margin="5,0,0,0"
+                    Margin="12,0,0,0"
                     Command="{Binding SendCommand}"
-                    Style="{StaticResource MaterialDesignIconButton}">
-                    <materialDesign:PackIcon Foreground="#1976D2" Kind="Send" />
+                    Style="{StaticResource SendButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon 
+                            Width="16"
+                            Height="16"
+                            Foreground="Black" 
+                            Kind="Send"
+                            Margin="0,0,5,0" />
+                        <TextBlock Text="Gửi" FontWeight="SemiBold" />
+                    </StackPanel>
                 </Button>
             </Grid>
-        </Border>
+        </materialDesign:Card>
     </Grid>
 </Window>

@@ -6,22 +6,33 @@
     Title="Admin Dashboard"
     Width="1200"
     Height="800"
-    Background="White"
+    FontFamily="Roboto"
+    Background="#FFF3E0"
     WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
+
         <!--  Modern Card Style  -->
         <Style x:Key="ModernCard" TargetType="Border">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect
-                        BlurRadius="15"
-                        ShadowDepth="3"
-                        Color="#10000000" />
+                        BlurRadius="6"
+                        ShadowDepth="2"
+                        Color="#55000000" />
                 </Setter.Value>
             </Setter>
             <Setter Property="Margin" Value="15" />
@@ -30,17 +41,23 @@
 
         <!--  Function Button Style  -->
         <Style x:Key="ModernFunctionButton" TargetType="Button">
-            <Setter Property="Width" Value="280" />
-            <Setter Property="Height" Value="180" />
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Foreground" Value="#212121" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="Height" Value="200" />
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Margin" Value="20" />
+            <Setter Property="Margin" Value="25" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -49,85 +66,209 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8">
-                            <Grid>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Border
-                                    x:Name="hoverOverlay"
-                                    Background="#10000000"
-                                    CornerRadius="8"
-                                    Opacity="0" />
-                            </Grid>
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="hoverOverlay" Property="Opacity" Value="1" />
-                                <Setter TargetName="border" Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect
-                                            BlurRadius="20"
-                                            ShadowDepth="5"
-                                            Color="#20000000" />
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter TargetName="border" Property="Background" Value="#FFF8E1" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FBC02D" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!--  Header Card Style  -->
+        <Style x:Key="HeaderCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="25" />
+            <Setter Property="Margin" Value="30,30,30,20" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Popup Header Style  -->
+        <Style x:Key="PopupHeaderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#F57F17" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="CornerRadius" Value="10,10,0,0" />
+        </Style>
     </Window.Resources>
 
-    <Grid>
-        <!--  Main Content - Horizontal Buttons  -->
-        <ScrollViewer
-            Margin="0,60,0,60"
-            Padding="30"
-            HorizontalScrollBarVisibility="Auto"
-            VerticalScrollBarVisibility="Disabled">
-            <UniformGrid HorizontalAlignment="Center" Rows="1">
-                <!--  Account Management  -->
-                <Button Click="ShowAccountManagement_Click" Style="{StaticResource ModernFunctionButton}">
-                    <StackPanel>
-                        <materialDesign:PackIcon
-                            Width="48"
-                            Height="48"
-                            Foreground="#1976D2"
-                            Kind="AccountGroup" />
-                        <TextBlock Margin="0,15,0,0" Text="Quản lý tài khoản" />
-                        <TextBlock
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Foreground="#757575"
-                            Text="Xem và quản lý người dùng" />
-                    </StackPanel>
-                </Button>
+    <Grid Background="{StaticResource PageBackground}">
+        <!--  Header Section  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-                <!--  Logout Button  -->
-                <Button
-                    x:Name="LogoutButton"
-                    Click="LogoutButton_Click"
-                    Style="{StaticResource ModernFunctionButton}">
-                    <StackPanel>
-                        <materialDesign:PackIcon
-                            Width="48"
-                            Height="48"
-                            Foreground="#F44336"
-                            Kind="Logout" />
-                        <TextBlock Margin="0,15,0,0" Text="Đăng xuất" />
-                        <TextBlock
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Foreground="#757575"
-                            Text="Thoát khỏi hệ thống" />
-                    </StackPanel>
-                </Button>
-            </UniformGrid>
+        <!--  Welcome Header  -->
+        <materialDesign:Card Grid.Row="0" Style="{StaticResource HeaderCard}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <materialDesign:PackIcon
+                    Width="40"
+                    Height="40"
+                    Foreground="#FBC02D"
+                    Kind="ShieldAccount" />
+                <TextBlock
+                    Margin="20,0,0,0"
+                    FontSize="26"
+                    FontWeight="Bold"
+                    Foreground="#F57F17"
+                    Text="BẢNG ĐIỀU KHIỂN QUẢN TRỊ" />
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!--  Main Content - Function Buttons  -->
+        <ScrollViewer
+            Grid.Row="1"
+            Padding="30,20,30,60"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto">
+            
+            <StackPanel HorizontalAlignment="Center">
+                <!--  Admin Functions Title  -->
+                <TextBlock
+                    Margin="0,0,0,30"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Foreground="#F57F17"
+                    Text="CHỨC NĂNG QUẢN TRỊ" />
+
+                <!--  Function Buttons Grid  -->
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  First Row: Account Management & System Reports  -->
+                    <!--  Account Management  -->
+                    <Button Grid.Row="0" Grid.Column="0" 
+                            Click="ShowAccountManagement_Click" 
+                            Style="{StaticResource ModernFunctionButton}">
+                        <StackPanel>
+                            <materialDesign:PackIcon
+                                Width="56"
+                                Height="56"
+                                Foreground="#FBC02D"
+                                Kind="AccountGroup" />
+                            <TextBlock 
+                                Margin="0,20,0,5" 
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="#F57F17"
+                                Text="Quản lý tài khoản" />
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Foreground="#757575"
+                                Text="Xem và quản lý người dùng"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--  System Reports  -->
+                    <Button Grid.Row="0" Grid.Column="1"
+                            Style="{StaticResource ModernFunctionButton}">
+                        <StackPanel>
+                            <materialDesign:PackIcon
+                                Width="56"
+                                Height="56"
+                                Foreground="#4CAF50"
+                                Kind="ChartLine" />
+                            <TextBlock 
+                                Margin="0,20,0,5" 
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="#F57F17"
+                                Text="Báo cáo hệ thống" />
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Foreground="#757575"
+                                Text="Thống kê và phân tích"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--  Second Row: Settings & Logout  -->
+                    <!--  Settings  -->
+                    <Button Grid.Row="1" Grid.Column="0"
+                            Style="{StaticResource ModernFunctionButton}">
+                        <StackPanel>
+                            <materialDesign:PackIcon
+                                Width="56"
+                                Height="56"
+                                Foreground="#FF9800"
+                                Kind="Cog" />
+                            <TextBlock 
+                                Margin="0,20,0,5" 
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="#F57F17"
+                                Text="Cài đặt hệ thống" />
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Foreground="#757575"
+                                Text="Cấu hình và tùy chỉnh"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--  Logout Button  -->
+                    <Button Grid.Row="1" Grid.Column="1"
+                            x:Name="LogoutButton"
+                            Click="LogoutButton_Click"
+                            Style="{StaticResource ModernFunctionButton}">
+                        <StackPanel>
+                            <materialDesign:PackIcon
+                                Width="56"
+                                Height="56"
+                                Foreground="#F44336"
+                                Kind="Logout" />
+                            <TextBlock 
+                                Margin="0,20,0,5" 
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="#F57F17"
+                                Text="Đăng xuất" />
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Foreground="#757575"
+                                Text="Thoát khỏi hệ thống"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </StackPanel>
         </ScrollViewer>
 
         <!--  Popup Container  -->
         <Grid
             x:Name="PopupContainer"
+            Grid.RowSpan="2"
             Background="#80000000"
             Visibility="Collapsed">
             <Border
@@ -136,7 +277,9 @@
                 Height="700"
                 Padding="0"
                 Background="White"
-                CornerRadius="8"
+                BorderBrush="#FFD54F"
+                BorderThickness="2"
+                CornerRadius="10"
                 Effect="{StaticResource MaterialDesignShadowDepth4}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -145,17 +288,22 @@
                     </Grid.RowDefinitions>
 
                     <!--  Popup Header  -->
-                    <Border
-                        Padding="15"
-                        Background="#1976D2"
-                        CornerRadius="8,8,0,0">
+                    <Border Style="{StaticResource PopupHeaderStyle}">
                         <Grid>
-                            <TextBlock
-                                x:Name="PopupTitle"
-                                VerticalAlignment="Center"
-                                FontSize="18"
-                                FontWeight="Bold"
-                                Foreground="White" />
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <materialDesign:PackIcon
+                                    Width="24"
+                                    Height="24"
+                                    Foreground="White"
+                                    Kind="ViewDashboard"
+                                    Margin="0,0,10,0" />
+                                <TextBlock
+                                    x:Name="PopupTitle"
+                                    VerticalAlignment="Center"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Foreground="White" />
+                            </StackPanel>
                             <Button
                                 HorizontalAlignment="Right"
                                 Click="ClosePopup_Click"

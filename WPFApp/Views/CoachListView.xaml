@@ -4,103 +4,266 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="KẾT NỐI VỚI HUẤN LUYỆN VIÊN"
-    Width="380"
-    Height="550"
-    FontFamily="Segoe UI"
+    Width="420"
+    Height="600"
+    FontFamily="Roboto"
+    Background="#FFF3E0"
     WindowStartupLocation="CenterScreen">
 
-    <Grid>
+    <Window.Resources>
+        <!--  Color Palette - Matching DashboardView theme  -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FBC02D" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF9800" />
+        <SolidColorBrush x:Key="AccentColor" Color="#FFF300" />
+        <SolidColorBrush x:Key="DarkTextColor" Color="#212121" />
+        <SolidColorBrush x:Key="LightTextColor" Color="#757575" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PageBackground" Color="#FFF3E0" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="#F57F17" />
+
+        <!--  Header Card Style  -->
+        <Style x:Key="HeaderCard" TargetType="materialDesign:Card">
+            <Setter Property="Background" Value="#FFF8E1" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="20,20,20,15" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+        </Style>
+
+        <!--  Coach Card Style  -->
+        <Style x:Key="CoachCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Margin" Value="0,10" />
+            <Setter Property="Padding" Value="18" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Back Button Style  -->
+        <Style x:Key="BackButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderBackground}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--  Select Coach Button Style  -->
+        <Style x:Key="SelectCoachButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFECB3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFD54F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource PageBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  Header đơn giản  -->
-        <Border
-            Grid.Row="0"
-            Padding="15"
-            Background="#1976D2">
-            <Grid>
+        <!--  Header Card  -->
+        <materialDesign:Card Grid.Row="0" Style="{StaticResource HeaderCard}">
+            <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                
                 <Button
                     x:Name="BackToDashboardButton"
-                    Margin="0,0,16,0"
-                    Padding="10,4"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Background="#1976D2"
-                    BorderThickness="0"
+                    Grid.Column="0"
+                    Margin="0,0,15,0"
                     Click="BackToDashboard_Click"
-                    Content="←"
-                    Cursor="Hand"
-                    FontWeight="SemiBold"
-                    Foreground="White" />
-                <TextBlock
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    FontSize="18"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Text="KẾT NỐI VỚI HUẤN LUYỆN VIÊN"
-                    TextAlignment="Center" />
+                    Content="← Quay lại"
+                    Style="{StaticResource BackButton}" />
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon
+                        Width="28"
+                        Height="28"
+                        Foreground="{StaticResource PrimaryColor}"
+                        Kind="AccountSupervisor"
+                        Margin="0,0,12,0" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource HeaderBackground}"
+                        Text="HUẤN LUYỆN VIÊN" />
+                </StackPanel>
             </Grid>
-        </Border>
+        </materialDesign:Card>
 
-        <!--  Danh sách Coach  -->
-        <ScrollViewer Grid.Row="1" Padding="15">
-            <ItemsControl ItemsSource="{Binding Coaches}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border
-                            Margin="0,8"
-                            Padding="15"
-                            Background="{DynamicResource MaterialDesignCardBackground}"
-                            BorderBrush="{DynamicResource MaterialDesignDivider}"
-                            BorderThickness="1"
-                            CornerRadius="8">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+        <!--  Content Section  -->
+        <ScrollViewer Grid.Row="1" Padding="20,0,20,20">
+            <StackPanel>
+                <!--  Section Title  -->
+                <TextBlock
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource HeaderBackground}"
+                    Text="CHỌN HUẤN LUYỆN VIÊN PHÙ HỢP" />
 
-                                <!--  Thông tin Coach  -->
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock
-                                        Margin="0,0,0,5"
-                                        FontSize="16"
-                                        FontWeight="SemiBold"
-                                        Text="{Binding Name}" />
-                                    <TextBlock
-                                        Margin="0,0,0,5"
-                                        FontSize="14"
-                                        Foreground="#555555"
-                                        Text="{Binding Specialization}" />
-                                    <TextBlock
-                                        FontSize="13"
-                                        Foreground="#777777"
-                                        Text="{Binding ExperienceYears, StringFormat='Kinh nghiệm: {0} năm'}" />
-                                </StackPanel>
+                <!--  Coaches List  -->
+                <ItemsControl ItemsSource="{Binding Coaches}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CoachCardStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                                <!--  Icon chọn là Button  -->
-                                <Button
-                                    Grid.Column="1"
-                                    Command="{Binding DataContext.SelectCoachCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                    CommandParameter="{Binding}"
-                                    Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon
-                                        VerticalAlignment="Center"
-                                        Foreground="#1976D2"
-                                        Kind="ChevronRight" />
-                                </Button>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                    <!--  Coach Avatar and Name  -->
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                                        <Ellipse
+                                            Width="50"
+                                            Height="50"
+                                            Fill="{StaticResource PrimaryColor}"
+                                            Margin="0,0,15,0">
+                                            <Ellipse.OpacityMask>
+                                                <VisualBrush Stretch="Fill" Visual="{materialDesign:PackIcon Kind=AccountSupervisor}" />
+                                            </Ellipse.OpacityMask>
+                                        </Ellipse>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock
+                                                FontSize="18"
+                                                FontWeight="Bold"
+                                                Foreground="{StaticResource HeaderBackground}"
+                                                Text="{Binding Name}" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{StaticResource LightTextColor}"
+                                                Text="Chuyên gia cai thuốc" />
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <!--  Specialization  -->
+                                    <Border Grid.Row="1" 
+                                            Background="#FFF8E1" 
+                                            CornerRadius="6" 
+                                            Padding="12,8"
+                                            Margin="0,0,0,10">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon
+                                                Width="16"
+                                                Height="16"
+                                                Foreground="{StaticResource HeaderBackground}"
+                                                Kind="StarCircle"
+                                                Margin="0,0,8,0" />
+                                            <TextBlock
+                                                FontSize="14"
+                                                FontWeight="SemiBold"
+                                                Foreground="{StaticResource DarkTextColor}"
+                                                Text="{Binding Specialization}" />
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!--  Experience  -->
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,15">
+                                        <materialDesign:PackIcon
+                                            Width="16"
+                                            Height="16"
+                                            Foreground="{StaticResource SecondaryColor}"
+                                            Kind="TrophyAward"
+                                            Margin="0,0,8,0" />
+                                        <TextBlock
+                                            FontSize="14"
+                                            Foreground="{StaticResource LightTextColor}"
+                                            Text="{Binding ExperienceYears, StringFormat='Kinh nghiệm: {0} năm'}" />
+                                    </StackPanel>
+
+                                    <!--  Connect Button  -->
+                                    <Button
+                                        Grid.Row="3"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding DataContext.SelectCoachCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource SelectCoachButton}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon
+                                                Width="18"
+                                                Height="18"
+                                                Foreground="Black"
+                                                Kind="MessageText"
+                                                Margin="0,0,8,0" />
+                                            <TextBlock 
+                                                Text="Kết nối ngay"
+                                                FontWeight="Bold" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </Window>
