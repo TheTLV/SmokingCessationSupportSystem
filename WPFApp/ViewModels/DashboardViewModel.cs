@@ -1,42 +1,14 @@
-﻿using BusinessObjects;
-using Services;
+﻿using Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using WPFApp.Views;
 
 namespace WPFApp.ViewModels
 {
     public class DashboardViewModel : INotifyPropertyChanged
     {
-        private readonly INotificationService _notificationService;
         private readonly IQuitPlanService _quitPlanService = new QuitPlanService();
         private readonly ISmokingStatusService _smokingStatusService = new SmokingStatusService();
-
-        private ObservableCollection<Notification> _notifications;
-        public ObservableCollection<Notification> Notifications
-        {
-            get => _notifications;
-            set
-            {
-                _notifications = value;
-                OnPropertyChanged(nameof(Notifications));
-            }
-        }
-
-        private int _unreadNotificationCount;
-        public int UnreadNotificationCount
-        {
-            get => _unreadNotificationCount;
-            set
-            {
-                _unreadNotificationCount = value;
-                OnPropertyChanged(nameof(UnreadNotificationCount));
-                OnPropertyChanged(nameof(HasUnreadNotifications));
-            }
-        }
-
-        public bool HasUnreadNotifications => UnreadNotificationCount > 0;
 
         private int _totalQuitDays;
         public int TotalQuitDays
@@ -93,20 +65,6 @@ namespace WPFApp.ViewModels
             set { _recentJournals = value; OnPropertyChanged(nameof(RecentJournals)); }
         }
 
-        private void LoadNotifications()
-        {
-            var userId = AppSession.CurrentUser?.Id ?? 0;
-            if (userId == 0)
-            {
-                Notifications = new ObservableCollection<Notification>();
-                UnreadNotificationCount = 0;
-                return;
-            }
-            var allNoti = _notificationService.GetAllNotificationsByUserId(userId);
-            Notifications = new ObservableCollection<Notification>(allNoti);
-            var unreadCount = allNoti.Count(n => !n.IsRead);
-            UnreadNotificationCount = unreadCount;
-        }
 
         private void LoadQuitStats()
         {
@@ -186,18 +144,8 @@ namespace WPFApp.ViewModels
 
         public DashboardViewModel()
         {
-            ViewAllNotificationsCommand = new RelayCommand(obj => ViewAllNotifications());
-            _notificationService = new NotificationService();
-
-            LoadNotifications();
             LoadQuitStats();
             LoadCurrentPlanAndJournals();
-        }
-
-        private void ViewAllNotifications()
-        {
-            var notificationView = new NotificationView();
-            notificationView.ShowDialog();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

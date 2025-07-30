@@ -21,11 +21,7 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<CommunityPost> CommunityPosts { get; set; }
 
-    public virtual DbSet<Feedback> Feedbacks { get; set; }
-
     public virtual DbSet<Membership> Memberships { get; set; }
-
-    public virtual DbSet<Notification> Notifications { get; set; }
 
     public virtual DbSet<QuitPlan> QuitPlans { get; set; }
 
@@ -134,25 +130,6 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK__Community__UserI__4CA06362");
         });
 
-        modelBuilder.Entity<Feedback>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Feedback__3214EC079E598A53");
-
-            entity.ToTable("Feedback");
-
-            entity.HasIndex(e => e.UserId, "IX_Feedback_UserId");
-
-            entity.Property(e => e.Content).HasMaxLength(500);
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Feedbacks)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Feedback__UserId__619B8048");
-        });
-
         modelBuilder.Entity<Membership>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Membersh__3214EC074673B439");
@@ -170,27 +147,6 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Membershi__UserI__6477ECF3");
-        });
-
-        modelBuilder.Entity<Notification>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC075C61FE45");
-
-            entity.ToTable("Notification");
-
-            entity.HasIndex(e => e.IsRead, "IX_Notification_IsRead");
-
-            entity.HasIndex(e => e.UserId, "IX_Notification_UserId");
-
-            entity.Property(e => e.Message).HasMaxLength(500);
-            entity.Property(e => e.SentDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Notifications)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Notificat__UserI__5CD6CB2B");
         });
 
         modelBuilder.Entity<QuitPlan>(entity =>

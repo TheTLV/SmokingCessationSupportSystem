@@ -47,20 +47,6 @@ namespace WPFApp.Views
             this.Close();
         }
 
-        private void GotoNotificationButton_Click(object sender, RoutedEventArgs e)
-        {
-            var notificationView = new NotificationView();
-            notificationView.Show();
-            this.Close();
-        }
-
-        private void GoToAchievementButton_Click(object sender, RoutedEventArgs e)
-        {
-            var achievementView = new AchievementView();
-            achievementView.Show();
-            this.Close();
-        }
-
         private void GoToCommunityButton_Click(object sender, RoutedEventArgs e)
         {
             var communityView = new CommunityView();
@@ -88,24 +74,10 @@ namespace WPFApp.Views
             this.Close();
         }
 
-        private void GoToAIChatSupportButton_Click(object sender, RoutedEventArgs e)
-        {
-            var aiChatSupportView = new AIChatSupportView();
-            aiChatSupportView.Show();
-            this.Close();
-        }
-
         private void GoToProfileButton_Click(object sender, RoutedEventArgs e)
         {
             ProfileView profileView = new ProfileView();
             profileView.Show();
-            this.Close();
-        }
-
-        private void GoToFeedbackButton_Click(object sender, RoutedEventArgs e)
-        {
-            FeedbackView feedbackView = new FeedbackView();
-            feedbackView.Show();
             this.Close();
         }
     }

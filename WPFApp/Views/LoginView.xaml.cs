@@ -7,12 +7,10 @@ namespace WPFApp.Views
     public partial class LoginView : Window
     {
         private readonly IUserService iUserService;
-        private readonly INotificationService iNotificationService;
         public LoginView()
         {
             InitializeComponent();
             iUserService = new UserService();
-            iNotificationService = new NotificationService();
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
@@ -45,7 +43,6 @@ namespace WPFApp.Views
                 {
                     MessageBox.Show("Login Success!");
                     AppSession.CurrentUser = user;
-                    iNotificationService.SendDailyNotificationForUser(user.Id);
                     this.Hide();
                     DashboardView dashboardView = new DashboardView();
                     dashboardView.Show();

@@ -26,11 +26,6 @@ namespace WPFApp.Views
             ShowPopup("QUẢN LÝ TÀI KHOẢN", new AccountManagementView());
         }
 
-        private void ShowFeedbackManagement_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPopup("QUẢN LÝ PHẢN HỒI", new FeedbackManagementView());
-        }
-
         private void ShowPopup(string title, UserControl content)
         {
             PopupTitle.Text = title;

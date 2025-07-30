@@ -103,23 +103,6 @@
                     </StackPanel>
                 </Button>
 
-                <!--  Feedback Management  -->
-                <Button Click="ShowFeedbackManagement_Click" Style="{StaticResource ModernFunctionButton}">
-                    <StackPanel>
-                        <materialDesign:PackIcon
-                            Width="48"
-                            Height="48"
-                            Foreground="#FF9800"
-                            Kind="MessageAlert" />
-                        <TextBlock Margin="0,15,0,0" Text="Quản lý phản hồi" />
-                        <TextBlock
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Foreground="#757575"
-                            Text="Xem và xử lý phản hồi" />
-                    </StackPanel>
-                </Button>
-
                 <!--  Logout Button  -->
                 <Button
                     x:Name="LogoutButton"

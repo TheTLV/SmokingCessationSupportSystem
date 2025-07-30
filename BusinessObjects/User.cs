@@ -26,11 +26,7 @@ public partial class User
 
     public virtual ICollection<CommunityPost> CommunityPosts { get; set; } = new List<CommunityPost>();
 
-    public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
-
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
-
-    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
     public virtual ICollection<QuitPlan> QuitPlans { get; set; } = new List<QuitPlan>();
 

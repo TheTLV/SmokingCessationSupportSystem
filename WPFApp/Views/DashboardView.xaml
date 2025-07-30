@@ -147,37 +147,6 @@
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button
-                        Click="GotoNotificationButton_Click"
-                        Style="{StaticResource MaterialDesignIconButton}"
-                        ToolTip="Thông báo">
-                        <Grid>
-                            <materialDesign:PackIcon
-                                Width="24"
-                                Height="24"
-                                Foreground="White"
-                                Kind="Bell" />
-                            <!--  Badge thông báo  -->
-                            <Border
-                                x:Name="NotificationBadge"
-                                Width="16"
-                                Height="16"
-                                Margin="-5,-5,0,0"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                Background="#FF5252"
-                                CornerRadius="8"
-                                Visibility="{Binding HasUnreadNotifications, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontSize="10"
-                                    FontWeight="Bold"
-                                    Foreground="White"
-                                    Text="{Binding UnreadNotificationCount}" />
-                            </Border>
-                        </Grid>
-                    </Button>
-                    <Button
                         Click="GoToProfileButton_Click"
                         Style="{StaticResource MaterialDesignIconButton}"
                         ToolTip="Hồ sơ">
@@ -359,21 +328,6 @@
                     </StackPanel>
                 </Button>
                 <Button
-                    Click="GoToAchievementButton_Click"
-                    Style="{StaticResource NavButton}"
-                    ToolTip="Thành tích">
-                    <StackPanel>
-                        <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="Trophy" />
-                        <TextBlock
-                            Margin="0,5,0,0"
-                            FontSize="10"
-                            Text="Thành tích" />
-                    </StackPanel>
-                </Button>
-                <Button
                     Click="GoToCommunityButton_Click"
                     Style="{StaticResource NavButton}"
                     ToolTip="Cộng đồng">
@@ -416,36 +370,6 @@
                             Margin="0,5,0,0"
                             FontSize="10"
                             Text="Coach" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Click="GoToAIChatSupportButton_Click"
-                    Style="{StaticResource NavButton}"
-                    ToolTip="Hỗ trợ">
-                    <StackPanel>
-                        <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="HelpCircle" />
-                        <TextBlock
-                            Margin="0,5,0,0"
-                            FontSize="10"
-                            Text="Hỗ trợ" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Click="GoToFeedbackButton_Click"
-                    Style="{StaticResource NavButton}"
-                    ToolTip="Phản hồi">
-                    <StackPanel>
-                        <materialDesign:PackIcon
-                            Width="24"
-                            Height="24"
-                            Kind="MessageAlert" />
-                        <TextBlock
-                            Margin="0,5,0,0"
-                            FontSize="10"
-                            Text="Phản hồi" />
                     </StackPanel>
                 </Button>
             </StackPanel>
