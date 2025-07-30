@@ -7,11 +7,13 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="Gói thành viên"
     Width="900"
-    Height="650"
-    FontFamily="Segoe UI"
-    WindowStartupLocation="CenterScreen">
+    Height="690"
+    FontFamily="Roboto"
+    WindowStartupLocation="CenterScreen"
+    Background="#FFF3E0">
 
     <Window.Resources>
+        <!-- Converters -->
         <conv:MoneyConverter x:Key="MoneyConverter" />
         <conv:DateToStringConverter x:Key="DateToStringConverter" />
         <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
@@ -20,221 +22,182 @@
         <conv:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
         <conv:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
 
-        <Style x:Key="PackageCardStyle" TargetType="Border">
+        <!-- Card style -->
+        <Style x:Key="CustomCardStyle" TargetType="Border">
             <Setter Property="Margin" Value="15" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderBrush" Value="#FFD54F" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Background" Value="White" />
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect
-                        BlurRadius="10"
-                        ShadowDepth="2"
-                        Color="#10000000" />
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="#55000000" />
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="PackageHeaderStyle" TargetType="Border">
-            <Setter Property="Background" Value="#1976D2" />
-            <Setter Property="CornerRadius" Value="8,8,0,0" />
-            <Setter Property="Padding" Value="15" />
-            <Setter Property="Height" Value="60" />
+        <!-- Header của từng gói -->
+        <Style x:Key="CustomHeaderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFF300" />
+            <Setter Property="CornerRadius" Value="10,10,0,0" />
+            <Setter Property="Padding" Value="10" />
         </Style>
 
-        <Style
-            x:Key="ActivePackageHeaderStyle"
-            BasedOn="{StaticResource PackageHeaderStyle}"
-            TargetType="Border">
-            <Setter Property="Background" Value="#388E3C" />
+        <Style x:Key="ActiveHeaderStyle" TargetType="Border" BasedOn="{StaticResource CustomHeaderStyle}">
+            <Setter Property="Background" Value="#FDD835" />
         </Style>
 
-        <Style
-            x:Key="SelectButtonStyle"
-            BasedOn="{StaticResource MaterialDesignRaisedButton}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#388E3C" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="15" />
+        <!-- Nút chọn gói -->
+        <Style x:Key="YellowSelectButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="Background" Value="#FFF300" />
+            <Setter Property="Foreground" Value="#212121" />
+            <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Padding" Value="10,5" />
-            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="10" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
 
+        <!-- Nút cancel -->
+        <Style x:Key="CancelButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+            <Setter Property="Foreground" Value="#D32F2F" />
+            <Setter Property="BorderBrush" Value="#D32F2F" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="15" />
+        </Style>
+
+        <!-- Button chính -->
+        <Style x:Key="PrimaryYellowButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="Background" Value="#FBC02D" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="Margin" Value="10,0,0,0" />
+        </Style>
+
+        <!-- Feature item -->
         <Style x:Key="FeatureItemStyle" TargetType="StackPanel">
             <Setter Property="Orientation" Value="Horizontal" />
             <Setter Property="Margin" Value="0,5" />
         </Style>
-
-        <Style
-            x:Key="PrimaryButton"
-            BasedOn="{StaticResource MaterialDesignRaisedButton}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#1976D2" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="10,0,0,0" />
-            <Setter Property="Padding" Value="15,5" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-        </Style>
-
-        <Style
-            x:Key="CancelButtonStyle"
-            BasedOn="{StaticResource MaterialDesignOutlinedButton}"
-            TargetType="Button">
-            <Setter Property="Foreground" Value="#F44336" />
-            <Setter Property="BorderBrush" Value="#F44336" />
-            <Setter Property="Margin" Value="15" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-        </Style>
     </Window.Resources>
 
-    <Grid Margin="10">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--  Header Section  -->
-        <materialDesign:Card
-            Grid.Row="0"
-            Padding="15"
-            Background="#E3F2FD">
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                <materialDesign:PackIcon
-                    Width="36"
-                    Height="36"
-                    Foreground="#1976D2"
-                    Kind="AccountStar" />
+        <!-- Header -->
+        <materialDesign:Card Grid.Row="0" Background="#FFF8E1" Padding="20">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <materialDesign:PackIcon Kind="AccountStar" Width="36" Height="36" Foreground="#FBC02D" />
                 <TextBlock
                     Margin="15,0,0,0"
                     FontSize="22"
                     FontWeight="Bold"
-                    Foreground="#0D47A1"
+                    Foreground="#F57F17"
                     Text="GÓI THÀNH VIÊN CAI THUỐC" />
             </StackPanel>
         </materialDesign:Card>
 
-        <!--  Main Content  -->
-        <ScrollViewer
-            Grid.Row="1"
-            Padding="0,15"
-            VerticalScrollBarVisibility="Auto">
+        <!-- Nội dung chính -->
+        <ScrollViewer Grid.Row="1" Padding="0,15" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <!--  Current Active Package  -->
+
+                <!-- Gói đang kích hoạt -->
                 <TextBlock
                     Margin="0,0,0,20"
                     HorizontalAlignment="Center"
                     FontSize="16"
                     FontWeight="Bold"
-                    Foreground="#388E3C"
+                    Foreground="#43A047"
                     Text="GÓI ĐANG KÍCH HOẠT"
                     Visibility="{Binding CurrentPackage, Converter={StaticResource NullToVisibilityConverter}}" />
 
                 <ContentControl Content="{Binding CurrentPackage}" Visibility="{Binding CurrentPackage, Converter={StaticResource NullToVisibilityConverter}}">
                     <ContentControl.ContentTemplate>
                         <DataTemplate>
-                            <Border Style="{StaticResource PackageCardStyle}">
+                            <Border Style="{StaticResource CustomCardStyle}">
                                 <Grid Width="280">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <!--  Package Header  -->
-                                    <Border Style="{StaticResource ActivePackageHeaderStyle}">
+
+                                    <!-- Header -->
+                                    <Border Style="{StaticResource ActiveHeaderStyle}">
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             FontSize="18"
                                             FontWeight="Bold"
-                                            Foreground="White"
-                                            Text="{Binding PackageName}" />
+                                            Text="{Binding PackageName}"
+                                            Foreground="#212121" />
                                     </Border>
-                                    <!--  Package Content  -->
+
+                                    <!-- Nội dung -->
                                     <StackPanel Grid.Row="1" Margin="15">
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             FontSize="24"
                                             FontWeight="Bold"
-                                            Foreground="#388E3C"
+                                            Foreground="#43A047"
                                             Text="{Binding Price, Converter={StaticResource MoneyConverter}}" />
+
                                         <TextBlock
                                             Margin="0,15,0,10"
                                             HorizontalAlignment="Center"
                                             FontWeight="SemiBold"
                                             Text="{Binding DurationMonths, StringFormat={}{0} tháng}" />
+
                                         <StackPanel Margin="0,0,0,10">
                                             <TextBlock FontWeight="SemiBold" Text="Đặc điểm nổi bật:" />
                                             <ItemsControl ItemsSource="{Binding Features}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Style="{StaticResource FeatureItemStyle}">
-                                                            <materialDesign:PackIcon
-                                                                Width="16"
-                                                                Height="16"
-                                                                Margin="0,0,5,0"
-                                                                Foreground="#4CAF50"
-                                                                Kind="CheckCircle" />
-                                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                                                            <materialDesign:PackIcon Kind="CheckCircle" Width="16" Height="16" Foreground="#4CAF50" Margin="0,0,5,0"/>
+                                                            <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                         </StackPanel>
-                                        <!--  Expiration Info  -->
-                                        <Border
-                                            Margin="0,10,0,0"
-                                            Padding="10"
-                                            Background="#FFF8E1"
-                                            BorderBrush="#FFE0B2"
-                                            BorderThickness="1"
-                                            CornerRadius="5">
+
+                                        <Border Margin="0,10,0,0" Padding="10" Background="#FFFDE7" BorderBrush="#FFECB3" BorderThickness="1" CornerRadius="6">
                                             <StackPanel>
-                                                <TextBlock
-                                                    FontWeight="SemiBold"
-                                                    Foreground="#E65100"
-                                                    Text="Ngày hết hạn:" />
-                                                <TextBlock
-                                                    Margin="0,5,0,0"
-                                                    FontWeight="Bold"
-                                                    Foreground="#E65100"
-                                                    Text="{Binding EndDate, StringFormat={}{0:dd/MM/yyyy}}" />
+                                                <TextBlock FontWeight="SemiBold" Foreground="#E65100" Text="Ngày hết hạn:" />
+                                                <TextBlock Margin="0,5,0,0" FontWeight="Bold" Foreground="#E65100" Text="{Binding EndDate, StringFormat={}{0:dd/MM/yyyy}}" />
                                             </StackPanel>
                                         </Border>
                                     </StackPanel>
-                                    <!--  Cancel Button  -->
-                                    <Button
-                                        Grid.Row="2"
-                                        Command="{Binding DataContext.DeleteCurrentPackageCommand, RelativeSource={RelativeSource AncestorType=ContentControl}}"
-                                        Content="HỦY GÓI"
-                                        Style="{StaticResource CancelButtonStyle}" />
+
+                                    <!-- Nút hủy -->
+                                    <Button Grid.Row="2"
+                                            Content="HỦY GÓI"
+                                            Style="{StaticResource CancelButtonStyle}"
+                                            Command="{Binding DataContext.DeleteCurrentPackageCommand, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ContentControl.ContentTemplate>
                 </ContentControl>
 
-                <!--  Available Packages  -->
-                <TextBlock
-                    Margin="0,30,0,20"
-                    HorizontalAlignment="Center"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="#1976D2"
-                    Text="CHỌN GÓI PHÙ HỢP VỚI BẠN" />
+                <!-- Gói còn lại -->
+                <TextBlock Margin="0,30,0,20" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#F57F17" Text="CHỌN GÓI PHÙ HỢP VỚI BẠN" />
 
                 <ItemsControl ItemsSource="{Binding MembershipPackages}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Style="{StaticResource PackageCardStyle}">
+                            <Border Style="{StaticResource CustomCardStyle}">
                                 <Grid Width="280">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -242,31 +205,20 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
 
-                                    <!--  Package Header  -->
-                                    <Border Style="{StaticResource PackageHeaderStyle}">
+                                    <Border Style="{StaticResource CustomHeaderStyle}">
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             FontSize="18"
                                             FontWeight="Bold"
-                                            Foreground="White"
+                                            Foreground="#212121"
                                             Text="{Binding PackageName}" />
                                     </Border>
 
-                                    <!--  Package Content  -->
                                     <StackPanel Grid.Row="1" Margin="15">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            FontSize="24"
-                                            FontWeight="Bold"
-                                            Foreground="#1976D2"
-                                            Text="{Binding Price, Converter={StaticResource MoneyConverter}}" />
+                                        <TextBlock HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="#FBC02D" Text="{Binding Price, Converter={StaticResource MoneyConverter}}" />
 
-                                        <TextBlock
-                                            Margin="0,15,0,10"
-                                            HorizontalAlignment="Center"
-                                            FontWeight="SemiBold"
-                                            Text="{Binding DurationMonths, StringFormat={}{0} tháng}" />
+                                        <TextBlock Margin="0,15,0,10" HorizontalAlignment="Center" FontWeight="SemiBold" Text="{Binding DurationMonths, StringFormat={}{0} tháng}" />
 
                                         <StackPanel Margin="0,0,0,10">
                                             <TextBlock FontWeight="SemiBold" Text="Đặc điểm nổi bật:" />
@@ -274,94 +226,36 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Style="{StaticResource FeatureItemStyle}">
-                                                            <materialDesign:PackIcon
-                                                                Width="16"
-                                                                Height="16"
-                                                                Margin="0,0,5,0"
-                                                                Foreground="#4CAF50"
-                                                                Kind="CheckCircle" />
-                                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                                                            <materialDesign:PackIcon Kind="CheckCircle" Width="16" Height="16" Foreground="#4CAF50" Margin="0,0,5,0"/>
+                                                            <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                         </StackPanel>
 
-                                        <TextBlock
-                                            Margin="0,10,0,0"
-                                            FontSize="12"
-                                            Foreground="#666666"
-                                            Text="{Binding Description}"
-                                            TextWrapping="Wrap" />
+                                        <TextBlock Margin="0,10,0,0" FontSize="12" Foreground="#666666" Text="{Binding Description}" TextWrapping="Wrap"/>
                                     </StackPanel>
 
-                                    <!--  Select Button  -->
-                                    <Button
-                                        Grid.Row="2"
-                                        Command="{Binding DataContext.SelectPackageCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                        CommandParameter="{Binding}"
-                                        Content="CHỌN GÓI"
-                                        Style="{StaticResource SelectButtonStyle}" />
+                                    <Button Grid.Row="2"
+                                            Content="CHỌN GÓI"
+                                            Style="{StaticResource YellowSelectButton}"
+                                            Command="{Binding DataContext.SelectPackageCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}" />
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!--  Selected Package Info  -->
-                <materialDesign:Card Margin="20,30,20,10" Visibility="{Binding SelectedPackage, Converter={StaticResource NullToVisibilityConverter}}">
-                    <StackPanel>
-                        <TextBlock
-                            Margin="0,0,0,10"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            Foreground="#1976D2"
-                            Text="GÓI BẠN ĐÃ CHỌN" />
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel>
-                                <TextBlock FontWeight="SemiBold" Text="Tên gói:" />
-                                <TextBlock Margin="0,5,0,15" Text="{Binding SelectedPackage.PackageName}" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1">
-                                <TextBlock FontWeight="SemiBold" Text="Giá:" />
-                                <TextBlock Margin="0,5,0,15" Text="{Binding SelectedPackage.Price, Converter={StaticResource MoneyConverter}}" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2">
-                                <TextBlock FontWeight="SemiBold" Text="Thời hạn:" />
-                                <TextBlock Margin="0,5,0,15" Text="{Binding SelectedPackage.DurationMonths, StringFormat={}{0} tháng}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </materialDesign:Card>
             </StackPanel>
         </ScrollViewer>
 
-        <!--  Footer Buttons  -->
-        <Border
-            Grid.Row="2"
-            Padding="10"
-            BorderBrush="#E0E0E0"
-            BorderThickness="0,1,0,0">
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button
-                    Click="GoBackButton_Click"
-                    Content="QUAY LẠI"
-                    Style="{StaticResource MaterialDesignOutlinedButton}" />
-
-                <Button
-                    Command="{Binding ConfirmPaymentCommand}"
-                    Content="TIẾN HÀNH THANH TOÁN"
-                    Style="{StaticResource PrimaryButton}"
-                    Visibility="{Binding SelectedPackage, Converter={StaticResource NullToVisibilityConverter}}" />
+        <!-- Footer -->
+        <Border Grid.Row="2" Padding="10" BorderBrush="#FFE082" BorderThickness="0,1,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="QUAY LẠI" Click="GoBackButton_Click" Style="{StaticResource CancelButtonStyle}" />
+                <Button Content="TIẾN HÀNH THANH TOÁN" Command="{Binding ConfirmPaymentCommand}" Style="{StaticResource PrimaryYellowButton}" Visibility="{Binding SelectedPackage, Converter={StaticResource NullToVisibilityConverter}}" />
             </StackPanel>
         </Border>
     </Grid>
