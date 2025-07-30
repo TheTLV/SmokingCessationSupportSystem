@@ -6,11 +6,26 @@
     Title="Biểu đồ tiến trình cai thuốc"
     Width="800"
     Height="500"
+    FontFamily="Roboto"
     WindowStartupLocation="CenterScreen"
     WindowStyle="ToolWindow">
 
     <Grid Margin="10">
-        <lvc:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollection}">
+        <!-- Logo + Title -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Top">
+            <Image Source="/Assets/logo.png" Width="32" Height="32" Margin="0,0,10,0"/>
+            <TextBlock Text="Tiến trình cai thuốc" 
+                       FontSize="20" 
+                       FontWeight="Bold" 
+                       Foreground="#FFB300" 
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Chart -->
+        <lvc:CartesianChart 
+            LegendLocation="Right" 
+            Series="{Binding SeriesCollection}" 
+            Margin="0,40,0,0">
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Ngày" Labels="{Binding Labels}" />
             </lvc:CartesianChart.AxisX>
